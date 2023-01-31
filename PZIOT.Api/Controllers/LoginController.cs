@@ -51,88 +51,6 @@ namespace PZIOT.Controllers
         }
 
 
-        #region 获取token的第1种方法
-        /// <summary>
-        /// 获取JWT的方法1
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("Token")]
-        public async Task<MessageModel<string>> GetJwtStr(string name, string pass)
-        {
-
-            string jwtStr = string.Empty;
-            bool suc = false;
-            //这里就是用户登陆以后，通过数据库去调取数据，分配权限的操作
-
-            var user = await _sysUserInfoServices.GetUserRoleNameStr(name, MD5Helper.MD5Encrypt32(pass));
-            if (user != null)
-            {
-
-                TokenModelJwt tokenModel = new TokenModelJwt { Uid = 1, Role = user };
-
-                jwtStr = JwtHelper.IssueJwt(tokenModel);
-                suc = true;
-            }
-            else
-            {
-                jwtStr = "login fail!!!";
-            }
-
-            return new MessageModel<string>()
-            {
-                success = suc,
-                msg = suc ? "获取成功" : "获取失败",
-                response = jwtStr
-            };
-        }
-
-
-        /// <summary>
-        /// 获取JWT的方法2：给Nuxt提供
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("GetTokenNuxt")]
-        public MessageModel<string> GetJwtStrForNuxt(string name, string pass)
-        {
-            string jwtStr = string.Empty;
-            bool suc = false;
-            //这里就是用户登陆以后，通过数据库去调取数据，分配权限的操作
-            //这里直接写死了
-            if (name == "admins" && pass == "admins")
-            {
-                TokenModelJwt tokenModel = new TokenModelJwt
-                {
-                    Uid = 1,
-                    Role = "Admin"
-                };
-
-                jwtStr = JwtHelper.IssueJwt(tokenModel);
-                suc = true;
-            }
-            else
-            {
-                jwtStr = "login fail!!!";
-            }
-            var result = new
-            {
-                data = new { success = suc, token = jwtStr }
-            };
-
-            return new MessageModel<string>()
-            {
-                success = suc,
-                msg = suc ? "获取成功" : "获取失败",
-                response = jwtStr
-            };
-        }
-        #endregion
-
 
 
         /// <summary>
@@ -236,31 +154,7 @@ namespace PZIOT.Controllers
             return Failed<TokenInfoViewModel>("认证失败！");
         }
 
-        /// <summary>
-        /// 获取JWT的方法4：给 JSONP 测试
-        /// </summary>
-        /// <param name="callBack"></param>
-        /// <param name="id"></param>
-        /// <param name="sub"></param>
-        /// <param name="expiresSliding"></param>
-        /// <param name="expiresAbsoulute"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("jsonp")]
-        public void Getjsonp(string callBack, long id = 1, string sub = "Admin", int expiresSliding = 30, int expiresAbsoulute = 30)
-        {
-            TokenModelJwt tokenModel = new TokenModelJwt
-            {
-                Uid = id,
-                Role = sub
-            };
-
-            string jwtStr = JwtHelper.IssueJwt(tokenModel);
-
-            string response = string.Format("\"value\":\"{0}\"", jwtStr);
-            string call = callBack + "({" + response + "})";
-            Response.WriteAsync(call);
-        }
+      
 
 
         /// <summary>
@@ -294,16 +188,7 @@ namespace PZIOT.Controllers
             return new { result = false };
         }
 
-        /// <summary>
-        /// weixin登录
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("wxLogin")]
-        public dynamic WxLogin(string g = "", string token = "")
-        {
-            return new { g, token };
-        }
+       
     }
 
     public class SwaggerLoginRequest
