@@ -148,24 +148,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:PZIOT.Controllers.ImgController">
-            <summary>
-            图片管理
-            </summary>
-        </member>
-        <member name="M:PZIOT.Controllers.ImgController.DownImg">
-            <summary>
-            下载图片（支持中文字符）
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.ImgController.InsertPicture(PZIOT.Model.ViewModels.UploadFileDto)">
-            <summary>
-            上传图片,多文件
-            </summary>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
         <member name="T:PZIOT.Controllers.LoginController">
             <summary>
             登录管理【无权限】
