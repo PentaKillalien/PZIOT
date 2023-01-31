@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace PZIOT.Controllers
 {
+    /// <summary>
+    /// Api的标准返回结构体的封装
+    /// </summary>
     public class BaseApiController : Controller
     {
         [NonAction]
