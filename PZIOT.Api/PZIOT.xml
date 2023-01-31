@@ -4,6 +4,11 @@
         <name>PZIOT.Api</name>
     </assembly>
     <members>
+        <member name="T:PZIOT.Controllers.BaseApiController">
+            <summary>
+            Api的标准返回结构体的封装
+            </summary>
+        </member>
         <member name="T:PZIOT.Controllers.BlogController">
             <summary>
             博客管理
@@ -140,17 +145,6 @@
         <member name="M:PZIOT.Controllers.MigrateController.SaveData2ExcelAsync">
             <summary>
             权限数据库导出excel
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:PZIOT.Controllers.HealthCheckController">
-            <summary>
-            健康检查
-            </summary>
-        </member>
-        <member name="M:PZIOT.Controllers.HealthCheckController.Get">
-            <summary>
-            健康检查接口
             </summary>
             <returns></returns>
         </member>

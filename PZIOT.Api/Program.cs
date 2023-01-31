@@ -85,7 +85,7 @@ if (Permissions.IsUseIds4)
 }
 else
 {
-    builder.Services.AddAuthentication_JWTSetup();
+    //builder.Services.AddAuthentication_JWTSetup();
 }
 
 builder.Services.AddIpPolicyRateLimitSetup(builder.Configuration);
