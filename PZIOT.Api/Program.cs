@@ -24,6 +24,7 @@ using Newtonsoft.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
+using PZIOT.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -189,6 +190,6 @@ app.UseSeedDataMiddle(myContext, builder.Environment.WebRootPath);
 app.UseQuartzJobMiddleware(tasksQzServices, schedulerCenter);
 app.UseConsulMiddle(builder.Configuration, lifetime);
 app.ConfigureEventBus();
-
+Console.WriteLine($"当前系统版本:{GlobeBaseParameters.SysVersion}");
 // 4、运行
 app.Run();

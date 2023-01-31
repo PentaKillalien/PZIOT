@@ -34,6 +34,17 @@
             所有
             </summary>
         </member>
+        <member name="T:PZIOT.Model.GlobeBaseParameters">
+            <summary>
+            存放静态变量--不存常量
+            全局静态参数--按照系统的业务逻辑，这里的所有静态内容都写到配置文件
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.GlobeBaseParameters.SysVersion">
+            <summary>
+            当前系统版本-不应该写这里
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.IDS4DbModels.ApplicationRole">
             <summary>
             以下model 来自ids4项目，多库模式，为了调取ids4数据
