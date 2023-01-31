@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PZIOT.Common\PZIOT.Common.csproj" />
+    <ProjectReference Include="..\PZIOT.IServices\PZIOT.IServices.csproj" />
+  </ItemGroup>
+
+</Project>
