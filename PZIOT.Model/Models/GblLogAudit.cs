@@ -24,7 +24,7 @@ namespace PZIOT.Model.Models
         ///<summary>
         ///时间
         ///</summary>
-        [SugarColumn(ColumnDescription = "时间", IsNullable = false, IsPrimaryKey = false, IsIdentity = false, ColumnDataType = "datetime")]
+        [SugarColumn(ColumnDescription = "时间", IsNullable = false, IsPrimaryKey = false, IsIdentity = false)]
         public DateTime Date { get; set; } = DateTime.Now;
 
         ///<summary>
