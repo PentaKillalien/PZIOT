@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StackExchange.Profiling;
 using static PZIOT.Extensions.CustomApiVersion;
+using PZIOT.Extensions;
+using StackExchange.Redis;
 
 namespace PZIOT.Controllers
 {
@@ -26,15 +28,16 @@ namespace PZIOT.Controllers
     {
         public IBlogArticleServices _blogArticleServices { get; set; }
         private readonly ILogger<BlogController> _logger;
-
+        IRedisBasketRepository _redisBasketRepository;
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="logger"></param>
         /// 
-        public BlogController(ILogger<BlogController> logger)
+        public BlogController(ILogger<BlogController> logger, IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;
+            _redisBasketRepository = redisBasketRepository;
         }
 
 
@@ -49,6 +52,9 @@ namespace PZIOT.Controllers
         [HttpGet]
         public async Task<MessageModel<PageModel<BlogArticle>>> Get(int id, int page = 1, string bcategory = "技术博文", string key = "")
         {
+            await _redisBasketRepository.ListLeftPushAsync("JJBO","ccc",0);
+            //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}");
+
             int intPageSize = 6;
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {

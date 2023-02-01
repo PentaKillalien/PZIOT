@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InitQ.Abstractions;
 using PZIOT.Common;
 using PZIOT.IRepository.Base;
 using PZIOT.IServices;

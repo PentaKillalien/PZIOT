@@ -14,7 +14,7 @@
             博客管理
             </summary>
         </member>
-        <member name="M:PZIOT.Controllers.BlogController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.BlogController})">
+        <member name="M:PZIOT.Controllers.BlogController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.BlogController},PZIOT.Extensions.IRedisBasketRepository)">
             <summary>
             构造函数
             </summary>
