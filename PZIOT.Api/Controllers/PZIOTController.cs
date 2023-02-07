@@ -31,10 +31,10 @@ namespace PZIOT.Api.Controllers
         public async Task<MessageModel<string>> StartPIot()
         {
             if (ApiLock.IOTApiLock) {
-                return Failed<string>();
+                return Failed<string>("IOT主服务启动后无法再次启动");
             }
             await _PZIOTServices.StartPIOT();
-            return Success<string>("操作成功");
+            return Success<string>("IOT主服务启动成功");
 
         }
     }
