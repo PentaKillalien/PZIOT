@@ -9,6 +9,7 @@ namespace PZIOT.Controllers
     /// </summary>
     public class BaseApiController : Controller
     {
+        
         [NonAction]
         public MessageModel<T> Success<T>(T data, string msg = "成功")
         {

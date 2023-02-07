@@ -567,6 +567,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:PZIOT.Api.Controllers.PZIOTController">
+            <summary>
+            IOT相关服务启动
+            </summary>
+        </member>
+        <member name="M:PZIOT.Api.Controllers.PZIOTController.#ctor(PZIOT.IServices.IPZIOTServices)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="pZIOTServices"></param>
+        </member>
+        <member name="M:PZIOT.Api.Controllers.PZIOTController.StartPIot">
+            <summary>
+            启动IOT服务
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:PZIOT.SwaggerHelper.CustomRouteAttribute">
             <summary>
             自定义路由 /api/{version}/[controler]/[action]

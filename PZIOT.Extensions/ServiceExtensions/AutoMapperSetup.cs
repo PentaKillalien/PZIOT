@@ -10,6 +10,7 @@ namespace PZIOT.Extensions
     /// </summary>
     public static class AutoMapperSetup
     {
+        //自动映射model 和viewmodel的转换，事先配置好每一个转换的属性
         public static void AddAutoMapperSetup(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));

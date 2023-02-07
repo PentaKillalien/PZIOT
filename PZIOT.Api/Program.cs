@@ -60,7 +60,7 @@ Permissions.IsUseIds4 = AppSettings.app(new string[] { "Startup", "IdentityServe
 RoutePrefix.Name = AppSettings.app(new string[] { "AppSettings", "SvcName" }).ObjToString();
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
+//加载工具或中间件
 builder.Services.AddMemoryCacheSetup();
 builder.Services.AddRedisCacheSetup();
 builder.Services.AddSqlsugarSetup();
@@ -190,6 +190,5 @@ app.UseSeedDataMiddle(myContext, builder.Environment.WebRootPath);
 app.UseQuartzJobMiddleware(tasksQzServices, schedulerCenter);
 app.UseConsulMiddle(builder.Configuration, lifetime);
 app.ConfigureEventBus();
-Console.WriteLine($"当前系统版本:{GlobeBaseParameters.SysVersion}");
 // 4、运行
 app.Run();

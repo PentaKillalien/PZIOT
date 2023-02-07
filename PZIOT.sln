@@ -24,16 +24,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		PZIOT.Build.bat = PZIOT.Build.bat
-		PZIOT.Publish.bat = PZIOT.Publish.bat
-		PZIOT.Publish.Docker.Jenkins.sh = PZIOT.Publish.Docker.Jenkins.sh
-		PZIOT.Publish.Docker.sh = PZIOT.Publish.Docker.sh
-		PZIOT.Publish.Linux.sh = PZIOT.Publish.Linux.sh
 		codecov.yml = codecov.yml
 		CreateYourProject.bat = CreateYourProject.bat
 		DockerBuild.bat = DockerBuild.bat
 		Dockerfile = Dockerfile
 		nuget.config = nuget.config
+		PZIOT.Build.bat = PZIOT.Build.bat
+		PZIOT.Publish.bat = PZIOT.Publish.bat
+		PZIOT.Publish.Docker.Jenkins.sh = PZIOT.Publish.Docker.Jenkins.sh
+		PZIOT.Publish.Docker.sh = PZIOT.Publish.Docker.sh
+		PZIOT.Publish.Linux.sh = PZIOT.Publish.Linux.sh
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -56,6 +56,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PZIOT.Serilog.Es", "PZIOT.Serilog.Es\PZIOT.Serilog.Es.csproj", "{52AFAB53-D1CA-4014-8B63-3550FDCDA6E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.Provider.Nacos", "Ocelot.Provider.Nacos\Ocelot.Provider.Nacos.csproj", "{6463FB13-5F01-4A1D-8B62-A454FB3812EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PZIOT.DistributedMqttServer", "PZIOT.DistributedMqttServer\PZIOT.DistributedMqttServer.csproj", "{7D65BBA5-9C49-4C9D-A76F-4235D5C36FAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +121,10 @@ Global
 		{6463FB13-5F01-4A1D-8B62-A454FB3812EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6463FB13-5F01-4A1D-8B62-A454FB3812EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6463FB13-5F01-4A1D-8B62-A454FB3812EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D65BBA5-9C49-4C9D-A76F-4235D5C36FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D65BBA5-9C49-4C9D-A76F-4235D5C36FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D65BBA5-9C49-4C9D-A76F-4235D5C36FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D65BBA5-9C49-4C9D-A76F-4235D5C36FAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

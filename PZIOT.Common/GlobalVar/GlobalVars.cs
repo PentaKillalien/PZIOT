@@ -43,4 +43,13 @@
     {
         public const string Loging = "Loging";
     }
+    /// <summary>
+    /// Api能否执行成功的系统锁
+    /// </summary>
+    public static class ApiLock {
+        /// <summary>
+        /// 此变量为True时，说明IOT业务已经启动,相关Api才可以访问
+        /// </summary>
+        public static bool IOTApiLock = false;
+    }
 }
