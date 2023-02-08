@@ -103,6 +103,7 @@ builder.Services.AddControllers(o =>
     o.Filters.Add(typeof(GlobalExceptionsFilter));
     //o.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
     o.Conventions.Insert(0, new GlobalRoutePrefixFilter(new RouteAttribute(RoutePrefix.Name)));
+    //o.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;//可解决接口不能为空
 })
 .AddNewtonsoftJson(options =>
 {
