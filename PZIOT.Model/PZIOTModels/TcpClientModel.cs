@@ -19,5 +19,9 @@ namespace PZIOT.Model.PZIOTModels
         /// 端口号
         /// </summary>
         public int Port{ get; set; }
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public int TimeOut { get; set; }
     }
 }

@@ -77,19 +77,33 @@ namespace PZIOT.Common.EquipmentDriver
         {
             EquipmentReadResponseProtocol result = await Task.Run(async () => {
                 client.Send(Encoding.Default.GetBytes(para));
-                bool flag = true;
-                while (flag) {
-                    if (preCount!=currentCount) {
+                bool flag = false;
+                for (int i = 0; i < tcpClientConnectionModel.TimeOut/10; i++)
+                {
+                    if (preCount != currentCount)
+                    {
                         Console.WriteLine("轮询等待返回中");
-                        flag = false;
                         preCount = currentCount;
+                        flag = true;
+                        break;
                     }
-                    await Task.Delay(1000);
-                } ;
-                return new EquipmentReadResponseProtocol() { 
-                     RequestPara =para,
-                     ResponseValue= currentData
-                };
+                }
+                if (flag)
+                {
+                    return new EquipmentReadResponseProtocol()
+                    {
+                        RequestPara = para,
+                        ResponseValue = currentData
+                    };
+                }
+                else {
+                    return new EquipmentReadResponseProtocol()
+                    {
+                        RequestPara = para,
+                        ResponseValue = "响应超时"
+                    };
+                }
+                
             });
             return result;
         }

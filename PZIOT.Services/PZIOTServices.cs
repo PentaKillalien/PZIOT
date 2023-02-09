@@ -21,7 +21,8 @@ namespace PZIOT.Services
                 TcpClientDriver tcp = new TcpClientDriver();
                 await tcp.CreatConnect(new Model.PZIOTModels.TcpClientConnectionModel() { 
                       Serverip="192.168.82.57",
-                      Port=1987
+                      Port=1987,
+                      TimeOut=100
                 });
                 EquipmentReadResponseProtocol result = await tcp.ReadSingleParaFromEquipment("ggg");
                 ConsoleHelper.WriteInfoLine($"发送ggg,接收到回复{result.ResponseValue}");

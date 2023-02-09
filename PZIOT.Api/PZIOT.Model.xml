@@ -1684,6 +1684,11 @@
             端口号
             </summary>
         </member>
+        <member name="P:PZIOT.Model.PZIOTModels.TcpClientConnectionModel.TimeOut">
+            <summary>
+            超时时间
+            </summary>
+        </member>
         <member name="F:PZIOT.Model.ResponseEnum.NoPermissions">
             <summary>
             无权限
