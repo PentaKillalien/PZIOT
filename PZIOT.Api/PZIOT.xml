@@ -81,6 +81,7 @@
             gz
             </summary>
             <param name="logger"></param>
+            <param name="equipmentServices"></param>
             <param name="redisBasketRepository"></param>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Get(System.Int32,System.Int32,System.String,System.String)">
@@ -110,14 +111,14 @@
             <summary>
             添加设备【无权限】
             </summary>
-            <param name="blogArticle"></param>
+            <param name="equipment"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Put(PZIOT.Model.Models.Equipment)">
             <summary>
             更新设备信息
             </summary>
-            <param name="BlogArticle"></param>
+            <param name="equipment"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Delete(System.Int32)">
@@ -327,74 +328,6 @@
         <member name="M:PZIOT.Controllers.RoleController.Delete(System.Int32)">
             <summary>
             删除角色
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="T:PZIOT.Controllers.TopicController">
-            <summary>
-            类别管理【无权限】
-            </summary>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicController.#ctor(PZIOT.IServices.ITopicServices)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="topicServices"></param>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicController.Get">
-            <summary>
-            获取Tibug所有分类
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:PZIOT.Controllers.TopicDetailController">
-            <summary>
-            Tibug 管理
-            </summary>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.#ctor(PZIOT.IServices.ITopicServices,PZIOT.IServices.ITopicDetailServices)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="topicServices"></param>
-            <param name="topicDetailServices"></param>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.Get(System.Int32,System.String,System.String,System.Int32)">
-            <summary>
-            获取Bug数据列表（带分页）
-            【无权限】
-            </summary>
-            <param name="page">页数</param>
-            <param name="tname">专题类型</param>
-            <param name="key">关键字</param>
-            <param name="intPageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.Get(System.Int32)">
-            <summary>
-            获取详情【无权限】
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.Post(PZIOT.Model.Models.TopicDetail)">
-            <summary>
-            添加一个 BUG 【无权限】
-            </summary>
-            <param name="topicDetail"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.Update(PZIOT.Model.Models.TopicDetail)">
-            <summary>
-            更新 bug
-            </summary>
-            <param name="topicDetail"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.TopicDetailController.Delete(System.Int32)">
-            <summary>
-            删除 bug
             </summary>
             <param name="id"></param>
             <returns></returns>

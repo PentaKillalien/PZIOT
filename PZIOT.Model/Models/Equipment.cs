@@ -19,6 +19,11 @@ namespace PZIOT.Model.Models
         /// </summary>
         [SugarColumn(Length = 100, IsNullable = true)]
         public string UniqueCode { get; set; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        [SugarColumn(Length = 100, IsNullable = true)]
+        public string Type { get; set; }
 
     }
 }

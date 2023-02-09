@@ -213,35 +213,6 @@ namespace PZIOT.Common.Seed
                     #endregion
 
 
-                    #region Topic
-                    if (!await myContext.Db.Queryable<Topic>().AnyAsync())
-                    {
-                        var data = JsonConvert.DeserializeObject<List<Topic>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "Topic"), Encoding.UTF8), setting);
-
-                        myContext.GetEntityDB<Topic>().InsertRange(data);
-                        Console.WriteLine("Table:Topic created success!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Table:Topic already exists...");
-                    }
-                    #endregion
-
-
-                    #region TopicDetail
-                    if (!await myContext.Db.Queryable<TopicDetail>().AnyAsync())
-                    {
-                        var data = JsonConvert.DeserializeObject<List<TopicDetail>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "TopicDetail"), Encoding.UTF8), setting);
-
-                        myContext.GetEntityDB<TopicDetail>().InsertRange(data);
-                        Console.WriteLine("Table:TopicDetail created success!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Table:TopicDetail already exists...");
-                    }
-                    #endregion
-
 
                     #region UserRole
                     if (!await myContext.Db.Queryable<UserRole>().AnyAsync())

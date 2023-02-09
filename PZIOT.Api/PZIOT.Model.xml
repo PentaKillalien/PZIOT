@@ -330,6 +330,11 @@
             唯一编号
             </summary>
         </member>
+        <member name="P:PZIOT.Model.Models.Equipment.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.Models.GblLogAudit">
             <summary>
             用户团队表
@@ -924,16 +929,6 @@
         <member name="P:PZIOT.Model.Models.TasksQz.Triggers">
             <summary>
             任务内存中的状态
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.Models.Topic">
-            <summary>
-            Tibug 类别
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.Models.TopicDetail">
-            <summary>
-            Tibug 博文
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.UserRole">
