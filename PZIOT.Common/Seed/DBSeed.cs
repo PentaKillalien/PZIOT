@@ -135,9 +135,9 @@ namespace PZIOT.Common.Seed
                     var importer = new ExcelImporter();
 
                     #region BlogArticle
-                    if (!await myContext.Db.Queryable<BlogArticle>().AnyAsync())
+                    if (!await myContext.Db.Queryable<Equipment>().AnyAsync())
                     {
-                        myContext.GetEntityDB<BlogArticle>().InsertRange(JsonHelper.ParseFormByJson<List<BlogArticle>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "BlogArticle"), Encoding.UTF8)));
+                        myContext.GetEntityDB<Equipment>().InsertRange(JsonHelper.ParseFormByJson<List<Equipment>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "BlogArticle"), Encoding.UTF8)));
                         Console.WriteLine("Table:BlogArticle created success!");
                     }
                     else

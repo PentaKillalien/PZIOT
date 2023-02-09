@@ -36,7 +36,7 @@ namespace PZIOT.Tests
         [Fact]
         public void TestEntity()
         {
-            BlogArticle blogArticle = new BlogArticle();
+            Equipment blogArticle = new Equipment();
 
             Assert.True(blogArticle.bID >= 0);
         }
@@ -44,7 +44,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Get_Blog_Page_Test()
         {
-            MessageModel<PageModel<BlogArticle>> blogs = await blogController.Get(1, 1, "技术博文", "");
+            MessageModel<PageModel<Equipment>> blogs = await blogController.Get(1, 1, "技术博文", "");
             Assert.NotNull(blogs);
             Assert.NotNull(blogs.response);
             Assert.True(blogs.response.dataCount >= 0);
@@ -77,7 +77,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Get_Blog_By_Type_For_MVP_Test()
         {
-            MessageModel<List<BlogArticle>> blogs = await blogController.GetBlogsByTypesForMVP("技术博文");
+            MessageModel<List<Equipment>> blogs = await blogController.GetBlogsByTypesForMVP("技术博文");
 
             Assert.NotNull(blogs);
             Assert.True(blogs.success);
@@ -88,7 +88,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Get_Blog_By_Id_For_MVP_Test()
         {
-            MessageModel<BlogArticle> blog = await blogController.GetBlogByIdForMVP(1);
+            MessageModel<Equipment> blog = await blogController.GetBlogByIdForMVP(1);
 
             Assert.NotNull(blog);
             Assert.True(blog.success);
@@ -98,7 +98,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void PostTest()
         {
-            BlogArticle blogArticle = new BlogArticle()
+            Equipment blogArticle = new Equipment()
             {
                 bCreateTime = DateTime.Now,
                 bUpdateTime = DateTime.Now,
@@ -118,7 +118,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Post_Insert_For_MVP_Test()
         {
-            BlogArticle blogArticle = new BlogArticle()
+            Equipment blogArticle = new Equipment()
             {
                 bCreateTime = DateTime.Now,
                 bUpdateTime = DateTime.Now,
@@ -138,7 +138,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Put_Test()
         {
-            BlogArticle blogArticle = new BlogArticle()
+            Equipment blogArticle = new Equipment()
             {
                 bID = 1,
                 bCreateTime = DateTime.Now,

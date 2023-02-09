@@ -1,6 +1,5 @@
 ﻿using PZIOT.IServices;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 
 namespace PZIOT.Filter
 {
@@ -8,13 +7,13 @@ namespace PZIOT.Filter
     {
 
         protected readonly ILogger<UseServiceDIAttribute> _logger;
-        private readonly IBlogArticleServices _blogArticleServices;
+        private readonly IEquipmentServices _equipmentServices;
         private readonly string _name;
 
-        public UseServiceDIAttribute(ILogger<UseServiceDIAttribute> logger, IBlogArticleServices blogArticleServices,string Name="")
+        public UseServiceDIAttribute(ILogger<UseServiceDIAttribute> logger, IEquipmentServices equipmentServices,string Name="")
         {
             _logger = logger;
-            _blogArticleServices = blogArticleServices;
+            _equipmentServices = equipmentServices;
             _name = Name;
         }
 

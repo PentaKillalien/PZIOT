@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PZIOT.IServices
 {
-    public interface IBlogArticleServices :IBaseServices<BlogArticle>
+    public interface IEquipmentServices :IBaseServices<Equipment>
     {
-        Task<List<BlogArticle>> GetBlogs();
-        Task<BlogViewModels> GetBlogDetails(int id);
+        Task<List<Equipment>> GetEquipments();
+        Task<Equipment> GetEquipmentDetails(int id);
 
     }
 

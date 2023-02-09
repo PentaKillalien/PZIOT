@@ -46,6 +46,6 @@ namespace PZIOT.Model.ViewModels
         /// </summary>
         public bool isshow { get; set; }
 
-        public BlogArticle blogarticle { get; set; }
+        public Equipment blogarticle { get; set; }
     }
 }

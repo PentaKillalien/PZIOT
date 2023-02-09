@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using PZIOT.Common.Helper;
+﻿
 using PZIOT.IServices;
 using PZIOT.Model;
 using PZIOT.Model.Models;
-using PZIOT.Model.ViewModels;
 using PZIOT.SwaggerHelper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using StackExchange.Profiling;
 using static PZIOT.Extensions.CustomApiVersion;
 using PZIOT.Extensions;
-using StackExchange.Redis;
 
 namespace PZIOT.Controllers
 {
@@ -26,137 +17,65 @@ namespace PZIOT.Controllers
     [Route("api/Equipment")]
     public class EquipmentController : BaseApiController
     {
-        public IBlogArticleServices _blogArticleServices { get; set; }
+        readonly IEquipmentServices _equipmentServices;
         private readonly ILogger<EquipmentController> _logger;
         IRedisBasketRepository _redisBasketRepository;
         /// <summary>
         /// gz
         /// </summary>
         /// <param name="logger"></param>
+        /// <param name="equipmentServices"></param>
         /// <param name="redisBasketRepository"></param>
-        public EquipmentController(ILogger<EquipmentController> logger, IRedisBasketRepository redisBasketRepository)
+        public EquipmentController(ILogger<EquipmentController> logger, IEquipmentServices equipmentServices,IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;
             _redisBasketRepository = redisBasketRepository;
+            _equipmentServices = equipmentServices;
         }
 
 
         /// <summary>
-        /// 获取博客列表【无权限】
+        /// 获取设备列表【无权限】
         /// </summary>
         /// <param name="id"></param>
         /// <param name="page"></param>
-        /// <param name="bcategory"></param>
+        /// <param name="eqp"></param>
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<PageModel<BlogArticle>>> Get(int id, int page = 1, string bcategory = "技术博文", string key = "")
+        public async Task<MessageModel<PageModel<Equipment>>> Get(int id, int page = 1, string eqp = "1", string key = "")
         {
             await _redisBasketRepository.ListLeftPushAsync("JJBO","ccc",0);
             //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}");
 
             int intPageSize = 6;
-            if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
-            {
-                key = "";
-            }
 
-            Expression<Func<BlogArticle, bool>> whereExpression = a => (a.bcategory == bcategory && a.IsDeleted == false) && ((a.btitle != null && a.btitle.Contains(key)) || (a.bcontent != null && a.bcontent.Contains(key)));
+           
 
-            var pageModelBlog = await _blogArticleServices.QueryPage(whereExpression, page, intPageSize, " bID desc ");
-
-            using (MiniProfiler.Current.Step("获取成功后，开始处理最终数据"))
-            {
-                foreach (var item in pageModelBlog.data)
-                {
-                    if (!string.IsNullOrEmpty(item.bcontent))
-                    {
-                        item.bRemark = (HtmlHelper.ReplaceHtmlTag(item.bcontent)).Length >= 200 ? (HtmlHelper.ReplaceHtmlTag(item.bcontent)).Substring(0, 200) : (HtmlHelper.ReplaceHtmlTag(item.bcontent));
-                        int totalLength = 500;
-                        if (item.bcontent.Length > totalLength)
-                        {
-                            item.bcontent = item.bcontent.Substring(0, totalLength);
-                        }
-                    }
-                }
-            }
-
-            return SuccessPage(pageModelBlog);
+            return SuccessPage(new PageModel<Equipment>() { 
+            
+            });
         }
 
 
         /// <summary>
-        /// 获取博客详情
+        /// 获取设备详情
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
         //[Authorize(Policy = "Scope_BlogModule_Policy")]
         [Authorize]
-        public async Task<MessageModel<BlogViewModels>> Get(int id)
+        public async Task<MessageModel<Equipment>> Get(int id)
         {
-            return Success(await _blogArticleServices.GetBlogDetails(id));
+            return Success(await _equipmentServices.GetEquipmentDetails(id));
         }
 
 
+
+        
         /// <summary>
-        /// 获取详情【无权限】
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("DetailNuxtNoPer")]
-        public async Task<MessageModel<BlogViewModels>> DetailNuxtNoPer(int id)
-        {
-            _logger.LogInformation("xxxxxxxxxxxxxxxxxxx");
-            return Success(await _blogArticleServices.GetBlogDetails(id));
-        }
-
-        [HttpGet]
-        [Route("GoUrl")]
-        public async Task<IActionResult> GoUrl(int id = 0)
-        {
-            var response = await _blogArticleServices.QueryById(id);
-            if (response != null && response.bsubmitter.IsNotEmptyOrNull())
-            {
-                string Url = @"^http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$";
-                if (Regex.IsMatch(response.bsubmitter, Url))
-                {
-                    response.btraffic += 1;
-                    await _blogArticleServices.Update(response);
-                    return Redirect(response.bsubmitter);
-                }
-
-            }
-
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("GetBlogsByTypesForMVP")]
-        public async Task<MessageModel<List<BlogArticle>>> GetBlogsByTypesForMVP(string types = "", int id = 0)
-        {
-            if (types.IsNotEmptyOrNull())
-            {
-                var blogs = await _blogArticleServices.Query(d => d.bcategory != null && types.Contains(d.bcategory) && d.IsDeleted == false, d => d.bID, false);
-                return Success(blogs);
-            }
-            return Success(new List<BlogArticle>() { });
-        }
-
-        [HttpGet]
-        [Route("GetBlogByIdForMVP")]
-        public async Task<MessageModel<BlogArticle>> GetBlogByIdForMVP(int id = 0)
-        {
-            if (id > 0)
-            {
-                return Success(await _blogArticleServices.QueryById(id));
-            }
-            return Success(new BlogArticle());
-        }
-
-        /// <summary>
-        /// 获取博客测试信息 v2版本
+        /// 获取设备测试信息 v2版本
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -169,78 +88,47 @@ namespace PZIOT.Controllers
         [CustomRoute(ApiVersions.V2, "Blogtest")]
         public MessageModel<string> V2_Blogtest()
         {
-            return Success<string>("我是第二版的博客信息");
+            return Success<string>("我是第二版的设备信息");
         }
 
         /// <summary>
-        /// 添加博客【无权限】
+        /// 添加设备【无权限】
         /// </summary>
-        /// <param name="blogArticle"></param>
+        /// <param name="equipment"></param>
         /// <returns></returns>
         [HttpPost]
         //[Authorize(Policy = "Scope_BlogModule_Policy")]
         [Authorize]
-        public async Task<MessageModel<string>> Post([FromBody] BlogArticle blogArticle)
+        public async Task<MessageModel<string>> Post([FromBody] Equipment equipment)
         {
-            if (blogArticle.btitle.Length > 5 && blogArticle.bcontent.Length > 50)
-            {
-
-                blogArticle.bCreateTime = DateTime.Now;
-                blogArticle.bUpdateTime = DateTime.Now;
-                blogArticle.IsDeleted = false;
-                blogArticle.bcategory = "技术博文";
-                var id = (await _blogArticleServices.Add(blogArticle));
-                return id > 0 ? Success<string>(id.ObjToString()) : Failed("添加失败");
-            }
-            else
-            {
-                return Failed("文章标题不能少于5个字符，内容不能少于50个字符！");
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="blogArticle"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("AddForMVP")]
-        [Authorize(Permissions.Name)]
-        public async Task<MessageModel<string>> AddForMVP([FromBody] BlogArticle blogArticle)
-        {
-            blogArticle.bCreateTime = DateTime.Now;
-            blogArticle.bUpdateTime = DateTime.Now;
-            blogArticle.IsDeleted = false;
-            var id = (await _blogArticleServices.Add(blogArticle));
+            var id = (await _equipmentServices.Add(equipment));
             return id > 0 ? Success<string>(id.ObjToString()) : Failed("添加失败");
         }
+
+
+        
         /// <summary>
-        /// 更新博客信息
+        /// 更新设备信息
         /// </summary>
-        /// <param name="BlogArticle"></param>
+        /// <param name="equipment"></param>
         /// <returns></returns>
-        // PUT: api/User/5
         [HttpPut]
         [Route("Update")]
         [Authorize(Permissions.Name)]
-        public async Task<MessageModel<string>> Put([FromBody] BlogArticle BlogArticle)
+        public async Task<MessageModel<string>> Put([FromBody] Equipment equipment)
         {
-            if (BlogArticle != null && BlogArticle.bID > 0)
+            if (equipment != null && equipment.Id > 0)
             {
-                var model = await _blogArticleServices.QueryById(BlogArticle.bID);
+                var model = await _equipmentServices.QueryById(equipment.Id);
 
                 if (model != null)
                 {
-                    model.btitle = BlogArticle.btitle;
-                    model.bcategory = BlogArticle.bcategory;
-                    model.bsubmitter = BlogArticle.bsubmitter;
-                    model.bcontent = BlogArticle.bcontent;
-                    model.btraffic = BlogArticle.btraffic;
+                    model.Name = equipment.Name;
+                    model.UniqueCode = equipment.UniqueCode;
 
-                    if (await _blogArticleServices.Update(model))
+                    if (await _equipmentServices.Update(model))
                     {
-                        return Success<string>(BlogArticle?.bID.ObjToString());
+                        return Success<string>(equipment?.Id.ObjToString());
                     }
                 }
             }
@@ -250,7 +138,7 @@ namespace PZIOT.Controllers
 
 
         /// <summary>
-        /// 删除博客
+        /// 删除设备
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -261,13 +149,12 @@ namespace PZIOT.Controllers
         {
             if (id > 0)
             {
-                var blogArticle = await _blogArticleServices.QueryById(id);
-                if (blogArticle == null)
+                var equipment = await _equipmentServices.QueryById(id);
+                if (equipment == null)
                 {
                     return Failed("查询无数据");
                 }
-                blogArticle.IsDeleted = true;
-                return await _blogArticleServices.Update(blogArticle) ? Success(blogArticle?.bID.ObjToString(), "删除成功") : Failed("删除失败");
+                return await _equipmentServices.Update(equipment) ? Success(equipment?.Id.ObjToString(), "删除成功") : Failed("删除失败");
             }
             return Failed("入参无效");
         }
@@ -280,7 +167,7 @@ namespace PZIOT.Controllers
         [Route("ApacheTestUpdate")]
         public async Task<MessageModel<bool>> ApacheTestUpdate()
         {
-            return Success(await _blogArticleServices.Update(new { bsubmitter = $"laozhang{DateTime.Now.Millisecond}", bID = 1 }), "更新成功");
+            return Success(await _equipmentServices.Update(new { bsubmitter = $"laozhang{DateTime.Now.Millisecond}", bID = 1 }), "更新成功");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace PZIOT.Tests.Common_Test;
 public class DynamicLambdaTest
 {
     private readonly ITestOutputHelper _testOutputHelper;
-    private readonly IBaseRepository<BlogArticle> _baseRepository;
+    private readonly IBaseRepository<Equipment> _baseRepository;
     DI_Test dI_Test = new DI_Test();
 
     public DynamicLambdaTest(ITestOutputHelper testOutputHelper)
@@ -20,7 +20,7 @@ public class DynamicLambdaTest
 
         var container = dI_Test.DICollections();
 
-        _baseRepository = container.Resolve<IBaseRepository<BlogArticle>>();
+        _baseRepository = container.Resolve<IBaseRepository<Equipment>>();
 
         //DbContext.Init(BaseDBConfig.ConnectionString,(DbType)BaseDBConfig.DbType);
     }
@@ -49,7 +49,7 @@ public class DynamicLambdaTest
 
     private async Task TestConditions(string conditions)
     {
-        var express = DynamicLinqFactory.CreateLambda<BlogArticle>(conditions);
+        var express = DynamicLinqFactory.CreateLambda<Equipment>(conditions);
         var product = await _baseRepository.Query(express);
         _testOutputHelper.WriteLine(new string('=', 100));
         _testOutputHelper.WriteLine($"原条件:{conditions}\r\nLambda:{express}\r\n结果:{product.Count}");

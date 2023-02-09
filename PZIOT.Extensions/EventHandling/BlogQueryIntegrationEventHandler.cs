@@ -9,14 +9,14 @@ namespace PZIOT.EventBus
 {
     public class BlogQueryIntegrationEventHandler : IIntegrationEventHandler<BlogQueryIntegrationEvent>
     {
-        private readonly IBlogArticleServices _blogArticleServices;
+        private readonly IEquipmentServices _equipmentServices;
         private readonly ILogger<BlogQueryIntegrationEventHandler> _logger;
 
         public BlogQueryIntegrationEventHandler(
-            IBlogArticleServices blogArticleServices,
+            IEquipmentServices blogArticleServices,
             ILogger<BlogQueryIntegrationEventHandler> logger)
         {
-            _blogArticleServices = blogArticleServices;
+            _equipmentServices = blogArticleServices;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -26,7 +26,7 @@ namespace PZIOT.EventBus
 
             ConsoleHelper.WriteSuccessLine($"----- Handling integration event: {@event.Id} at PZIOT - ({@event})");
 
-            await _blogArticleServices.QueryById(@event.BlogId.ToString());
+            await _equipmentServices.QueryById(@event.BlogId.ToString());
         }
 
     }

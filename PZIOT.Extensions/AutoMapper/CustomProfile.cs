@@ -11,8 +11,8 @@ namespace PZIOT.AutoMapper
         /// </summary>
         public CustomProfile()
         {
-            CreateMap<BlogArticle, BlogViewModels>();
-            CreateMap<BlogViewModels, BlogArticle>();
+            CreateMap<Equipment, BlogViewModels>();
+            CreateMap<BlogViewModels, Equipment>();
 
             CreateMap<SysUserInfo, SysUserInfoDto>()
                 .ForMember(a => a.uID, o => o.MapFrom(d => d.Id))

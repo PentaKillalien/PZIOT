@@ -9,11 +9,11 @@ namespace PZIOT.Tasks
 {
     public class Job_Blogs_Quartz : JobBase, IJob
     {
-        private readonly IBlogArticleServices _blogArticleServices;
+        private readonly IEquipmentServices _equipmentServices;
 
-        public Job_Blogs_Quartz(IBlogArticleServices blogArticleServices, ITasksQzServices tasksQzServices)
+        public Job_Blogs_Quartz(IEquipmentServices equipmentServices, ITasksQzServices tasksQzServices)
         {
-            _blogArticleServices = blogArticleServices;
+            _equipmentServices = equipmentServices;
             _tasksQzServices = tasksQzServices;
         }
         public async Task Execute(IJobExecutionContext context)
@@ -22,7 +22,7 @@ namespace PZIOT.Tasks
         }
         public async Task Run(IJobExecutionContext context)
         {
-            var list = await _blogArticleServices.Query();
+            var list = await _equipmentServices.Query();
             // 也可以通过数据库配置，获取传递过来的参数
             JobDataMap data = context.JobDetail.JobDataMap;
             //int jobId = data.GetInt("JobParam");

@@ -46,6 +46,6 @@ namespace PZIOT.Model.Models
         public bool isshow { get; set; }
 
         [SugarColumn(IsIgnore = true)]
-        public BlogArticle blogarticle { get; set; }
+        public Equipment blogarticle { get; set; }
     }
 }

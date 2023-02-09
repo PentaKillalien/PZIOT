@@ -14,6 +14,6 @@ namespace PZIOT.Model.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public BlogArticle data { get; set; }
+        public Equipment data { get; set; }
     }
 }

@@ -10,12 +10,12 @@ namespace PZIOT.Tasks
     public class Job1TimedService : IHostedService, IDisposable
     {
         private Timer _timer;
-        private readonly IBlogArticleServices _blogArticleServices;
+        private readonly IEquipmentServices _equipmentServices;
 
         // 这里可以注入
-        public Job1TimedService(IBlogArticleServices blogArticleServices)
+        public Job1TimedService(IEquipmentServices equipmentServices)
         {
-            _blogArticleServices = blogArticleServices;
+            _equipmentServices = equipmentServices;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -32,8 +32,8 @@ namespace PZIOT.Tasks
         {
             try
             {
-                var model = _blogArticleServices.GetBlogDetails(1).Result;
-                Console.WriteLine($"Job 1 启动成功，获取id=1的博客title为:{model?.btitle}");
+                var model = _equipmentServices.GetEquipmentDetails(1).Result;
+                Console.WriteLine($"Job 1 启动成功，获取id=1的设备为:{model?.UniqueCode}");
             }
             catch (Exception ex)
             {

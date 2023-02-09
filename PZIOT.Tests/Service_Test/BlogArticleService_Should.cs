@@ -43,7 +43,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Add_Blog_Test()
         {
-            BlogArticle blogArticle = new BlogArticle()
+            Equipment blogArticle = new Equipment()
             {
                 bCreateTime = DateTime.Now,
                 bUpdateTime = DateTime.Now,

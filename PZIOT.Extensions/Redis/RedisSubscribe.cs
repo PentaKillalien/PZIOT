@@ -8,11 +8,11 @@ namespace PZIOT.Extensions.Redis
 {
     public class RedisSubscribe : IRedisSubscribe
     {
-        private readonly IBlogArticleServices _blogArticleServices;
+        private readonly IEquipmentServices _equipmentServices;
 
-        public RedisSubscribe(IBlogArticleServices blogArticleServices)
+        public RedisSubscribe(IEquipmentServices equipmentServices)
         {
-            _blogArticleServices = blogArticleServices;
+            _equipmentServices = equipmentServices;
         }
 
         [Subscribe(RedisMqKey.Loging)]

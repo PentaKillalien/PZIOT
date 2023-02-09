@@ -23,7 +23,7 @@ namespace PZIOT.Common.WebApiClients.HttpApis
         /// <param name="key"></param>
         /// <returns>Success</returns>
         [HttpGet("api/Blog")]
-        Task<MessageModel<PageModel<BlogArticle>>> BlogAsync(int? id, int page, string bcategory, string key);
+        Task<MessageModel<PageModel<Equipment>>> BlogAsync(int? id, int page, string bcategory, string key);
 
         /// <summary>
         /// 添加博客【无权限】
@@ -31,7 +31,7 @@ namespace PZIOT.Common.WebApiClients.HttpApis
         /// <param name="body"></param>
         /// <returns>Success</returns>
         [HttpPost("api/Blog")]
-        Task<MessageModel<string>> Blog2Async([JsonContent] BlogArticle body);
+        Task<MessageModel<string>> Blog2Async([JsonContent] Equipment body);
 
         /// <summary>
         /// 获取博客详情 (Auth)
@@ -71,7 +71,7 @@ namespace PZIOT.Common.WebApiClients.HttpApis
         /// <param name="body"></param>
         /// <returns>Success</returns>
         [HttpPut("api/Blog/Update")]
-        Task<MessageModel<string>> UpdateAsync([JsonContent] BlogArticle body);
+        Task<MessageModel<string>> UpdateAsync([JsonContent] Equipment body);
 
         /// <summary>
         /// 获取博客测试信息 v2版本

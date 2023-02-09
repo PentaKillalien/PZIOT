@@ -9,7 +9,7 @@ namespace PZIOT.Tests
 {
     public class Repository_Base_Should
     {
-        private IBaseRepository<BlogArticle> baseRepository;
+        private IBaseRepository<Equipment> baseRepository;
         DI_Test dI_Test = new DI_Test();
 
         public Repository_Base_Should()
@@ -17,7 +17,7 @@ namespace PZIOT.Tests
 
             var container = dI_Test.DICollections();
 
-            baseRepository = container.Resolve<IBaseRepository<BlogArticle>>();
+            baseRepository = container.Resolve<IBaseRepository<Equipment>>();
 
             //DbContext.Init(BaseDBConfig.ConnectionString,(DbType)BaseDBConfig.DbType);
         }
@@ -34,7 +34,7 @@ namespace PZIOT.Tests
         [Fact]
         public async void Add_Blog_Test()
         {
-            BlogArticle blogArticle = new BlogArticle()
+            Equipment blogArticle = new Equipment()
             {
                 bCreateTime = DateTime.Now,
                 bUpdateTime = DateTime.Now,

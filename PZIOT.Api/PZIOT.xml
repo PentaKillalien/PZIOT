@@ -76,7 +76,7 @@
             设备管理
             </summary>
         </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.EquipmentController},PZIOT.Extensions.IRedisBasketRepository)">
+        <member name="M:PZIOT.Controllers.EquipmentController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.EquipmentController},PZIOT.IServices.IEquipmentServices,PZIOT.Extensions.IRedisBasketRepository)">
             <summary>
             gz
             </summary>
@@ -85,58 +85,44 @@
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Get(System.Int32,System.Int32,System.String,System.String)">
             <summary>
-            获取博客列表【无权限】
+            获取设备列表【无权限】
             </summary>
             <param name="id"></param>
             <param name="page"></param>
-            <param name="bcategory"></param>
+            <param name="eqp"></param>
             <param name="key"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Get(System.Int32)">
             <summary>
-            获取博客详情
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.DetailNuxtNoPer(System.Int32)">
-            <summary>
-            获取详情【无权限】
+            获取设备详情
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.V2_Blogtest">
             <summary>
-            获取博客测试信息 v2版本
+            获取设备测试信息 v2版本
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.Post(PZIOT.Model.Models.BlogArticle)">
+        <member name="M:PZIOT.Controllers.EquipmentController.Post(PZIOT.Model.Models.Equipment)">
             <summary>
-            添加博客【无权限】
-            </summary>
-            <param name="blogArticle"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.AddForMVP(PZIOT.Model.Models.BlogArticle)">
-            <summary>
-            
+            添加设备【无权限】
             </summary>
             <param name="blogArticle"></param>
             <returns></returns>
         </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.Put(PZIOT.Model.Models.BlogArticle)">
+        <member name="M:PZIOT.Controllers.EquipmentController.Put(PZIOT.Model.Models.Equipment)">
             <summary>
-            更新博客信息
+            更新设备信息
             </summary>
             <param name="BlogArticle"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Controllers.EquipmentController.Delete(System.Int32)">
             <summary>
-            删除博客
+            删除设备
             </summary>
             <param name="id"></param>
             <returns></returns>
