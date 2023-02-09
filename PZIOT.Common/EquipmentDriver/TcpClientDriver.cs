@@ -85,7 +85,7 @@ namespace PZIOT.Common.EquipmentDriver
         {
             List<EquipmentReadResponseProtocol> listinfos = new List<EquipmentReadResponseProtocol>();
             foreach (string parasItem in readparas) {
-                EquipmentReadResponseProtocol temp = await ReadSingleParaFromEquipment(parasItem);
+                EquipmentReadResponseProtocol temp = await RequestSingleParaFromEquipment(parasItem);
                 listinfos.Add(temp);
             }
             return listinfos;
