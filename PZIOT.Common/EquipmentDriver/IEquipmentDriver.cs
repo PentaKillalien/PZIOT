@@ -33,16 +33,16 @@ namespace PZIOT.Common.EquipmentDriver
         /// <param name="t"></param>
         /// <returns></returns>
         /// <summary>
-        /// 从设备读取单个参数
+        /// 从设备请求单个参数
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        Task<EquipmentReadResponseProtocol> ReadSingleParaFromEquipment(string para);
+        Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para);
         /// <summary>
-        /// 从设备读取多个参数
+        /// 从设备请求多个参数
         /// </summary>
         /// <param name="ts"></param>
         /// <returns></returns>
-        Task<List<EquipmentReadResponseProtocol>> ReadMultipleParasFromEquipment(List<string> readparas);
+        Task<List<EquipmentReadResponseProtocol>> RequestMultipleParasFromEquipment(List<string> readparas);
     }
 }

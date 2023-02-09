@@ -40,7 +40,7 @@ namespace PZIOT.Common.EquipmentDriver
         }
         void client_Error(object sender, ErrorEventArgs e)
         {
-
+            ConsoleHelper.WriteWarningLine($"{tcpClientConnectionModel.Serverip}发生错误!");
         }
 
         void client_Connected(object sender, EventArgs e)
@@ -53,36 +53,55 @@ namespace PZIOT.Common.EquipmentDriver
             currentData = Encoding.ASCII.GetString(e.Data);
             currentCount++ ;
         }
-
+        /// <summary>
+        /// 被关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void client_Closed(object sender, EventArgs e)
         {
             client.Close();
         }
-        public Task<bool> DisConnect()
+        public async Task<bool> DisConnect()
         {
-            throw new NotImplementedException();
+            bool result = await Task.Run(() => {
+                client.Close();
+                return true;
+            });
+
+            return result;
         }
 
-        public Task<bool> GetConnectionState()
+        public async Task<bool> GetConnectionState()
         {
-            throw new NotImplementedException();
+            bool result =await Task.Run(() => {
+                return client.IsConnected;
+            });
+
+            return result;
         }
 
-        public  Task<List<EquipmentReadResponseProtocol>> ReadMultipleParasFromEquipment(List<string> readparas)
+        public async Task<List<EquipmentReadResponseProtocol>> RequestMultipleParasFromEquipment(List<string> readparas)
         {
-            throw new NotImplementedException();
+            List<EquipmentReadResponseProtocol> listinfos = new List<EquipmentReadResponseProtocol>();
+            foreach (string parasItem in readparas) {
+                EquipmentReadResponseProtocol temp = await ReadSingleParaFromEquipment(parasItem);
+                listinfos.Add(temp);
+            }
+            return listinfos;
         }
 
-        public async Task<EquipmentReadResponseProtocol> ReadSingleParaFromEquipment(string para)
+        public async Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para)
         {
             EquipmentReadResponseProtocol result = await Task.Run(async () => {
                 client.Send(Encoding.Default.GetBytes(para));
                 bool flag = false;
                 for (int i = 0; i < tcpClientConnectionModel.TimeOut/10; i++)
                 {
+                    await Task.Delay(10);
+                    Console.WriteLine("轮询等待返回中");
                     if (preCount != currentCount)
                     {
-                        Console.WriteLine("轮询等待返回中");
                         preCount = currentCount;
                         flag = true;
                         break;
