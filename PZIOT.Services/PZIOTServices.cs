@@ -1,4 +1,6 @@
 ﻿using log4net.Util;
+using PZIOT.Common;
+using PZIOT.Common.EquipmentDriver;
 using PZIOT.IServices;
 using PZIOT.Model;
 using System;
@@ -15,11 +17,14 @@ namespace PZIOT.Services
         public async Task<bool> StartPIOT()
         {
             bool result = await Task.Run(async () => {
-                Console.WriteLine("加载IOT设备实例中");
-                await Task.Delay(1000);
-                Console.WriteLine("加载IOT内置服务中");
-                await Task.Delay(1000);
-                Console.WriteLine("移除IOT接口限制");
+                Console.WriteLine("创建TcpClientDriver示例");
+                TcpClientDriver tcp = new TcpClientDriver();
+                await tcp.CreatConnect(new Model.PZIOTModels.TcpClientConnectionModel() { 
+                      Serverip="192.168.82.57",
+                      Port=1987
+                });
+                EquipmentReadResponseProtocol result = await tcp.ReadSingleParaFromEquipment("ggg");
+                ConsoleHelper.WriteInfoLine($"发送ggg,接收到回复{result.ResponseValue}");
                 ApiLock.IOTApiLock = true;
                 Console.WriteLine("IOT启动成功");
                 return true;

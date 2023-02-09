@@ -1669,6 +1669,21 @@
             查询条件( 例如:id = 1 and name = 小明)
             </summary>
         </member>
+        <member name="T:PZIOT.Model.PZIOTModels.TcpClientConnectionModel">
+            <summary>
+            TcpClient链接信息模型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.TcpClientConnectionModel.Serverip">
+            <summary>
+            Ip地址
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.TcpClientConnectionModel.Port">
+            <summary>
+            端口号
+            </summary>
+        </member>
         <member name="F:PZIOT.Model.ResponseEnum.NoPermissions">
             <summary>
             无权限
