@@ -584,12 +584,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PZIOT.Api.Controllers.PZIOTController.ConnectAndPublic">
-            <summary>
-            MqttClient测试
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:PZIOT.SwaggerHelper.CustomRouteAttribute">
             <summary>
             自定义路由 /api/{version}/[controler]/[action]

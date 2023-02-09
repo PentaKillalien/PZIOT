@@ -14,7 +14,7 @@ namespace PZIOT.Extensions.ServiceExtensions
         public static void AddMqttSetup(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            ConsoleHelper.WriteSuccessLine("Mqtt启动成功");
+
             services.AddHostedService<MqttHostService>();
         }
     }

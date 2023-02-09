@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using PZIOT.Common;
 
 namespace PZIOT.Extensions.Mqtt
 {
@@ -28,16 +29,16 @@ namespace PZIOT.Extensions.Mqtt
 
             MqttService._mqttServer = new MqttFactory().CreateMqttServer(options);
 
-            MqttService._mqttServer.ClientConnectedAsync += _mqttServer_ClientConnectedAsync; //客户端连接事件
-            MqttService._mqttServer.ClientDisconnectedAsync += _mqttServer_ClientDisconnectedAsync; // 客户端关闭事件
-            MqttService._mqttServer.ApplicationMessageNotConsumedAsync += _mqttServer_ApplicationMessageNotConsumedAsync; // 消息接收事件
+            MqttService._mqttServer.ClientConnectedAsync += _ClientConnectedAsync; //客户端连接事件
+            MqttService._mqttServer.ClientDisconnectedAsync += _ClientDisconnectedAsync; // 客户端关闭事件
+            MqttService._mqttServer.ApplicationMessageNotConsumedAsync += _ApplicationMessageNotConsumedAsync; // 消息接收事件
 
-            MqttService._mqttServer.ClientSubscribedTopicAsync += _mqttServer_ClientSubscribedTopicAsync; // 客户端订阅主题事件
-            MqttService._mqttServer.ClientUnsubscribedTopicAsync += _mqttServer_ClientUnsubscribedTopicAsync; // 客户端取消订阅事件
-            MqttService._mqttServer.StartedAsync += _mqttServer_StartedAsync; // 启动后事件
-            MqttService._mqttServer.StoppedAsync += _mqttServer_StoppedAsync; // 关闭后事件
-            MqttService._mqttServer.InterceptingPublishAsync += _mqttServer_InterceptingPublishAsync; // 消息接收事件
-            MqttService._mqttServer.ValidatingConnectionAsync += _mqttServer_ValidatingConnectionAsync; // 用户名和密码验证有关
+            MqttService._mqttServer.ClientSubscribedTopicAsync += _ClientSubscribedTopicAsync; // 客户端订阅主题事件
+            MqttService._mqttServer.ClientUnsubscribedTopicAsync += _ClientUnsubscribedTopicAsync; // 客户端取消订阅事件
+            MqttService._mqttServer.StartedAsync += _StartedAsync; // 启动后事件
+            MqttService._mqttServer.StoppedAsync += _StoppedAsync; // 关闭后事件
+            MqttService._mqttServer.InterceptingPublishAsync += _InterceptingPublishAsync; // 消息接收事件
+            MqttService._mqttServer.ValidatingConnectionAsync += _ValidatingConnectionAsync; // 用户名和密码验证有关
 
             MqttService._mqttServer.StartAsync();
             return Task.CompletedTask;
@@ -48,7 +49,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_ClientSubscribedTopicAsync(ClientSubscribedTopicEventArgs arg)
+        private Task _ClientSubscribedTopicAsync(ClientSubscribedTopicEventArgs arg)
         {
             Console.WriteLine($"ClientSubscribedTopicAsync：客户端ID=【{arg.ClientId}】订阅的主题=【{arg.TopicFilter}】 ");
             return Task.CompletedTask;
@@ -59,7 +60,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_StoppedAsync(EventArgs arg)
+        private Task _StoppedAsync(EventArgs arg)
         {
             Console.WriteLine($"StoppedAsync：MQTT服务已关闭……");
             return Task.CompletedTask;
@@ -70,7 +71,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_ValidatingConnectionAsync(ValidatingConnectionEventArgs arg)
+        private Task _ValidatingConnectionAsync(ValidatingConnectionEventArgs arg)
         {
             arg.ReasonCode = MqttConnectReasonCode.Success;
             if ((arg.Username ?? string.Empty) != "admin" || (arg.Password ?? String.Empty) != "123456")
@@ -87,7 +88,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_InterceptingPublishAsync(InterceptingPublishEventArgs arg)
+        private Task _InterceptingPublishAsync(InterceptingPublishEventArgs arg)
         {
             if (string.Equals(arg.ClientId, ServerClientId))
             {
@@ -104,9 +105,9 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_StartedAsync(EventArgs arg)
+        private Task _StartedAsync(EventArgs arg)
         {
-            Console.WriteLine($"StartedAsync：MQTT服务已启动……");
+            ConsoleHelper.WriteSuccessLine($"StartedAsync：MQTT服务已启动……");
             return Task.CompletedTask;
         }
 
@@ -115,13 +116,13 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_ClientUnsubscribedTopicAsync(ClientUnsubscribedTopicEventArgs arg)
+        private Task _ClientUnsubscribedTopicAsync(ClientUnsubscribedTopicEventArgs arg)
         {
             Console.WriteLine($"ClientUnsubscribedTopicAsync：客户端ID=【{arg.ClientId}】已取消订阅的主题=【{arg.TopicFilter}】  ");
             return Task.CompletedTask;
         }
 
-        private Task _mqttServer_ApplicationMessageNotConsumedAsync(ApplicationMessageNotConsumedEventArgs arg)
+        private Task _ApplicationMessageNotConsumedAsync(ApplicationMessageNotConsumedEventArgs arg)
         {
             Console.WriteLine($"ApplicationMessageNotConsumedAsync：发送端ID=【{arg.SenderId}】 Topic主题=【{arg.ApplicationMessage.Topic}】 消息=【{Encoding.UTF8.GetString(arg.ApplicationMessage.Payload)}】 qos等级=【{arg.ApplicationMessage.QualityOfServiceLevel}】");
             return Task.CompletedTask;
@@ -134,7 +135,7 @@ namespace PZIOT.Extensions.Mqtt
         /// <param name="arg"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private Task _mqttServer_ClientDisconnectedAsync(ClientDisconnectedEventArgs arg)
+        private Task _ClientDisconnectedAsync(ClientDisconnectedEventArgs arg)
         {
             Console.WriteLine($"ClientDisconnectedAsync：客户端ID=【{arg.ClientId}】已断开, 地址=【{arg.Endpoint}】  ");
             return Task.CompletedTask;
@@ -146,7 +147,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        private Task _mqttServer_ClientConnectedAsync(ClientConnectedEventArgs arg)
+        private Task _ClientConnectedAsync(ClientConnectedEventArgs arg)
         {
             Console.WriteLine($"ClientConnectedAsync：客户端ID=【{arg.ClientId}】已连接, 用户名=【{arg.UserName}】地址=【{arg.Endpoint}】  ");
             return Task.CompletedTask;
