@@ -16,10 +16,10 @@
         </member>
         <member name="M:PZIOT.Controllers.BlogController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.BlogController},PZIOT.Extensions.IRedisBasketRepository)">
             <summary>
-            构造函数
+            gz
             </summary>
             <param name="logger"></param>
-            
+            <param name="redisBasketRepository"></param>
         </member>
         <member name="M:PZIOT.Controllers.BlogController.Get(System.Int32,System.Int32,System.String,System.String)">
             <summary>
@@ -581,6 +581,12 @@
         <member name="M:PZIOT.Api.Controllers.PZIOTController.StartPIot">
             <summary>
             启动IOT服务
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Api.Controllers.PZIOTController.ConnectAndPublic">
+            <summary>
+            MqttClient测试
             </summary>
             <returns></returns>
         </member>

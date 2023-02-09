@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PZIOT.Controllers;
+using PZIOT.Extensions.Mqtt;
 using PZIOT.IServices;
 using PZIOT.Model;
 using PZIOT.Services;
@@ -38,5 +39,6 @@ namespace PZIOT.Api.Controllers
             return Success<string>("IOT主服务启动成功");
 
         }
+
     }
 }

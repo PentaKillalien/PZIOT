@@ -51,5 +51,9 @@
         /// 此变量为True时，说明IOT业务已经启动,相关Api才可以访问
         /// </summary>
         public static bool IOTApiLock = false;
+        /// <summary>
+        /// Mqtt服务运行锁
+        /// </summary>
+        public static bool MqttRunLock = false;
     }
 }

@@ -30,10 +30,10 @@ namespace PZIOT.Controllers
         private readonly ILogger<BlogController> _logger;
         IRedisBasketRepository _redisBasketRepository;
         /// <summary>
-        /// 构造函数
+        /// gz
         /// </summary>
         /// <param name="logger"></param>
-        /// 
+        /// <param name="redisBasketRepository"></param>
         public BlogController(ILogger<BlogController> logger, IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;

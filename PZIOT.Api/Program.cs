@@ -24,7 +24,7 @@ using Newtonsoft.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
-using PZIOT.Model;
+using PZIOT.Extensions.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +80,7 @@ builder.Services.AddEventBusSetup();
 builder.Services.AddNacosSetup(builder.Configuration);
 
 builder.Services.AddAuthorizationSetup();
+builder.Services.AddMqttSetup();
 if (Permissions.IsUseIds4)
 {
     builder.Services.AddAuthentication_Ids4Setup();
