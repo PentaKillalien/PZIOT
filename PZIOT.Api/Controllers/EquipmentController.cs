@@ -20,21 +20,21 @@ using StackExchange.Redis;
 namespace PZIOT.Controllers
 {
     /// <summary>
-    /// 博客管理
+    /// 设备管理
     /// </summary>
     [Produces("application/json")]
-    [Route("api/Blog")]
-    public class BlogController : BaseApiController
+    [Route("api/Equipment")]
+    public class EquipmentController : BaseApiController
     {
         public IBlogArticleServices _blogArticleServices { get; set; }
-        private readonly ILogger<BlogController> _logger;
+        private readonly ILogger<EquipmentController> _logger;
         IRedisBasketRepository _redisBasketRepository;
         /// <summary>
         /// gz
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="redisBasketRepository"></param>
-        public BlogController(ILogger<BlogController> logger, IRedisBasketRepository redisBasketRepository)
+        public EquipmentController(ILogger<EquipmentController> logger, IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;
             _redisBasketRepository = redisBasketRepository;

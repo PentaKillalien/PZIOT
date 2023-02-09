@@ -15,8 +15,8 @@ namespace PZIOT.Tests
     public class BlogController_Should
     {
         Mock<IBlogArticleServices> mockBlogSev = new Mock<IBlogArticleServices>();
-        Mock<ILogger<BlogController>> mockLogger = new Mock<ILogger<BlogController>>();
-        BlogController blogController;
+        Mock<ILogger<EquipmentController>> mockLogger = new Mock<ILogger<EquipmentController>>();
+        EquipmentController blogController;
 
         private IBlogArticleServices blogArticleServices;
         DI_Test dI_Test = new DI_Test();
