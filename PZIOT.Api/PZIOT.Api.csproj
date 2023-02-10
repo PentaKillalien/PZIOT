@@ -96,6 +96,7 @@
   <ItemGroup>
     <Folder Include="Log\" />
     <Folder Include="wwwroot\BlogCore.Data.excel\" />
+    <Folder Include="wwwroot\logo\" />
   </ItemGroup>
 
   <ProjectExtensions>

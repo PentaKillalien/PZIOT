@@ -35,7 +35,7 @@ namespace PZIOT.Tests.Common_Test
             Console.Out.WriteLine("明文: " + plainText);
 
             Assert.NotNull(plainText);
-            Assert.Equal("老张的哲学", plainText);
+            Assert.Equal("狗蛋啊狗蛋", plainText);
         }
 
     }

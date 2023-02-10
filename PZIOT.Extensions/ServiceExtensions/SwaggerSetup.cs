@@ -39,8 +39,8 @@ namespace PZIOT.Extensions
                         Version = version,
                         Title = $"{ApiName} 接口文档——{RuntimeInformation.FrameworkDescription}",
                         Description = $"{ApiName} HTTP API " + version,
-                        Contact = new OpenApiContact { Name = ApiName, Email = "PZIOT@xxx.com", Url = new Uri("https://neters.club") },
-                        License = new OpenApiLicense { Name = ApiName + " 官方文档", Url = new Uri("http://apk.neters.club/.doc/") }
+                        Contact = new OpenApiContact { Name = ApiName, Email = "PZIOT@xxx.com", Url = new Uri("https://baidu.com") },
+                        License = new OpenApiLicense { Name = ApiName + " 官方文档", Url = new Uri("http://baidu.com/") }
                     });
                     c.OrderActionsBy(o => o.RelativePath);
                 });
