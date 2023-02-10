@@ -52,5 +52,9 @@ namespace PZIOT.Model.Models
         /// 注册用Id --唯一，作为键
         /// </summary>
         public int RegisterUserId { get; set; }
+        /// <summary>
+        /// 4G卡绑定 --唯一，作为键
+        /// </summary>
+        public int Qccid { get; set; }
     }
 }
