@@ -425,41 +425,6 @@
             异常
             </summary>
         </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.blogId">
-            <summary>博客ID
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.createdate">
-            <summary>创建时间
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.phone">
-            <summary>手机
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.QQ">
-            <summary>qq
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.body">
-            <summary>留言内容
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.ip">
-            <summary>ip地址
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.Guestbook.isshow">
-            <summary>是否显示在前台,0否1是
-            
-            </summary>
-        </member>
         <member name="T:PZIOT.Model.Models.Modules">
             <summary>
             接口API地址信息表
