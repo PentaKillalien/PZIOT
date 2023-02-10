@@ -1,8 +1,6 @@
-<img align="right" height="50px" src="http://apk.neters.club/logocore.png">
 
 # PZIOT
-
-[English](README-en.md) | 简体中文
+(README-en.md) | 简体中文
 
 
 &nbsp;
