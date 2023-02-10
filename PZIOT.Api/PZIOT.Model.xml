@@ -317,12 +317,12 @@
         </member>
         <member name="T:PZIOT.Model.Models.Equipment">
             <summary>
-            博客文章
+            设备基础信息
             </summary>
         </member>
         <member name="P:PZIOT.Model.Models.Equipment.Name">
             <summary>
-            FactoryId
+            设备名
             </summary>
         </member>
         <member name="P:PZIOT.Model.Models.Equipment.UniqueCode">
@@ -333,6 +333,41 @@
         <member name="P:PZIOT.Model.Models.Equipment.Type">
             <summary>
             类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.WorkSpace">
+            <summary>
+            车间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.Factory">
+            <summary>
+            工厂
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.Position">
+            <summary>
+            位置
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.ProductLine">
+            <summary>
+            产线
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.RegisterUser">
+            <summary>
+            注册用户 --哪个用户注册的
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.RegisterUserId">
+            <summary>
+            注册用Id --唯一，作为键
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.Equipment.Qccid">
+            <summary>
+            4G卡绑定 --唯一，作为键
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.GblLogAudit">
