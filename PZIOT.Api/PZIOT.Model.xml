@@ -460,6 +460,11 @@
             PZIOT子状态枚举-第三方扩展行为
             </summary>
         </member>
+        <member name="F:PZIOT.Model.Models.PZIOTChildEquipmentStatus.None">
+            <summary>
+            无
+            </summary>
+        </member>
         <member name="F:PZIOT.Model.Models.PZIOTChildEquipmentStatus.ModuleAdjustment">
             <summary>
             调模 - 某车企
@@ -1223,6 +1228,66 @@
             查询条件( 例如:id = 1 and name = 小明)
             </summary>
         </member>
+        <member name="T:PZIOT.Model.PZIOTModels.ModbusMasterModel">
+            <summary>
+            连接modbus需要的参数
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.Address">
+            <summary>
+            用于指定 Modbus 服务器的 IP 地址或者设备地址。
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.Port">
+            <summary>
+            用于指定 Modbus 服务器的端口号，通常为 502
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.ReadTimeout">
+            <summary>
+            用于指定读取数据的超时时间，单位为毫秒
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.WriteTimeout">
+            <summary>
+            用于指定读取数据的超时时间，单位为毫秒
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.Retries">
+            <summary>
+            用于指定重试的次数
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.PZIOTModels.OpcUaClientModel">
+            <summary>
+            Opc客户端协议
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.PZIOTModels.S7NetModel">
+            <summary>
+            西门子连接模型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.S7NetModel.PlcType">
+            <summary>
+            plc类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.S7NetModel.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.S7NetModel.Slot">
+            <summary>
+            槽号
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.PZIOTModels.S7NetModel.Rack">
+            <summary>
+            架号
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.PZIOTModels.TcpClientConnectionModel">
             <summary>
             TcpClient链接信息模型
@@ -1446,394 +1511,6 @@
         <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.isshow">
             <summary>是否显示在前台,0否1是
             
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.MERCHANTID">
-            <summary>
-            商户号
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.POSID">
-            <summary>
-            柜台号
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.BRANCHID">
-            <summary>
-            分行号
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.GROUPMCH">
-            <summary>
-            集团商户信息
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.TXCODE">
-            <summary>
-            交易码
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.MERFLAG">
-            <summary>
-            商户类型
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.TERMNO1">
-            <summary>
-            终端编号 1
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.TERMNO2">
-            <summary>
-            终端编号 2
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.ORDERID">
-            <summary>
-            订单号
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.QRCODE">
-            <summary>
-            码信息（一维码、二维码）
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.AMOUNT">
-            <summary>
-            订单金额，单位：元
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.PROINFO">
-            <summary>
-            商品名称
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.REMARK1">
-            <summary>
-            备注 1
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.REMARK2">
-            <summary>
-            备注 2
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.FZINFO1">
-            <summary>
-            分账信息一
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.FZINFO2">
-            <summary>
-            分账信息二
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.SUB_APPID">
-            <summary>
-            子商户公众账号 ID
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.RETURN_FIELD">
-            <summary>
-            返回信息位图
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.USERPARAM">
-            <summary>
-            实名支付
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.detail">
-            <summary>
-            商品详情
-            </summary>  
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.goods_tag">
-            <summary>
-            订单优惠标记
-            </summary>                           
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.pubKey">
-            <summary>
-            公钥
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.url">
-            <summary>
-            请求地址
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayModel.deleteEmpty">
-            <summary>
-            是否删除空值
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayNeedModel">
-            <summary>
-            退款参数
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.ORDERID">
-            <summary>
-            订单ID
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.PROINFO">
-            <summary>
-            商品名称
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.AMOUNT">
-            <summary>
-            支付金额(小数点最多两位)
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.QRCODE">
-            <summary>
-            二维码/条码信息
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.REMARK1">
-            <summary>
-            备注信息1
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayNeedModel.REMARK2">
-            <summary>
-            备注信息2
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayRefundNeedModel">
-            <summary>
-            订单参数
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundNeedModel.ORDER">
-            <summary>
-            订单号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundNeedModel.MONEY">
-            <summary>
-            退款金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundNeedModel.REFUND_CODE">
-            <summary>
-            退款流水号(可选)
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayRefundReturnModel">
-            <summary>
-            退款返回消息
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.REQUEST_SN">
-            <summary>
-            序列号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.CUST_ID">
-            <summary>
-            商户号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.TX_CODE">
-            <summary>
-            交易码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.RETURN_CODE">
-            <summary>
-            返回码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.RETURN_MSG">
-            <summary>
-            返回码说明
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.LANGUAGE">
-            <summary>
-            语言
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnModel.TX_INFO">
-            <summary>
-            订单信息
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel">
-            <summary>
-            订单信息
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel.ORDER_NUM">
-            <summary>
-            订单号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel.PAY_AMOUNT">
-            <summary>
-            支付金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel.AMOUNT">
-            <summary>
-            退款金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel.REM1">
-            <summary>
-            备注1
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnOrderInfoModel.REM2">
-            <summary>
-            备注2
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayRefundReturnResultModel">
-            <summary>
-            退款返回结果消息
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.ORDER_NUM">
-            <summary>
-            订单号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.PAY_AMOUNT">
-            <summary>
-            支付金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.AMOUNT">
-            <summary>
-            退款金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.REQUEST_SN">
-            <summary>
-            序列号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.CUST_ID">
-            <summary>
-            商户号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.TX_CODE">
-            <summary>
-            交易码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.RETURN_CODE">
-            <summary>
-            返回码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.RETURN_MSG">
-            <summary>
-            返回码说明
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayRefundReturnResultModel.LANGUAGE">
-            <summary>
-            语言
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayResultModel">
-            <summary>
-            支付结果dto
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.RESULT">
-            <summary>
-            支付结果
-            Y：成功
-            N：失败
-            U：不确定
-            Q：待轮询 
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.ORDERID">
-            <summary>
-            订单ID
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.AMOUNT">
-            <summary>
-            支付金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.QRCODETYPE">
-            <summary>
-            二维码类型
-            1：龙支付
-            2：微信
-            3：支付宝
-            4：银联 
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.WAITTIME">
-            <summary>
-            等待时间-轮询等待时间
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.TRACEID">
-            <summary>
-            全局事件跟踪号-建行交易流水号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.ERRCODE">
-            <summary>
-            错误码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.ERRMSG">
-            <summary>
-            错误信息
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayResultModel.SIGN">
-            <summary>
-            验证签名-防止伪造攻击
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.PayReturnResultModel">
-            <summary>
-            返回支付结果
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.ORDERID">
-            <summary>
-            发起的订单ID
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.AMOUNT">
-            <summary>
-            返回支付的金额
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.QRCODETYPE">
-            <summary>
-            返回支付的类型 1：龙支付 2：微信 3：支付宝 4：银联
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.TRACEID">
-            <summary>
-            返回建行的流水号
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.ERRCODE">
-            <summary>
-            错误代码
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.PayReturnResultModel.ERRMSG">
-            <summary>
-            错误信息
             </summary>
         </member>
         <member name="T:PZIOT.Model.ViewModels.QuartzReflectionViewModel">

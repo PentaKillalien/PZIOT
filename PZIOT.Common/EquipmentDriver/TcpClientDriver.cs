@@ -1,9 +1,7 @@
-﻿using Grpc.Core;
-using PZIOT.Model.PZIOTModels;
+﻿using PZIOT.Model.PZIOTModels;
 using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;

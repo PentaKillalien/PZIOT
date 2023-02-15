@@ -14,7 +14,6 @@ using PZIOT.Filter;
 using PZIOT.Hubs;
 using PZIOT.IServices;
 using PZIOT.Tasks;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -83,6 +82,7 @@ builder.Services.AddNacosSetup(builder.Configuration);
 builder.Services.AddAuthorizationSetup();
 builder.Services.AddMqttSetup();
 builder.Services.AddIotSetup();
+builder.Services.AddHostedService<Job1TimedService>();
 if (Permissions.IsUseIds4)
 {
     builder.Services.AddAuthentication_Ids4Setup();

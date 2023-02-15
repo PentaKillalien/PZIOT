@@ -22,9 +22,10 @@ namespace PZIOT.Tasks
         {
             Console.WriteLine("Job 1 is starting.");
 
+            //_timer = new Timer(DoWork, null, TimeSpan.Zero,
+            //    TimeSpan.FromSeconds(60 * 60));//一个小时
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(60 * 60));//一个小时
-
+                TimeSpan.FromSeconds(10));//10秒
             return Task.CompletedTask;
         }
 
@@ -32,6 +33,7 @@ namespace PZIOT.Tasks
         {
             try
             {
+                ConsoleHelper.WriteSuccessLine("执行定时任务Dowork");
                 var model = _equipmentServices.GetEquipmentDetails(1).Result;
                 Console.WriteLine($"Job 1 启动成功，获取id=1的设备为:{model?.UniqueCode}");
             }
