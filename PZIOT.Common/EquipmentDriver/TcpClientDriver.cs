@@ -8,30 +8,39 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Common.EquipmentDriver
 {
-    public class TcpClientDriver : IEquipmentDriver<TcpClientConnectionModel>
+    public class TcpClientDriver : IEquipmentDriver
     {
         private TcpClientConnectionModel tcpClientConnectionModel;
         private AsyncTcpSession client;
         private string currentData=string.Empty;
         private long currentCount = 0;
         private long preCount = 0;
-        public async Task<bool> CreatConnect(TcpClientConnectionModel t)
+        public async Task<bool> CreatConnect(object t)
         {
            bool result = await Task.Run(() =>
             {
-                tcpClientConnectionModel = t;
-                //建立Tcp链接
-                client = new AsyncTcpSession();
-                client.Connect(new IPEndPoint(IPAddress.Parse(tcpClientConnectionModel.Serverip), tcpClientConnectionModel.Port));
-                // 连接断开事件
-                client.Closed += client_Closed;
-                // 收到服务器数据事件
-                client.DataReceived += client_DataReceived;
-                // 连接到服务器事件
-                client.Connected += client_Connected;
-                // 发生错误的处理
-                client.Error += client_Error;
-                return true;
+                try
+                {
+                    tcpClientConnectionModel = (TcpClientConnectionModel)t;
+                    //建立Tcp链接
+                    client = new AsyncTcpSession();
+                    client.Connect(new IPEndPoint(IPAddress.Parse(tcpClientConnectionModel.Serverip), tcpClientConnectionModel.Port));
+                    // 连接断开事件
+                    client.Closed += client_Closed;
+                    // 收到服务器数据事件
+                    client.DataReceived += client_DataReceived;
+                    // 连接到服务器事件
+                    client.Connected += client_Connected;
+                    // 发生错误的处理
+                    client.Error += client_Error;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ConsoleHelper.WriteErrorLine($"驱动创建连接失败，错误的连接字符串{t},{ex}");
+                    return false;
+                }
+                
             });
             
             return result;

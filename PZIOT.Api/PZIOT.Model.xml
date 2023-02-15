@@ -370,6 +370,26 @@
             Qccid
             </summary>
         </member>
+        <member name="T:PZIOT.Model.Models.EquipmentDriverDesc">
+            <summary>
+            设备驱动描述
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDriverDesc.EquipmentId">
+            <summary>
+            设备Id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDriverDesc.DriverType">
+            <summary>
+            驱动类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDriverDesc.StartJsonInfo">
+            <summary>
+            启动json信息
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.Models.EquipmentStatus">
             <summary>
             设备状态

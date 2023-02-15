@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static PZIOT.Extensions.CustomApiVersion;
 using PZIOT.Extensions;
+using PZIOT.Services;
 
 namespace PZIOT.Controllers
 {
@@ -27,7 +28,7 @@ namespace PZIOT.Controllers
         /// <param name="logger"></param>
         /// <param name="equipmentServices"></param>
         /// <param name="redisBasketRepository"></param>
-        public EquipmentController(ILogger<EquipmentController> logger, IEquipmentServices equipmentServices, IEquipmentStatusServices eqpstatusService,IRedisBasketRepository redisBasketRepository)
+        public EquipmentController(ILogger<EquipmentController> logger,IEquipmentServices equipmentServices, IEquipmentStatusServices eqpstatusService,IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;
             _redisBasketRepository = redisBasketRepository;
@@ -48,8 +49,7 @@ namespace PZIOT.Controllers
         public async Task<MessageModel<PageModel<Equipment>>> Get(int id, int page = 1, string eqp = "1", string key = "")
         {
             await _redisBasketRepository.ListLeftPushAsync("JJBO","ccc",0);
-            //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}");
-
+            //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}")
             //int intPageSize = 6;
             await _equipmentStatusServices.Add(new EquipmentStatus() { 
                  EquipmentId=id,

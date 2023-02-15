@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace PZIOT.IServices
 {
     /// <summary>
-    /// 设备状态服务
+    /// 设备驱动描述服务
     /// </summary>
-    public interface IEquipmentStatusServices : IBaseServices<EquipmentStatus>
+    public interface IEquipmentDriverDescServices : IBaseServices<EquipmentDriverDesc>
     {
     }
 }

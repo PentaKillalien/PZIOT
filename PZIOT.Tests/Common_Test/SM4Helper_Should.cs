@@ -1,5 +1,7 @@
-﻿using PZIOT.Common.Helper;
+﻿
+using Newtonsoft.Json;
 using PZIOT.Common.Helper.SM;
+using PZIOT.Model.PZIOTModels;
 using System;
 using Xunit;
 
@@ -37,6 +39,19 @@ namespace PZIOT.Tests.Common_Test
             Assert.NotNull(plainText);
             Assert.Equal("狗蛋啊狗蛋", plainText);
         }
-
+        [Fact]
+        public void EquipmentDriver_Test()
+        {
+            TcpClientConnectionModel c = new TcpClientConnectionModel()
+            {
+                Port = 1922,
+                Serverip = "192.168.0.16",
+                TimeOut = 2000
+            };
+            string s = JsonConvert.SerializeObject(c);
+            Console.WriteLine(s);
+            Assert.NotNull(s);
+            //Assert.Equal("192", s);
+        }
     }
 }
