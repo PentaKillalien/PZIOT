@@ -1,5 +1,4 @@
 ﻿using SqlSugar;
-using System;
 
 namespace PZIOT.Model.Models
 {
@@ -53,8 +52,9 @@ namespace PZIOT.Model.Models
         /// </summary>
         public int RegisterUserId { get; set; }
         /// <summary>
-        /// 4G卡绑定 --唯一，作为键
+        /// Qccid
         /// </summary>
-        public int Qccid { get; set; }
+        [SugarColumn(Length = 100, IsNullable = true)]
+        public string Qccid { get; set; }
     }
 }

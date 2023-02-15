@@ -10,7 +10,7 @@ namespace PZIOT.Common.Helper.SM
 
         private long GET_ULONG_BE(SByte[] b, int i)
         {
-            long n2 = (b[i] & 0xFF) << 24 | (b[(i + 1)] & 0xFF) << 16 | (b[(i + 2)] & 0xFF) << 8 | b[(i + 3)] & 0xFF & 0xFFFFFFFF;
+            long n2 = ((b[i] & 0xFF) << 24) | (b[i + 1] & 0xFF) << 16 | (b[(i + 2)] & 0xFF) << 8 | b[(i + 3)] & 0xFF & 0xFFFFFFFF;
             return n2;
         }
 
@@ -207,8 +207,6 @@ namespace PZIOT.Common.Helper.SM
             int length = input.Length;
             SByte[] bins = new SByte[length];
             SByte[] bous = new SByte[length];
-            SByte[] output = null;
-
             Array.Copy(input, 0, bins, 0, length);
 
             for (int i = 0; length > 0; length -= 16, i++)

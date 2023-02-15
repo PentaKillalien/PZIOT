@@ -367,7 +367,102 @@
         </member>
         <member name="P:PZIOT.Model.Models.Equipment.Qccid">
             <summary>
-            4G卡绑定 --唯一，作为键
+            Qccid
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.Models.EquipmentStatus">
+            <summary>
+            设备状态
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.EquipmentId">
+            <summary>
+            设备Id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.Status">
+            <summary>
+            设备状态
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.ChildStatus">
+            <summary>
+            设备二级状态--第三方对接状态
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.StatusKeepLength">
+            <summary>
+            状态保持时长
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.StatusStartTime">
+            <summary>
+            状态开始时间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.StatusEndTime">
+            <summary>
+            状态结束时间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentStatus.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.Models.PZIOTEquipmnetStatus">
+            <summary>
+            PZIOT的设备状态枚举
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Normal">
+            <summary>
+            正常
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Fault">
+            <summary>
+            故障
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Shutdown">
+            <summary>
+            停机
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Offline">
+            <summary>
+            离线
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Standby">
+            <summary>
+            待机
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Upgrading">
+            <summary>
+            升级中
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.LowBattery">
+            <summary>
+            低电量
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTEquipmnetStatus.Alarm">
+            <summary>
+            报警
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.Models.PZIOTChildEquipmentStatus">
+            <summary>
+            PZIOT子状态枚举-第三方扩展行为
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.Models.PZIOTChildEquipmentStatus.ModuleAdjustment">
+            <summary>
+            调模 - 某车企
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.GblLogAudit">

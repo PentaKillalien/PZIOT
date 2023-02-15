@@ -17,6 +17,8 @@ namespace PZIOT.Extensions.Mqtt
 
         }
         const string ServerClientId = "SERVER";
+
+        [Obsolete]
         public Task StartAsync(CancellationToken cancellationToken)
         {
             MqttServerOptionsBuilder optionsBuilder = new MqttServerOptionsBuilder();
@@ -69,6 +71,7 @@ namespace PZIOT.Extensions.Mqtt
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
+        [Obsolete]
         private Task _ValidatingConnectionAsync(ValidatingConnectionEventArgs arg)
         {
             arg.ReasonCode = MqttConnectReasonCode.Success;

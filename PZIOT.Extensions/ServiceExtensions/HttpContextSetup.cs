@@ -15,6 +15,7 @@ namespace PZIOT.Extensions
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //有生命周期的用户
             services.AddScoped<IUser, AspNetUser>();
         }
     }
