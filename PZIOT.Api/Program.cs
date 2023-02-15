@@ -1,4 +1,5 @@
-﻿
+﻿// 在此系统中，除了Mqtt协议外，只提供客户端连接设备
+// 如果一个设备具有多个控制器需要整合，那么请分开进行配置，并做好标记,最终查询时多个控制器考虑信息整合
 // 以下为asp.net 6.0的写法，如果用5.0，请看Program.five.cs文件
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
