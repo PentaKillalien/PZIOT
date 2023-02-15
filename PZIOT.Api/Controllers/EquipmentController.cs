@@ -18,6 +18,7 @@ namespace PZIOT.Controllers
     public class EquipmentController : BaseApiController
     {
         readonly IEquipmentServices _equipmentServices;
+        readonly IEquipmentStatusServices _equipmentStatusServices;
         private readonly ILogger<EquipmentController> _logger;
         IRedisBasketRepository _redisBasketRepository;
         /// <summary>
@@ -26,11 +27,12 @@ namespace PZIOT.Controllers
         /// <param name="logger"></param>
         /// <param name="equipmentServices"></param>
         /// <param name="redisBasketRepository"></param>
-        public EquipmentController(ILogger<EquipmentController> logger, IEquipmentServices equipmentServices,IRedisBasketRepository redisBasketRepository)
+        public EquipmentController(ILogger<EquipmentController> logger, IEquipmentServices equipmentServices, IEquipmentStatusServices eqpstatusService,IRedisBasketRepository redisBasketRepository)
         {
             _logger = logger;
             _redisBasketRepository = redisBasketRepository;
             _equipmentServices = equipmentServices;
+            _equipmentStatusServices = eqpstatusService;
         }
 
 
@@ -48,10 +50,17 @@ namespace PZIOT.Controllers
             await _redisBasketRepository.ListLeftPushAsync("JJBO","ccc",0);
             //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}");
 
-            int intPageSize = 6;
+            //int intPageSize = 6;
+            await _equipmentStatusServices.Add(new EquipmentStatus() { 
+                 EquipmentId=id,
+                 Status=PZIOTEquipmnetStatus.Normal,
+                 ChildStatus=PZIOTChildEquipmentStatus.None,
+                 StatusEndTime=DateTime.Now,
+                 StatusStartTime=DateTime.Now,
+                 StatusKeepLength=0,
+                 Desc="测试"
 
-           
-
+            });
             return SuccessPage(new PageModel<Equipment>() { 
             
             });

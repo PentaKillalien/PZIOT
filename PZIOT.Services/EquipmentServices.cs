@@ -10,13 +10,17 @@ namespace PZIOT.Services
 {
     public class EquipmentServices : BaseServices<Equipment>, IEquipmentServices
     {
-        IMapper _mapper;
-        public EquipmentServices(IMapper mapper)
+        //IMapper _mapper;
+        //public EquipmentServices(IMapper mapper)
+        //{
+        //    this._mapper = mapper;
+        //}
+        public EquipmentServices()
         {
-            this._mapper = mapper;
+
         }
         /// <summary>
-        /// 获取视图博客详情信息
+        /// 获取设备详情信息
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

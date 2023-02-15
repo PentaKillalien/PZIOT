@@ -86,6 +86,10 @@ namespace PZIOT.Model.Models
     /// </summary>
     public enum PZIOTChildEquipmentStatus { 
         /// <summary>
+        /// 无
+        /// </summary>
+        None,
+        /// <summary>
         /// 调模 - 某车企
         /// </summary>
         ModuleAdjustment
