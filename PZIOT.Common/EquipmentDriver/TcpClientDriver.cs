@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Common.EquipmentDriver
 {
-    public class TcpClientDriver : IEquipmentDriver
+    public class TcpClientDriver : BaseClientDriver
     {
         private TcpClientConnectionModel tcpClientConnectionModel;
         private AsyncTcpSession client;
@@ -17,9 +17,9 @@ namespace PZIOT.Common.EquipmentDriver
         private long preCount = 0;
         private bool _IsConnected = false;
         private int timeout = 200;
-        public bool IsConnected => _IsConnected;
+        public override bool IsConnected => _IsConnected;
 
-        public async Task<bool> CreatConnect(object t)
+        public override async Task<bool> CreatConnect(object t)
         {
            bool result = await Task.Run(() =>
             {
@@ -80,7 +80,7 @@ namespace PZIOT.Common.EquipmentDriver
             _IsConnected = false;
             client.Close();
         }
-        public async Task<bool> DisConnect()
+        public override async Task<bool> DisConnect()
         {
             bool result = await Task.Run(() => {
                 client.Close();
@@ -90,7 +90,7 @@ namespace PZIOT.Common.EquipmentDriver
             return result;
         }
 
-        public async Task<bool> GetConnectionState()
+        public override async Task<bool> GetConnectionState()
         {
             bool result =await Task.Run(() => {
                 return client.IsConnected;
@@ -99,17 +99,9 @@ namespace PZIOT.Common.EquipmentDriver
             return result;
         }
 
-        public async Task<List<EquipmentReadResponseProtocol>> RequestMultipleParasFromEquipment(List<string> readparas)
-        {
-            List<EquipmentReadResponseProtocol> listinfos = new List<EquipmentReadResponseProtocol>();
-            foreach (string parasItem in readparas) {
-                EquipmentReadResponseProtocol temp = await RequestSingleParaFromEquipment(parasItem);
-                listinfos.Add(temp);
-            }
-            return listinfos;
-        }
+        
 
-        public async Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para)
+        public override async Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para)
         {
             EquipmentReadResponseProtocol result = await Task.Run(async () => {
                 client.Send(Encoding.Default.GetBytes(para));

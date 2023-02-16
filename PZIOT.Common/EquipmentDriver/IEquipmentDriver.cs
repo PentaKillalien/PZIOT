@@ -42,11 +42,6 @@ namespace PZIOT.Common.EquipmentDriver
         /// <param name="t"></param>
         /// <returns></returns>
         Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para);
-        /// <summary>
-        /// 从设备请求多个参数
-        /// </summary>
-        /// <param name="ts"></param>
-        /// <returns></returns>
-        Task<List<EquipmentReadResponseProtocol>> RequestMultipleParasFromEquipment(List<string> readparas);
+        
     }
 }
