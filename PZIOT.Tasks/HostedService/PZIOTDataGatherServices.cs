@@ -61,21 +61,25 @@ namespace PZIOT.Tasks
                             {
                                 try
                                 {
-                                    //先获取采集的Mate项，绑定设备Id
-                                    EquipmentReadResponseProtocol backinfo = await item.Value.RequestSingleParaFromEquipment(item2.DataAddress);
-                                    ConsoleHelper.WriteWarningLine($"设备id为{item.Key}的驱动采集数据地址{item2.DataAddress}得到回复，结果为{backinfo.ResponseValue}!");
-                                    //转换成对应的设备信息进行记录,查询设备信息
-                                    item2.Value = backinfo.ResponseValue;
-                                    //数据库值更新
-                                    await _equipmentMatesServices.Update(item2);
-                                    //建立数据采集存储对象
-                                    EquipmentDataScada data = new EquipmentDataScada();
-                                    data.EquipmentId = item.Key;
-                                    data.EquipmentDataGatherTime = DateTime.Now;
-                                    data.EquipmentDataItemValue = backinfo.ResponseValue;
-                                    data.EquipmentDataItemName = item2.MateName;
-                                    data.LastInterval = 0;
-                                    await _equipmentDataScadaServices.Add(data);
+                                    if (item2.IsActivation) {
+
+                                        //先获取采集的Mate项，绑定设备Id
+                                        EquipmentReadResponseProtocol backinfo = await item.Value.RequestSingleParaFromEquipment(item2.DataAddress);
+                                        ConsoleHelper.WriteWarningLine($"设备id为{item.Key}的驱动采集数据地址{item2.DataAddress}得到回复，结果为{backinfo.ResponseValue}!");
+                                        //转换成对应的设备信息进行记录,查询设备信息
+                                        item2.Value = backinfo.ResponseValue;
+                                        //数据库值更新
+                                        await _equipmentMatesServices.Update(item2);
+                                        //建立数据采集存储对象
+                                        EquipmentDataScada data = new EquipmentDataScada();
+                                        data.EquipmentId = item.Key;
+                                        data.EquipmentDataGatherTime = DateTime.Now;
+                                        data.EquipmentDataItemValue = backinfo.ResponseValue;
+                                        data.EquipmentDataItemName = item2.MateName;
+                                        data.LastInterval = 0;
+                                        await _equipmentDataScadaServices.Add(data);
+                                    }
+                                    
                                 }
                                 catch (Exception ex)
                                 {

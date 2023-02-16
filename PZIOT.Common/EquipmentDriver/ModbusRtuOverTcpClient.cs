@@ -35,6 +35,7 @@ namespace PZIOT.Common.EquipmentDriver
                     var adapter = new TcpClientAdapter(tcpClient);
                     modbusMaster = factory.CreateRtuMaster(adapter);
                     modbusMaster.Transport.ReadTimeout = timeout;
+                    _IsConnected = true;
                     return true;
                 }
                 catch (Exception ex)
@@ -121,7 +122,7 @@ namespace PZIOT.Common.EquipmentDriver
                         case "short":
                             ushort[] aa = modbusMaster.ReadInputRegisters(byte.Parse(datas[0]), ushort.Parse(datas[1]), ushort.Parse(datas[2]));
                             //RedisLogHelper.LogInfo("OverRtu--读取short值的个数为：" + aa.Length);
-                            result = aa[1].ToString();
+                            result = aa[ushort.Parse(datas[3])].ToString();
                             break;
                         case "int": result = ReadInt(modbusMaster.ReadInputRegisters(byte.Parse(datas[0]), ushort.Parse(datas[1]), ushort.Parse(datas[2])), convertflag); break;
                         case "float": result = ReadFloat(modbusMaster.ReadInputRegisters(byte.Parse(datas[0]), ushort.Parse(datas[1]), ushort.Parse(datas[2])), convertflag); break;
