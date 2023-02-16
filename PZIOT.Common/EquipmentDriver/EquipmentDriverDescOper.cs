@@ -37,7 +37,10 @@ namespace PZIOT.Common.EquipmentDriver
             {
                 switch (driverType)
                 {
-                    case "TcpClientDriver": await new TcpClientDriver().CreatConnect(JsonConvert.DeserializeObject<TcpClientConnectionModel>(startJson)); break;
+                    case "TcpClientDriver":
+                        TcpClientDriver tcpClientDriver = new TcpClientDriver();
+                        PZIOTEquipmentManager.EquipmentDriverDic.Add(equipmentid,tcpClientDriver);
+                        await PZIOTEquipmentManager.EquipmentDriverDic[equipmentid].CreatConnect(JsonConvert.DeserializeObject<TcpClientConnectionModel>(startJson)); break;
                     default:
                         ConsoleHelper.WriteErrorLine($"Id为{equipmentid}的设备的设备驱动配置字段{driverType}不匹配,请检查");
                         break;

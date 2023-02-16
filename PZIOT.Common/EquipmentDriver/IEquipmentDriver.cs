@@ -13,6 +13,10 @@ namespace PZIOT.Common.EquipmentDriver
     public interface IEquipmentDriver
     {
         /// <summary>
+        /// 是否连接
+        /// </summary>
+        bool IsConnected { get; }
+        /// <summary>
         /// 创建和设备的链接
         /// </summary>
         /// <returns></returns>

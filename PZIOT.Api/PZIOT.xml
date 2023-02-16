@@ -76,7 +76,7 @@
             设备管理
             </summary>
         </member>
-        <member name="M:PZIOT.Controllers.EquipmentController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.EquipmentController},PZIOT.IServices.IEquipmentServices,PZIOT.IServices.IEquipmentStatusServices,PZIOT.Extensions.IRedisBasketRepository)">
+        <member name="M:PZIOT.Controllers.EquipmentController.#ctor(Microsoft.Extensions.Logging.ILogger{PZIOT.Controllers.EquipmentController},PZIOT.IServices.IEquipmentServices,PZIOT.Extensions.IRedisBasketRepository)">
             <summary>
             gz
             </summary>

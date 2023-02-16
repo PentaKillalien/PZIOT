@@ -82,7 +82,7 @@ builder.Services.AddNacosSetup(builder.Configuration);
 builder.Services.AddAuthorizationSetup();
 builder.Services.AddMqttSetup();
 builder.Services.AddIotSetup();
-builder.Services.AddHostedService<Job1TimedService>();
+builder.Services.AddHostedService<PZIOTDataGatherServices>();
 if (Permissions.IsUseIds4)
 {
     builder.Services.AddAuthentication_Ids4Setup();

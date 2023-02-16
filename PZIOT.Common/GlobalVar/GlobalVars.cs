@@ -1,4 +1,7 @@
-﻿namespace PZIOT
+﻿using PZIOT.Common.EquipmentDriver;
+using System.Collections.Generic;
+
+namespace PZIOT
 {
     /// <summary>
     /// 权限变量配置
@@ -55,5 +58,14 @@
         /// Mqtt服务运行锁
         /// </summary>
         public static bool MqttRunLock = false;
+    }
+    /// <summary>
+    /// PzIot设备管理模块
+    /// </summary>
+    public static class PZIOTEquipmentManager {
+        /// <summary>
+        /// 设备驱动对应关系
+        /// </summary>
+        public static Dictionary<int, IEquipmentDriver> EquipmentDriverDic{ get; set; }=new Dictionary<int, IEquipmentDriver>();
     }
 }

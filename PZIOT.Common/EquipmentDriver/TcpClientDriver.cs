@@ -15,6 +15,10 @@ namespace PZIOT.Common.EquipmentDriver
         private string currentData=string.Empty;
         private long currentCount = 0;
         private long preCount = 0;
+        private bool _IsConnected = false;
+        private int timeout = 200;
+        public bool IsConnected => _IsConnected;
+
         public async Task<bool> CreatConnect(object t)
         {
            bool result = await Task.Run(() =>
@@ -22,6 +26,9 @@ namespace PZIOT.Common.EquipmentDriver
                 try
                 {
                     tcpClientConnectionModel = (TcpClientConnectionModel)t;
+                    if(tcpClientConnectionModel.TimeOut>20)
+                    timeout = tcpClientConnectionModel.TimeOut;
+
                     //建立Tcp链接
                     client = new AsyncTcpSession();
                     client.Connect(new IPEndPoint(IPAddress.Parse(tcpClientConnectionModel.Serverip), tcpClientConnectionModel.Port));
@@ -37,6 +44,7 @@ namespace PZIOT.Common.EquipmentDriver
                 }
                 catch (Exception ex)
                 {
+                    _IsConnected = false;
                     ConsoleHelper.WriteErrorLine($"驱动创建连接失败，错误的连接字符串{t},{ex}");
                     return false;
                 }
@@ -47,11 +55,13 @@ namespace PZIOT.Common.EquipmentDriver
         }
         void client_Error(object sender, ErrorEventArgs e)
         {
+            _IsConnected = false;
             ConsoleHelper.WriteWarningLine($"{tcpClientConnectionModel.Serverip}发生错误!");
         }
 
         void client_Connected(object sender, EventArgs e)
         {
+            _IsConnected = true;
             ConsoleHelper.WriteSuccessLine($"{tcpClientConnectionModel.Serverip}连接成功!");
         }
         void client_DataReceived(object sender, DataEventArgs e)
@@ -67,6 +77,7 @@ namespace PZIOT.Common.EquipmentDriver
         /// <param name="e"></param>
         void client_Closed(object sender, EventArgs e)
         {
+            _IsConnected = false;
             client.Close();
         }
         public async Task<bool> DisConnect()
@@ -106,7 +117,7 @@ namespace PZIOT.Common.EquipmentDriver
                 for (int i = 0; i < tcpClientConnectionModel.TimeOut/10; i++)
                 {
                     await Task.Delay(10);
-                    Console.WriteLine("轮询等待返回中");
+                    //Console.WriteLine("轮询等待返回中");
                     if (preCount != currentCount)
                     {
                         preCount = currentCount;
