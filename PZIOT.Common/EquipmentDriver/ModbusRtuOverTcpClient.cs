@@ -1,13 +1,9 @@
 ﻿using NModbus;
 using NModbus.IO;
 using PZIOT.Model.PZIOTModels;
-using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PZIOT.Common.EquipmentDriver
@@ -139,7 +135,7 @@ namespace PZIOT.Common.EquipmentDriver
             }
             catch (Exception ex)
             {
-       
+                ConsoleHelper.WriteErrorLine(ex.ToString());
                 return string.Empty;
             }
         }
