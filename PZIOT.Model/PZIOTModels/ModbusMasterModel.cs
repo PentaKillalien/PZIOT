@@ -31,5 +31,10 @@ namespace PZIOT.Model.PZIOTModels
         /// 用于指定重试的次数
         /// </summary>
         public int Retries { get; set; }
+
+        /// <summary>
+        /// 用于指定读取数据的超时时间，单位为毫秒
+        /// </summary>
+        public int Timeout { get; set; }
     }
 }

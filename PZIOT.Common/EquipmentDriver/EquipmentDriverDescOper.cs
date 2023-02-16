@@ -41,6 +41,10 @@ namespace PZIOT.Common.EquipmentDriver
                         TcpClientDriver tcpClientDriver = new TcpClientDriver();
                         PZIOTEquipmentManager.EquipmentDriverDic.Add(equipmentid,tcpClientDriver);
                         await PZIOTEquipmentManager.EquipmentDriverDic[equipmentid].CreatConnect(JsonConvert.DeserializeObject<TcpClientConnectionModel>(startJson)); break;
+                    case "ModbusRtuOverTcpClient":
+                        ModbusRtuOverTcpClient mdbusRtuOverTcpClient = new ModbusRtuOverTcpClient();
+                        PZIOTEquipmentManager.EquipmentDriverDic.Add(equipmentid, mdbusRtuOverTcpClient);
+                        await PZIOTEquipmentManager.EquipmentDriverDic[equipmentid].CreatConnect(JsonConvert.DeserializeObject<ModbusMasterModel>(startJson)); break;
                     default:
                         ConsoleHelper.WriteErrorLine($"Id为{equipmentid}的设备的设备驱动配置字段{driverType}不匹配,请检查");
                         break;

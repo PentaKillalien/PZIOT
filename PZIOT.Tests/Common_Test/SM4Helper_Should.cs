@@ -53,5 +53,22 @@ namespace PZIOT.Tests.Common_Test
             Assert.NotNull(s);
             //Assert.Equal("192", s);
         }
+        [Fact]
+        public void EquipmentDriver_Test2()
+        {
+            ModbusMasterModel c = new ModbusMasterModel()
+            {
+                Address="192.168.88.160",
+                 Port=1988,
+                  Timeout=1000,
+                   ReadTimeout=0,
+                    Retries=0,
+                     WriteTimeout=0
+            };
+            string s = JsonConvert.SerializeObject(c);
+            Console.WriteLine(s);
+            Assert.NotNull(s);
+            //Assert.Equal("192", s);
+        }
     }
 }
