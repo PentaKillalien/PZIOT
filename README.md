@@ -61,6 +61,17 @@ PZIOT 开箱即用的物联网设备协议采集系统。
 - [x] 可配合 Nginx  实现负载均衡；
 - [x] 可配合 Ids4   实现认证中心；
 
+私有云部署支持的设备协议：
+-[x] TcpClinet
+-[x] ModbusRtuOvertcp
+-[x] S7Net
+-[x] OpcUaClient
+-[x] UdpClient
+-[x] 扩展各种采集方案，数据库等等
+云端版本支持的协议:
+-[x] Mqtt 深度集成,准备参考阿里云的协议格式，做到通用
+
+
 
 
 
