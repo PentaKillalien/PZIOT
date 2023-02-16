@@ -86,26 +86,6 @@
             用户表
             </summary>
         </member>
-        <member name="T:PZIOT.Model.Love">
-            <summary>
-            这是爱
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Love.Id">
-            <summary>
-            id
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Love.Name">
-            <summary>
-            姓名
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Love.Age">
-            <summary>
-            年龄
-            </summary>
-        </member>
         <member name="T:PZIOT.Model.MessageModel`1">
             <summary>
             通用返回信息类
@@ -1299,7 +1279,7 @@
         <member name="T:PZIOT.Model.PaginationModel">
             <summary>
             所需分页参数
-            作者:胡丁文
+            作者:彭政亮
             时间:2020-4-3 20:31:26
             </summary>
         </member>
@@ -1325,7 +1305,7 @@
         </member>
         <member name="T:PZIOT.Model.PZIOTModels.ModbusMasterModel">
             <summary>
-            连接modbus需要的参数
+            连接modbus需要的参数 示例{"Address":"192.168.88.160","Port":1988,"ReadTimeout":0,"WriteTimeout":0,"Retries":0,"Timeout":1000}
             </summary>
         </member>
         <member name="P:PZIOT.Model.PZIOTModels.ModbusMasterModel.Address">
