@@ -20,6 +20,7 @@ namespace PZIOT.Tasks
         private readonly IEquipmentServices _equipmentServices;//查询设备信息
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
+        private  const int GatherFrequency = 10;//秒
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
@@ -34,7 +35,7 @@ namespace PZIOT.Tasks
             //_timer = new Timer(DoWork, null, TimeSpan.Zero,
             //    TimeSpan.FromSeconds(60 * 60));//一个小时
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(10));//10秒
+                TimeSpan.FromSeconds(GatherFrequency));//优先写采集频率统一的版本，后期每个设备自定义频率
             return Task.CompletedTask;
         }
 
