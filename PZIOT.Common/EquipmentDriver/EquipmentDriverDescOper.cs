@@ -48,7 +48,8 @@ namespace PZIOT.Common.EquipmentDriver
             }
             catch (Exception ex)
             {
-                ConsoleHelper.WriteErrorLine($"设备id为{equipmentid}的驱动启动失败" + ex.ToString());
+                ConsoleHelper.WriteErrorLine($"设备id为{equipmentid}的驱动启动失败，关键位置异常，程序终止" + ex.ToString());
+                throw;
             }
 
         }

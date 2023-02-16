@@ -345,6 +345,36 @@
             Qccid
             </summary>
         </member>
+        <member name="T:PZIOT.Model.Models.EquipmentDataScada">
+            <summary>
+            数据采集
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentId">
+            <summary>
+            设备id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataItemName">
+            <summary>
+            设备采集数据项名
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataItemValue">
+            <summary>
+            设备采集数据项值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.LastInterval">
+            <summary>
+            上次生产间隔
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataGatherTime">
+            <summary>
+            数据采集时间
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.Models.EquipmentDriverDesc">
             <summary>
             设备驱动描述
@@ -363,6 +393,76 @@
         <member name="P:PZIOT.Model.Models.EquipmentDriverDesc.StartJsonInfo">
             <summary>
             启动json信息
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.EquipmentId">
+            <summary>
+            设备Id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.MateName">
+            <summary>
+            仪表名称
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.IsActivation">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.MateUnit">
+            <summary>
+            单位
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.StandardValue">
+            <summary>
+            标准值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.MaxValue">
+            <summary>
+            设置最大值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.MinValue">
+            <summary>
+            设置最小值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.Value">
+            <summary>
+            实际值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.DataAddress">
+            <summary>
+            数据地址 通过该地址解析数据通道中那个值是该仪表的值 
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.UpDateTimeStr">
+            <summary>
+            值更新时间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.Function">
+            <summary>
+            功能
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.VarType">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.Trigger">
+            <summary>
+            触发器
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMates.GatherInterval">
+            <summary>
+            采集间隔
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.EquipmentStatus">
