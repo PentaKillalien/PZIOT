@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Common.EquipmentDriver
 {
+    /// <summary>
+    /// 数据格式1-10-1-1*4*short
+    /// </summary>
     public class ModbusRtuOverTcpClient : BaseClientDriver
     {
         private ModbusMasterModel modbusMasterModel;

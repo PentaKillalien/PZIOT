@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PZIOT.Model.PZIOTModels
 {
     /// <summary>
-    /// 连接modbus需要的参数
+    /// 连接modbus需要的参数 示例{"Address":"192.168.88.160","Port":1988,"ReadTimeout":0,"WriteTimeout":0,"Retries":0,"Timeout":1000}
     /// </summary>
     public class ModbusMasterModel
     {

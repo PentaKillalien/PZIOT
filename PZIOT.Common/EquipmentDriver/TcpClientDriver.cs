@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Common.EquipmentDriver
 {
+    /// <summary>
+    /// 示例{"Serverip":"192.168.0.16","Port":1922,"TimeOut":20}
+    /// </summary>
     public class TcpClientDriver : BaseClientDriver
     {
         private TcpClientConnectionModel tcpClientConnectionModel;
