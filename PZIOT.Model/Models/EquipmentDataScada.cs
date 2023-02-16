@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PZIOT.Model.Models
 {
     /// <summary>
-    /// 数据采集
+    /// 数据采集历史表，定时任务会根据此表做数据分析
     /// </summary>
     public class EquipmentDataScada: RootEntityTkey<int>
     {
@@ -24,10 +24,6 @@ namespace PZIOT.Model.Models
         /// 设备采集数据项值
         /// </summary>
         public string EquipmentDataItemValue { get; set; }
-        /// <summary>
-        /// 上次生产间隔
-        /// </summary>
-        public long LastInterval { get; set; }
         /// <summary>
         /// 数据采集时间
         /// </summary>

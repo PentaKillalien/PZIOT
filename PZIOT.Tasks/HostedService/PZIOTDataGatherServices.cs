@@ -77,7 +77,6 @@ namespace PZIOT.Tasks
                                         data.EquipmentDataGatherTime = DateTime.Now;
                                         data.EquipmentDataItemValue = backinfo.ResponseValue;
                                         data.EquipmentDataItemName = item2.MateName;
-                                        data.LastInterval = 0;
                                         await _equipmentDataScadaServices.Add(data);
                                     }
                                     

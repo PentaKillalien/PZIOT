@@ -327,7 +327,7 @@
         </member>
         <member name="T:PZIOT.Model.Models.EquipmentDataScada">
             <summary>
-            数据采集
+            数据采集历史表，定时任务会根据此表做数据分析
             </summary>
         </member>
         <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentId">
@@ -343,11 +343,6 @@
         <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataItemValue">
             <summary>
             设备采集数据项值
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.EquipmentDataScada.LastInterval">
-            <summary>
-            上次生产间隔
             </summary>
         </member>
         <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataGatherTime">
