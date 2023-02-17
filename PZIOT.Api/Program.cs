@@ -84,6 +84,7 @@ builder.Services.AddMqttSetup();
 builder.Services.AddIotSetup();
 builder.Services.AddHostedService<PZIOTDataGatherServices>();
 builder.Services.AddHostedService<PZIOTEquipmentSimpleStatusAnalysisServices>();
+builder.Services.AddHostedService<PZIOTEquipmentNotSameDatasIntervalAnalysisSerivces>();
 if (Permissions.IsUseIds4)
 {
     builder.Services.AddAuthentication_Ids4Setup();

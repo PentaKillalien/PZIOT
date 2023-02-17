@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 namespace PZIOT.Tasks
 {
     /// <summary>
-    ///  定时采集任务，重复数据不进行采集存储,需进行优化，目前所有的采集都和数据库挂钩，资源占用会较大
+    ///  定时采集任务，目前所有的采集都和数据库挂钩，资源占用会较大
     /// </summary>
     public class PZIOTDataGatherServices : IHostedService, IDisposable
     {
@@ -20,7 +20,7 @@ namespace PZIOT.Tasks
         private readonly IEquipmentServices _equipmentServices;//查询设备信息
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
-        private  const int GatherFrequency = 10;//秒
+        private int GatherFrequency = 10;//秒
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
@@ -32,6 +32,7 @@ namespace PZIOT.Tasks
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine("Job 1 is starting.");
+            GatherFrequency = Convert.ToInt16(AppSettings.app(new string[] {"ServiceConfig", "PZIOTDataGatherServicesInterval" }));
             //_timer = new Timer(DoWork, null, TimeSpan.Zero,
             //    TimeSpan.FromSeconds(60 * 60));//一个小时
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
@@ -73,6 +74,7 @@ namespace PZIOT.Tasks
                                         await _equipmentMatesServices.Update(item2);
                                         //建立数据采集存储对象
                                         EquipmentDataScada data = new EquipmentDataScada();
+                                        data.MateId = item2.Id;
                                         data.EquipmentId = item.Key;
                                         data.EquipmentDataGatherTime = DateTime.Now;
                                         data.EquipmentDataItemValue = backinfo.ResponseValue;

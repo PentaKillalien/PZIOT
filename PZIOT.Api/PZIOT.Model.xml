@@ -335,6 +335,11 @@
             设备id
             </summary>
         </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScada.MateId">
+            <summary>
+            数据项Id--如果有规则采集的时候就触发，所以去重服务里面不会有这个ID
+            </summary>
+        </member>
         <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataItemName">
             <summary>
             设备采集数据项名
@@ -348,6 +353,36 @@
         <member name="P:PZIOT.Model.Models.EquipmentDataScada.EquipmentDataGatherTime">
             <summary>
             数据采集时间
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.Models.EquipmentDataScadaInterval">
+            <summary>
+            数据采集历史表，定时任务会根据此表做数据分析
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScadaInterval.EquipmentId">
+            <summary>
+            设备id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScadaInterval.EquipmentDataItemName">
+            <summary>
+            设备采集数据项名
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScadaInterval.EquipmentDataItemValue">
+            <summary>
+            设备采集数据项值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScadaInterval.EquipmentDataGatherTime">
+            <summary>
+            数据采集时间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDataScadaInterval.LastInterval">
+            <summary>
+            和上一条不同数据的时间间隔
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.EquipmentDriverDesc">

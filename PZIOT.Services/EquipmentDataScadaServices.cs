@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Services
 {
-    public class EquipmentDataScadaServices: BaseServices<EquipmentDataScada>, IEquipmentDataScadaServices
+    public class EquipmentDataScadaServices : BaseServices<EquipmentDataScada>, IEquipmentDataScadaServices
     {
+        
     }
 }

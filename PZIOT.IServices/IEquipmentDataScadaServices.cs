@@ -10,5 +10,6 @@ namespace PZIOT.IServices
 {
     public interface IEquipmentDataScadaServices:IBaseServices<EquipmentDataScada>
     {
+       
     }
 }
