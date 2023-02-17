@@ -79,7 +79,7 @@ namespace PZIOT.Model.Models
         /// <summary>
         /// 触发器
         /// </summary>
-        public string Trigger { get; set; }
+        public int TriggerId { get; set; }
         /// <summary>
         /// 采集间隔
         /// </summary>

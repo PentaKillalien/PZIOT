@@ -8,6 +8,9 @@ using PZIOT.Common.EquipmentDriver;
 using PZIOT.Model.Models;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System.Linq.Expressions;
+using PZIOT.Tasks.Trigger;
+using Google.Protobuf.WellKnownTypes;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace PZIOT.Tasks
 {
@@ -20,13 +23,15 @@ namespace PZIOT.Tasks
         private readonly IEquipmentServices _equipmentServices;//查询设备信息
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
+        private readonly IEquipmentMatesTriggerServices _equipmentMatesTriggerServices;
         private int GatherFrequency = 10;//秒
         // 这里可以注入
-        public PZIOTDataGatherServices(IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
+        public PZIOTDataGatherServices(IEquipmentMatesTriggerServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
             _equipmentServices = equipmentServices;
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
+            _equipmentMatesTriggerServices = equipmentMatesTriggerServices;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -79,6 +84,20 @@ namespace PZIOT.Tasks
                                         data.EquipmentDataGatherTime = DateTime.Now;
                                         data.EquipmentDataItemValue = backinfo.ResponseValue;
                                         data.EquipmentDataItemName = item2.MateName;
+                                        //查询规则进行触发,其实不需要维护Triggerid
+                                        int num = 0;
+                                        if (int.TryParse(data.EquipmentDataItemValue, out num)) {
+                                            //获取到当前Mate维护的触发器
+                                            var getresult = await _equipmentMatesTriggerServices.Query(t=>t.TriggerType.Equals(item2.TriggerId)&&t.MateId == item2.Id);
+                                            var triggerData = new TriggerData();
+                                            triggerData.rules = getresult;
+                                            triggerData.Value = num;
+                                            triggerData.ValueChanged += (sender, e) =>
+                                            {
+                                                Console.WriteLine($"调用触发器");
+                                            };
+                                        }
+                                        
                                         await _equipmentDataScadaServices.Add(data);
                                     }
                                     
