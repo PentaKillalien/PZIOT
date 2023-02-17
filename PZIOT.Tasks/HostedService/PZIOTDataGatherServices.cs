@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using PZIOT.Tasks.Trigger;
 using Google.Protobuf.WellKnownTypes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System.Collections.Generic;
 
 namespace PZIOT.Tasks
 {
@@ -24,6 +25,7 @@ namespace PZIOT.Tasks
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
         private readonly IEquipmentMatesTriggerServices _equipmentMatesTriggerServices;
+        private readonly Dictionary<int, TriggerData>  triggerDatas;
         private int GatherFrequency = 10;//秒
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentMatesTriggerServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
@@ -32,6 +34,8 @@ namespace PZIOT.Tasks
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
             _equipmentMatesTriggerServices = equipmentMatesTriggerServices;
+            triggerDatas = new Dictionary<int, TriggerData>();
+            
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -69,7 +73,14 @@ namespace PZIOT.Tasks
                                 try
                                 {
                                     if (item2.IsActivation) {
-
+                                        if (!triggerDatas.ContainsKey(item2.Id)) {
+                                            var triggerData = new TriggerData();
+                                            triggerData.ValueChanged += (sender, e) =>
+                                            {
+                                                Console.WriteLine($"数据项编号{e.MateId}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
+                                            };
+                                            triggerDatas.Add(item2.Id,triggerData);
+                                        }
                                         //先获取采集的Mate项，绑定设备Id
                                         EquipmentReadResponseProtocol backinfo = await item.Value.RequestSingleParaFromEquipment(item2.DataAddress);
                                         ConsoleHelper.WriteWarningLine($"设备id为{item.Key}的驱动采集数据地址{item2.DataAddress}得到回复，结果为{backinfo.ResponseValue}!");
@@ -89,13 +100,9 @@ namespace PZIOT.Tasks
                                         if (int.TryParse(data.EquipmentDataItemValue, out num)) {
                                             //获取到当前Mate维护的触发器
                                             var getresult = await _equipmentMatesTriggerServices.Query(t=>t.TriggerType.Equals(item2.TriggerId)&&t.MateId == item2.Id);
-                                            var triggerData = new TriggerData();
-                                            triggerData.rules = getresult;
-                                            triggerData.Value = num;
-                                            triggerData.ValueChanged += (sender, e) =>
-                                            {
-                                                Console.WriteLine($"调用触发器");
-                                            };
+                                            triggerDatas[item2.Id].rules = getresult;
+                                            triggerDatas[item2.Id].mateId = item2.Id;
+                                            triggerDatas[item2.Id].Value = num;
                                         }
                                         
                                         await _equipmentDataScadaServices.Add(data);

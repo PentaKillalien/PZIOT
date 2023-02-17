@@ -12,13 +12,14 @@ namespace PZIOT.Tasks.Trigger
     {
         public int OldValue { get; set; }
         public int NewValue { get; set; }
+        public int MateId { get; set; }
     }
     public class TriggerData
     {
         private int value;
         public List<EquipmentMatesTrigger> rules;
         public event EventHandler<TriggerEventArgs> ValueChanged;
-
+        public int mateId;
         public int Value
         {
             get => value;
@@ -29,7 +30,7 @@ namespace PZIOT.Tasks.Trigger
                     var oldValue = this.value;
                     this.value = value;
 
-                    ValueChanged?.Invoke(this, new TriggerEventArgs { OldValue = oldValue, NewValue = value });
+                    ValueChanged?.Invoke(this, new TriggerEventArgs { OldValue = oldValue, NewValue = value,MateId=mateId });
 
                     CheckRules();
                 }
