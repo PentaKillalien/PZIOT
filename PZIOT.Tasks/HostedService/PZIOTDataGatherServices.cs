@@ -6,12 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using PZIOT.Common.EquipmentDriver;
 using PZIOT.Model.Models;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using System.Linq.Expressions;
 using PZIOT.Tasks.Trigger;
-using Google.Protobuf.WellKnownTypes;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System.Collections.Generic;
+using System.Reflection;
+using PZIOT.Common.Helper;
+using Microsoft.AspNetCore.Rewrite;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace PZIOT.Tasks
 {
@@ -26,6 +26,7 @@ namespace PZIOT.Tasks
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
         private readonly IEquipmentMatesTriggerServices _equipmentMatesTriggerServices;
         private readonly Dictionary<int, TriggerData>  triggerDatas;
+        private const string DefaultTriggerClass = "DefaultConsoleOk";
         private int GatherFrequency = 10;//秒
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentMatesTriggerServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
@@ -100,11 +101,22 @@ namespace PZIOT.Tasks
                                         if (int.TryParse(data.EquipmentDataItemValue, out num)) {
                                             //获取到当前Mate维护的触发器
                                             var getresult = await _equipmentMatesTriggerServices.Query(t=>t.TriggerType.Equals(item2.TriggerId)&&t.MateId == item2.Id);
+                                            if (getresult.Count == 0)
+                                            {
+                                                triggerDatas[item2.Id].rulemethod = DefaultTriggerClass;//默认触发器
+                                            }
+                                            else {
+
+                                                triggerDatas[item2.Id].rulemethod = getresult[0].AssemblyMethod;
+                                            }
                                             triggerDatas[item2.Id].rules = getresult;
                                             triggerDatas[item2.Id].mateId = item2.Id;
-                                            triggerDatas[item2.Id].Value = num;
+                                            triggerDatas[item2.Id].usedata = data;//触发更多数据
+                                            triggerDatas[item2.Id].Value = num;//值变化触发判断
+                                            //InterfaceImplementationHelper(typeof(IRule));
+                                            
                                         }
-                                        
+
                                         await _equipmentDataScadaServices.Add(data);
                                     }
                                     

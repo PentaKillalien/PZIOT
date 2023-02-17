@@ -1,10 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+using PZIOT.Common.Helper;
 using PZIOT.Model.Models;
+using PZIOT.Tasks.Rule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PZIOT.Tasks.Trigger
 {
@@ -19,7 +19,9 @@ namespace PZIOT.Tasks.Trigger
         private int value;
         public List<EquipmentMatesTrigger> rules;
         public event EventHandler<TriggerEventArgs> ValueChanged;
+        public string rulemethod;
         public int mateId;
+        public EquipmentDataScada usedata;
         public int Value
         {
             get => value;
@@ -43,9 +45,17 @@ namespace PZIOT.Tasks.Trigger
             {
                 if (value >= rule.MinValue && value <= rule.MaxValue)
                 {
-                    Console.WriteLine($"Trigger fired: {rule.Description}");
+                    Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IRules));
+                    var myClass = implementingTypes.FirstOrDefault(type => type.Name == rulemethod);
+                    if (myClass != null)
+                    {
+                        var myObject = (IRules)Activator.CreateInstance(myClass);
+                        myObject.ExecuteRule(usedata);
+                        Console.WriteLine($"Trigger fired: {rule.Description}");
+                    }
                 }
             }
+
         }
 
     }
