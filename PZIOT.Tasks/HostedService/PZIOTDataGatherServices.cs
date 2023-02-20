@@ -76,12 +76,14 @@ namespace PZIOT.Tasks
                         {
                             var eqpinfo = await _equipmentServices.QueryById(item.Key);
                             var matesinfo = await _equipmentMatesServices.Query(it => it.EquipmentId == item.Key);
+                            //ConsoleHelper.WriteErrorLine("1111111111111");
                             foreach (var item2 in matesinfo)
                             {
                                 try
                                 {
                                     if (item2.IsActivation) {
                                         if (!triggerDatas.ContainsKey(item2.Id)) {
+                                            //ConsoleHelper.WriteErrorLine("2222222222222222");
                                             if (item2.VarType.Equals("DOUBLE")) {
                                                 var triggerData = new TriggerData();
                                                 triggerData.ValueChanged += async (sender, e) =>
@@ -93,6 +95,7 @@ namespace PZIOT.Tasks
                                                     {
                                                         //查找function
                                                         var getresult2 = await _equipmentMatesFunctionServices.Query(t => t.MateId.Equals(item2.Id));
+                                                        //ConsoleHelper.WriteErrorLine("33333333333333333");
                                                         if (getresult2.Count > 0)
                                                         {
                                                             foreach (var func in getresult2)
@@ -120,6 +123,7 @@ namespace PZIOT.Tasks
                                         }
                                         //先获取采集的Mate项，绑定设备Id
                                         EquipmentReadResponseProtocol backinfo = await item.Value.RequestSingleParaFromEquipment(item2.DataAddress);
+                                        //ConsoleHelper.WriteErrorLine("44444444444444444");
                                         ConsoleHelper.WriteWarningLine($"设备id为{item.Key}的驱动采集数据地址{item2.DataAddress}得到回复，结果为{backinfo.ResponseValue}!");
                                         //转换成对应的设备信息进行记录,查询设备信息
                                         item2.Value = backinfo.ResponseValue;

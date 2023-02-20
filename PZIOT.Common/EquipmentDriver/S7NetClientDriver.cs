@@ -18,13 +18,11 @@ namespace PZIOT.Common.EquipmentDriver
     public class S7NetClientDriver : BaseClientDriver
     {
         private S7NetModel _S7NetModel;
-        //机号
-        private short Rack = 0;
-        //槽号
-        private short Slot = 0;
-        private CpuType cpuType = 0;
-        private Plc plc = null;
+        private CpuType cpuType;
+        private Plc plc;
+
         private bool _IsConnected = false;
+        public override bool IsConnected => _IsConnected;
         public override async Task<bool> CreatConnect(object t)
         {
             bool result = await Task.Run(() =>
@@ -45,8 +43,9 @@ namespace PZIOT.Common.EquipmentDriver
                     }
                     plc = new Plc(cpuType, _S7NetModel.Address, _S7NetModel.Rack, _S7NetModel.Slot);
                     plc.Open();
-                    _IsConnected = true;
-                    return true;
+                    _IsConnected = plc.IsConnected;
+                    ConsoleHelper.WriteSuccessLine($"连接plc{_S7NetModel.Address}成功!");
+                    return _IsConnected;
                 }
                 catch (Exception ex)
                 {
@@ -83,6 +82,7 @@ namespace PZIOT.Common.EquipmentDriver
 
         public override async Task<EquipmentReadResponseProtocol> RequestSingleParaFromEquipment(string para)
         {
+            ConsoleHelper.WriteWarningLine("S7Net驱动尝试读取");
             EquipmentReadResponseProtocol result = await Task.Run(() => {
                 string back = ReadPlc(para);
                 return new EquipmentReadResponseProtocol()
@@ -128,7 +128,7 @@ namespace PZIOT.Common.EquipmentDriver
             }
             catch (Exception ex)
             {
-                ConsoleHelper.WriteErrorLine($"{ex.Message}");
+                ConsoleHelper.WriteErrorLine($"读取Plc地址{addr}异常{ex.Message}");
                 return string.Empty;
             }
         }

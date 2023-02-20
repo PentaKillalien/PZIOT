@@ -70,5 +70,20 @@ namespace PZIOT.Tests.Common_Test
             Assert.NotNull(s);
             //Assert.Equal("192", s);
         }
+        [Fact]
+        public void EquipmentDriver_Test3()
+        {
+            S7NetModel c = new S7NetModel()
+            {
+                Address = "10.0.48.7",
+                Rack=1,
+                Slot=0,
+                PlcType="S7300"
+            };
+            string s = JsonConvert.SerializeObject(c);
+            Console.WriteLine(s);
+            Assert.NotNull(s);
+            //Assert.Equal("192", s);
+        }
     }
 }
