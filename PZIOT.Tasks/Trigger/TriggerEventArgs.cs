@@ -12,7 +12,7 @@ namespace PZIOT.Tasks.Trigger
     {
         public double OldValue { get; set; }
         public double NewValue { get; set; }
-        public double MateId { get; set; }
+        public int MateId { get; set; }
     }
     public class TriggerData
     {
@@ -20,7 +20,7 @@ namespace PZIOT.Tasks.Trigger
         public List<EquipmentMatesTriggerInt> rules;
         public event EventHandler<TriggerEventArgs> ValueChanged;
         public string rulemethod;
-        public double mateId;
+        public int mateId;
         public EquipmentDataScada usedata;
         public double Value
         {

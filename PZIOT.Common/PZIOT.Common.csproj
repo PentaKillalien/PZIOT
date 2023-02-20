@@ -27,6 +27,7 @@
     <PackageReference Include="PinYinConverterCore" Version="1.0.2" />
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="RSAExtensions" Version="1.1.0" />
+    <PackageReference Include="S7netplus" Version="0.16.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.48" />
     <PackageReference Include="SuperSocket.ClientEngine.Core" Version="0.10.0" />

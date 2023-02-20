@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PZIOT.Common.Helper;
 using PZIOT.Tasks.Rule;
 using System.Linq;
+using PZIOT.Tasks.Function;
 
 namespace PZIOT.Tasks
 {
@@ -25,19 +26,24 @@ namespace PZIOT.Tasks
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
         private readonly IEquipmentMatesTriggerIntServices _equipmentMatesTriggerServices;
         private readonly IEquipmentMatesTriggerStringServices _equipmentMatesTriggerStringServices;
+        private readonly IEquipmentMatesFunctionServices _equipmentMatesFunctionServices;
         private readonly Dictionary<int, TriggerData>  triggerDatas;
+        private readonly Dictionary<int, IFunction> functions;
         private const string DefaultTriggerClass = "DefaultConsoleOk";
         private int GatherFrequency = 10;//秒
         // 这里可以注入
-        public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices,IEquipmentDataScadaServices equipmentDataScadaServices)
+        public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
             _equipmentServices = equipmentServices;
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
             _equipmentMatesTriggerServices = equipmentMatesTriggerServices;
             _equipmentMatesTriggerStringServices = equipmentMatesTriggerStringServices;
+            _equipmentMatesFunctionServices = equipmentMatesFunctionServices;
             triggerDatas = new Dictionary<int, TriggerData>();
-            
+            functions = new Dictionary<int, IFunction>();   
+
+
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -78,10 +84,35 @@ namespace PZIOT.Tasks
                                         if (!triggerDatas.ContainsKey(item2.Id)) {
                                             if (item2.VarType.Equals("DOUBLE")) {
                                                 var triggerData = new TriggerData();
-                                                triggerData.ValueChanged += (sender, e) =>
+                                                triggerData.ValueChanged += async (sender, e) =>
                                                 {
                                                     //double类型的mate会有Function,String的只有触发器
                                                     Console.WriteLine($"数据项编号{e.MateId}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
+                                                    int mateid = Convert.ToInt16(e.MateId);
+                                                    if (!functions.ContainsKey(mateid))
+                                                    {
+                                                        //查找function
+                                                        var getresult2 = await _equipmentMatesFunctionServices.Query(t => t.MateId.Equals(item2.Id));
+                                                        if (getresult2.Count > 0)
+                                                        {
+                                                            foreach (var func in getresult2)
+                                                            {
+                                                                Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IFunction));
+                                                                var myClass = implementingTypes.FirstOrDefault(type => type.Name == func.AssemblyMethod);
+                                                                if (myClass != null)
+                                                                {
+                                                                    var myObject = (IFunction)Activator.CreateInstance(myClass);
+                                                                    functions.Add(mateid, myObject);
+                                                                    await myObject.ExecuteRule(e.OldValue, e.NewValue);
+                                                                    Console.WriteLine($"Trigger fired: {func.Description}");
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    else {
+                                                        await functions[mateid].ExecuteRule(e.OldValue, e.NewValue);
+                                                    }
+                                                    
                                                 };
                                                 triggerDatas.Add(item2.Id, triggerData);
                                             }
