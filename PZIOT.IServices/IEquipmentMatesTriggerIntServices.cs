@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PZIOT.IServices
 {
-    public interface IEquipmentMatesTriggerServices : IBaseServices<EquipmentMatesTrigger>
+    public interface IEquipmentMatesTriggerIntServices : IBaseServices<EquipmentMatesTriggerInt>
     {
 
     }

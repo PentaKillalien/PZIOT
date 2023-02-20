@@ -9,7 +9,7 @@ namespace PZIOT.Model.Models
     /// <summary>
     /// 设备数据项触发器,采集时数据值会经过触发器，这里面保存触发器的具体配置
     /// </summary>
-    public class EquipmentMatesTrigger : RootEntityTkey<int>
+    public class EquipmentMatesTriggerInt : RootEntityTkey<int>
     {
 
         /// <summary>
@@ -23,11 +23,11 @@ namespace PZIOT.Model.Models
         /// <summary>
         /// 最小值
         /// </summary>
-        public int MinValue { get; set; }
+        public double MinValue { get; set; }
         /// <summary>
         /// 最大值
         /// </summary>
-        public int MaxValue { get; set; }
+        public double MaxValue { get; set; }
         /// <summary>
         /// 描述
         /// </summary>

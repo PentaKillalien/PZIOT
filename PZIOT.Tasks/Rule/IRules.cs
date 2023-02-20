@@ -17,5 +17,10 @@ namespace PZIOT.Tasks.Rule
         /// </summary>
         /// <returns></returns>
         Task<bool> ExecuteRule(EquipmentDataScada usedata);
+        /// <summary>
+        /// 执行String规则
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ExecuteRule(EquipmentDataScada usedata, EquipmentMatesTriggerString rule);
     }
 }
