@@ -32,7 +32,6 @@
     <PackageReference Include="StackExchange.Redis" Version="2.6.48" />
     <PackageReference Include="SuperSocket" Version="2.0.0-beta.13" />
     <PackageReference Include="SuperSocket.ClientEngine.Core" Version="0.10.0" />
-    <PackageReference Include="SuperSocket.Engine" Version="1.6.6.1" />
     <PackageReference Include="SuperSocket.ProtoBase" Version="2.0.0-beta.13" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
 
