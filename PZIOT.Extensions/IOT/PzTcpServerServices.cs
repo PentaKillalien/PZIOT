@@ -1,6 +1,9 @@
 ﻿using log4net;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PZIOT.Common;
+using PZIOT.Tasks.Trigger;
 using SuperSocket;
 using SuperSocket.Channel;
 using SuperSocket.ProtoBase;
@@ -28,12 +31,32 @@ namespace PZIOT.Extensions.IOT
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            //List
+            var triggerData = new PzTcpTriggerData();
+            triggerData.ValueChanged += async (sender, e) =>
+            {
+                Console.WriteLine($"数据项编号{e.EquipmentIp}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
+                //post
+            };
+            
             ConsoleHelper.WriteSuccessLine("PzTcpServer服务已启动...");
             host = SuperSocketHostBuilder.Create<TextPackageInfo, DoublePoundSignPipelineFilter>().UsePackageHandler((s, p) =>
             {
                 try
                 {
                     ConsoleHelper.WriteInfoLine($"pzTcp Recive:{p.Text}");
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(p.Text); //转换为Json对象
+                    int input1 = 0;
+                    var input1Result = int.TryParse(jo["UlKeyPushCount"][0].ToString(), out input1);
+                    int input2 = 0;
+                    var input2Result = int.TryParse(jo["UlKeyPushCount"][1].ToString(), out input2);
+                    int input3 = 0;
+                    var input3Result = int.TryParse(jo["UlKeyPushCount"][2].ToString(), out input3);
+                    int input4 = 0;
+                    var input4Result = int.TryParse(jo["UlKeyPushCount"][3].ToString(), out input4);
+                    string statu = jo["ProductionState"].ToString();
+                    //+1判断就要上传
+                    
                 }
                 catch (Exception ex)
                 {
@@ -71,7 +94,7 @@ namespace PZIOT.Extensions.IOT
         /// <summary>
         /// 双##号结尾协议
         /// </summary>
-        public class DoublePoundSignPipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
+        private class DoublePoundSignPipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
         {
             protected Encoding Encoding { get; private set; }
 
@@ -93,7 +116,7 @@ namespace PZIOT.Extensions.IOT
             }
         }
 
-        public class CptAppSession : AppSession
+        private class CptAppSession : AppSession
         {
 
             protected override ValueTask OnSessionConnectedAsync()
