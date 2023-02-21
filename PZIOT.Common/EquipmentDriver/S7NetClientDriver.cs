@@ -100,35 +100,46 @@ namespace PZIOT.Common.EquipmentDriver
         /// </summary>
         /// <param name="addr"></param>
         /// <returns></returns>
-        private string ReadPlc(string addr)
+        private string ReadPlc(string txt_read_addr)
         {
             try
             {
-                string tempaddr = addr;
-                string[] arr = (tempaddr.ToUpper()).Split('.');
-                string valuetype = arr[1].Substring(0, 3);
-                if (valuetype == "c")
+                try
                 {
-                    bool test1 = (bool)plc.Read(tempaddr.ToUpper());
-                    return test1.ToString();
-                }
+                    string[] arr = (txt_read_addr.ToUpper()).Split('.');
+                    string valuetype = arr[1].Substring(0, 3);
+                    if (valuetype == "DBX")
+                    {
+                        bool test1 = (bool)plc.Read(txt_read_addr.ToUpper());
+                        return test1.ToString();
+                    }
 
-                else if (valuetype == "DBW")
-                {
-                    short test3 = ((ushort)plc.Read(tempaddr.ToUpper())).ConvertToShort();
-                    return test3.ToString();
-                }
+                    else if (valuetype == "DBW")
+                    {
+                        short test3 = ((ushort)plc.Read(txt_read_addr.ToUpper())).ConvertToShort();
+                        return test3.ToString();
+                    }
 
-                else if (valuetype == "DBD")
+                    else if (valuetype == "DBD")
+                    {
+                        double test5 = ((uint)plc.Read(txt_read_addr.ToUpper())).ConvertToFloat();
+                        return test5.ToString();
+                    }
+
+                    else
+                    {
+                        ConsoleHelper.WriteErrorLine("请检查地址是否输入错误！");
+                    }
+                }
+                catch (Exception ex)
                 {
-                    double test5 = ((uint)plc.Read(tempaddr.ToUpper())).ConvertToFloat();
-                    return test5.ToString();
+                    ConsoleHelper.WriteErrorLine($"请检查地址是否输入错误！{ex}");
                 }
                 return string.Empty;
             }
             catch (Exception ex)
             {
-                ConsoleHelper.WriteErrorLine($"读取Plc地址{addr}异常{ex.Message}");
+                ConsoleHelper.WriteErrorLine($"读取Plc地址{txt_read_addr}异常{ex.Message}");
                 return string.Empty;
             }
         }

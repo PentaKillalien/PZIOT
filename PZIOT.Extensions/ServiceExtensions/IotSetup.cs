@@ -19,6 +19,7 @@ namespace PZIOT.Extensions.ServiceExtensions
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddHostedService<IotService>();
+            //services.AddHostedService<RhBg102TcpServerServices>();//客制化项目
         }
     }
 }
