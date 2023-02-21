@@ -17,36 +17,36 @@ namespace PZIOT.Extensions.IOT
     /// <summary>
     /// 客制化项目，服务端
     /// </summary>
-    public class RhBg102TcpServerServices : IHostedService, IDisposable
+    public class PzTcpServerServices : IHostedService, IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(IotService));
         private IHost host;
         public void Dispose()
         {
-            this.Dispose();
+            host.Dispose();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            ConsoleHelper.WriteSuccessLine("Rhbg102服务启动");
-            host = SuperSocketHostBuilder.Create<TextPackageInfo, Cpt300LinePipelineFilter>().UsePackageHandler((s, p) =>
+            ConsoleHelper.WriteSuccessLine("PzTcpServer服务已启动...");
+            host = SuperSocketHostBuilder.Create<TextPackageInfo, DoublePoundSignPipelineFilter>().UsePackageHandler((s, p) =>
             {
                 try
                 {
-
+                    ConsoleHelper.WriteInfoLine($"pzTcp Recive:{p.Text}");
                 }
                 catch (Exception ex)
                 {
-                    //p.test去掉尾 然后读出需要的信息，记录到数据库
+                    ConsoleHelper.WriteErrorLine($"pzTcp Recive failed {ex.Message}");
                 }
                 return new ValueTask();
             }).UseSession<CptAppSession>().ConfigureSuperSocket(options =>//配置服务器如服务器名和监听端口等基本信息
                     {
-                        options.Name = "Tcp";
+                        options.Name = "PziotTcpServer";
                         options.ReceiveBufferSize = 2048;
                         options.Listeners = new List<ListenOptions>(){
                         new ListenOptions{
-                         Ip="1988",
+                         Ip="Any",
                          Port = 1988
                         }
                         };
@@ -54,7 +54,7 @@ namespace PZIOT.Extensions.IOT
 
             try
             {
-                host.RunAsync();
+                host.RunAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -65,21 +65,23 @@ namespace PZIOT.Extensions.IOT
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            this.StopAsync(cancellationToken);
+            host.StopAsync(cancellationToken);
             return Task.CompletedTask;
         }
-
-        public class Cpt300LinePipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
+        /// <summary>
+        /// 双##号结尾协议
+        /// </summary>
+        public class DoublePoundSignPipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
         {
             protected Encoding Encoding { get; private set; }
 
-            public Cpt300LinePipelineFilter()
+            public DoublePoundSignPipelineFilter()
                 : this(Encoding.ASCII)
             {
 
             }
 
-            public Cpt300LinePipelineFilter(Encoding encoding)
+            public DoublePoundSignPipelineFilter(Encoding encoding)
                 : base(new[] { (byte)'#', (byte)'#' })
             {
                 Encoding = encoding;
