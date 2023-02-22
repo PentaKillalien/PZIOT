@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace PZIOT.Services
 {
-    public class EquipmentMatesTriggerServices : BaseServices<EquipmentMatesTrigger>, IEquipmentMatesTriggerServices { 
+    public class EquipmentMatesTriggerIntServices : BaseServices<EquipmentMatesTriggerInt>, IEquipmentMatesTriggerIntServices
+    { 
 
     }
 }

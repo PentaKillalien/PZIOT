@@ -475,37 +475,57 @@
             采集间隔
             </summary>
         </member>
-        <member name="T:PZIOT.Model.Models.EquipmentMatesTrigger">
-            <summary>
-            设备数据项触发器,采集时数据值会经过触发器，这里面保存触发器的具体配置
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.MateId">
+        <member name="P:PZIOT.Model.Models.EquipmentMatesFunction.MateId">
             <summary>
             触发器绑定的数据项ID
             </summary>
         </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.TriggerType">
+        <member name="P:PZIOT.Model.Models.EquipmentMatesFunction.CalculationDifference">
             <summary>
-            触发器类型
+            计算差值
             </summary>
         </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.MinValue">
-            <summary>
-            最小值
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.MaxValue">
-            <summary>
-            最大值
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.Description">
+        <member name="P:PZIOT.Model.Models.EquipmentMatesFunction.Description">
             <summary>
             描述
             </summary>
         </member>
-        <member name="P:PZIOT.Model.Models.EquipmentMatesTrigger.AssemblyMethod">
+        <member name="P:PZIOT.Model.Models.EquipmentMatesFunction.AssemblyMethod">
+            <summary>
+            反射方法
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.Models.EquipmentMatesTriggerInt">
+            <summary>
+            设备数据项触发器,采集时数据值会经过触发器，这里面保存触发器的具体配置
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.MateId">
+            <summary>
+            触发器绑定的数据项ID
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.TriggerType">
+            <summary>
+            触发器类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.MinValue">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.MaxValue">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerInt.AssemblyMethod">
             <summary>
             反射方法
             </summary>
@@ -518,6 +538,31 @@
         <member name="F:PZIOT.Model.Models.TriggerType.INT">
             <summary>
             整数型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerString.MateId">
+            <summary>
+            触发器绑定的数据项ID
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerString.TriggerType">
+            <summary>
+            触发器类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerString.CompareValue">
+            <summary>
+            比较值
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerString.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.Models.EquipmentMatesTriggerString.AssemblyMethod">
+            <summary>
+            反射方法
             </summary>
         </member>
         <member name="T:PZIOT.Model.Models.EquipmentStatus">

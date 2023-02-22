@@ -18,5 +18,10 @@ namespace PZIOT.Tasks.Rule
             Console.WriteLine($"执行UploadDataToTheWebapi推送触发器......内容{JsonConvert.SerializeObject(usedata)}");
             return Task.FromResult(true);
         }
+
+        public Task<bool> ExecuteRule(EquipmentDataScada usedata, EquipmentMatesTriggerString rule)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

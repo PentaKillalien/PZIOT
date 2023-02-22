@@ -1,7 +1,7 @@
 ﻿[
   {
-    "Name": "博客管理",
-    "JobGroup": "博客测试组",
+    "Name": "IOT管理",
+    "JobGroup": "IOT测试组",
     "TriggerType": 1, 
     "Cron": "0 */10 * * * ?",
     "AssemblyName": "PZIOT.Tasks",
