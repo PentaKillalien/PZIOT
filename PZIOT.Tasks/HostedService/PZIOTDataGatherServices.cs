@@ -91,20 +91,17 @@ namespace PZIOT.Tasks
                                                     if (!functions.ContainsKey(mateid))
                                                     {
                                                         //查找function
-                                                        var getresult2 = await _equipmentMatesFunctionServices.Query(t => t.MateId.Equals(item2.Id));
-                                                        if (getresult2.Count > 0)
+                                                        var getresult2 = await _equipmentMatesFunctionServices.QueryGlobeDic(t => t.MateId.Equals(item2.Id),item2.Id);
+                                                        if (getresult2 != null)
                                                         {
-                                                            foreach (var func in getresult2)
+                                                            Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IFunction));
+                                                            var myClass = implementingTypes.FirstOrDefault(type => type.Name == getresult2.AssemblyMethod);
+                                                            if (myClass != null)
                                                             {
-                                                                Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IFunction));
-                                                                var myClass = implementingTypes.FirstOrDefault(type => type.Name == func.AssemblyMethod);
-                                                                if (myClass != null)
-                                                                {
-                                                                    var myObject = (IFunction)Activator.CreateInstance(myClass);
-                                                                    functions.Add(mateid, myObject);
-                                                                    await myObject.ExecuteRule(e.OldValue, e.NewValue);
-                                                                    Console.WriteLine($"Trigger fired: {func.Description}");
-                                                                }
+                                                                var myObject = (IFunction)Activator.CreateInstance(myClass);
+                                                                functions.Add(mateid, myObject);
+                                                                await myObject.ExecuteRule(e.OldValue, e.NewValue);
+                                                                Console.WriteLine($"Trigger fired: {getresult2.Description}");
                                                             }
                                                         }
                                                     }
