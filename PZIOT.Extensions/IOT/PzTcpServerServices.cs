@@ -24,7 +24,6 @@ namespace PZIOT.Extensions.IOT
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(IotService));
         private IHost host;
-        private const string CptGather = "{\"stJsoncmd\":{ \"iId\":3,\"strCmd\":\"CmdReadDigitalInput\"},\"stDigitalInputPar\":{ \"iOffset\":0,\"iNumber\":4} }\n";
         public void Dispose()
         {
             host.Dispose();
@@ -34,7 +33,7 @@ namespace PZIOT.Extensions.IOT
         {
             //List
             var triggerData = new PzTcpTriggerData();
-            triggerData.ValueChanged += async (sender, e) =>
+            triggerData.ValueChanged +=  (sender, e) =>
             {
                 Console.WriteLine($"数据项编号{e.EquipmentIp}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
                 //post
