@@ -12,6 +12,7 @@ using PZIOT.Common.Helper;
 using PZIOT.Tasks.Rule;
 using System.Linq;
 using PZIOT.Tasks.Function;
+using System.Diagnostics;
 
 namespace PZIOT.Tasks
 {
@@ -21,7 +22,7 @@ namespace PZIOT.Tasks
     public class PZIOTDataGatherServices : IHostedService, IDisposable
     {
         private Timer _timer;
-        private readonly IEquipmentServices _equipmentServices;//查询设备信息
+        //private readonly IEquipmentServices _equipmentServices;//查询设备信息
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
         private readonly IEquipmentMatesTriggerIntServices _equipmentMatesTriggerServices;
@@ -32,9 +33,9 @@ namespace PZIOT.Tasks
         private const string DefaultTriggerClass = "DefaultConsoleOk";
         private int GatherFrequency = 10;//秒
         // 这里可以注入
-        public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentServices equipmentServices,IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
+        public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
-            _equipmentServices = equipmentServices;
+            //_equipmentServices = equipmentServices;
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
             _equipmentMatesTriggerServices = equipmentMatesTriggerServices;
@@ -42,7 +43,6 @@ namespace PZIOT.Tasks
             _equipmentMatesFunctionServices = equipmentMatesFunctionServices;
             triggerDatas = new Dictionary<int, TriggerData>();
             functions = new Dictionary<int, IFunction>();   
-
 
         }
 
@@ -74,16 +74,13 @@ namespace PZIOT.Tasks
                         //采集所有的驱动并进行数据存储，目前的模式只能设置整体的采集频率 不支持单个
                         Task.Run(async () =>
                         {
-                            var eqpinfo = await _equipmentServices.QueryById(item.Key);
-                            var matesinfo = await _equipmentMatesServices.Query(it => it.EquipmentId == item.Key);
-                            //ConsoleHelper.WriteErrorLine("1111111111111");
+                            var matesinfo = await _equipmentMatesServices.QueryGlobeDic(it => it.EquipmentId == item.Key,item.Key);
                             foreach (var item2 in matesinfo)
                             {
                                 try
                                 {
                                     if (item2.IsActivation) {
                                         if (!triggerDatas.ContainsKey(item2.Id)) {
-                                            //ConsoleHelper.WriteErrorLine("2222222222222222");
                                             if (item2.VarType.Equals("DOUBLE")) {
                                                 var triggerData = new TriggerData();
                                                 triggerData.ValueChanged += async (sender, e) =>
@@ -95,7 +92,6 @@ namespace PZIOT.Tasks
                                                     {
                                                         //查找function
                                                         var getresult2 = await _equipmentMatesFunctionServices.Query(t => t.MateId.Equals(item2.Id));
-                                                        //ConsoleHelper.WriteErrorLine("33333333333333333");
                                                         if (getresult2.Count > 0)
                                                         {
                                                             foreach (var func in getresult2)
@@ -123,7 +119,6 @@ namespace PZIOT.Tasks
                                         }
                                         //先获取采集的Mate项，绑定设备Id
                                         EquipmentReadResponseProtocol backinfo = await item.Value.RequestSingleParaFromEquipment(item2.DataAddress);
-                                        //ConsoleHelper.WriteErrorLine("44444444444444444");
                                         ConsoleHelper.WriteWarningLine($"设备id为{item.Key}的驱动采集数据地址{item2.DataAddress}得到回复，结果为{backinfo.ResponseValue}!");
                                         //转换成对应的设备信息进行记录,查询设备信息
                                         item2.Value = backinfo.ResponseValue;

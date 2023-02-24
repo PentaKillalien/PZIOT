@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PZIOT.Common\PZIOT.Common.csproj" />
-    <ProjectReference Include="..\PZIOT.Model\PZIOT.Model.csproj" />
   </ItemGroup>
 
 </Project>

@@ -33,7 +33,7 @@ namespace PZIOT.Extensions.IOT
             //需要定义个容器挂载所有的驱动连接，配置数据项后统一调用接口读取相关数据进行采集活动
             ConsoleHelper.WriteSuccessLine("StartedAsync: IOT服务已启动.");
             Log.Info("StartedAsync: IOT服务已启动.");
-            //开始加载设备驱动,从数据库读取，读取时根据设备编号建立映射
+            //开始加载设备驱动,从数据库读取，读取时根据设备编号建立映射,Redis进行更新
             List<EquipmentDriverDesc> tempAllDrivers = await _euqipmentDriverDescServices.Query();
             if (tempAllDrivers.Count == 0)
                 ConsoleHelper.WriteWarningLine("数据库无任何驱动配置信息");

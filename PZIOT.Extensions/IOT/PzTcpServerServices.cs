@@ -24,6 +24,7 @@ namespace PZIOT.Extensions.IOT
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(IotService));
         private IHost host;
+        private const string CptGather = "{\"stJsoncmd\":{ \"iId\":3,\"strCmd\":\"CmdReadDigitalInput\"},\"stDigitalInputPar\":{ \"iOffset\":0,\"iNumber\":4} }\n";
         public void Dispose()
         {
             host.Dispose();
@@ -70,7 +71,7 @@ namespace PZIOT.Extensions.IOT
                         options.Listeners = new List<ListenOptions>(){
                         new ListenOptions{
                          Ip="Any",
-                         Port = 1988
+                         Port = 17748
                         }
                         };
                     }).Build();
