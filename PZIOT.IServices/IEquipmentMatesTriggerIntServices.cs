@@ -11,6 +11,6 @@ namespace PZIOT.IServices
 {
     public interface IEquipmentMatesTriggerIntServices : IBaseServices<EquipmentMatesTriggerInt>
     {
-        Task<EquipmentMatesTriggerInt> QueryGlobeDic(Expression<Func<EquipmentMatesTriggerInt, bool>> whereExpression, int mateid);
+        Task<List<EquipmentMatesTriggerInt>> QueryGlobeDic(Expression<Func<EquipmentMatesTriggerInt, bool>> whereExpression, int mateid);
     }
 }

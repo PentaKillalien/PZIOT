@@ -75,7 +75,7 @@ namespace PZIOT
         /// <summary>
         /// MatesIntTrigger对应关系，很少会有写的情况，基本就是处理读
         /// </summary>
-        public static Dictionary<int, EquipmentMatesTriggerInt> MateTriggerIntDic { get; set; } = new Dictionary<int, EquipmentMatesTriggerInt>();
+        public static Dictionary<int, List<EquipmentMatesTriggerInt>> MateTriggerIntDic { get; set; } = new Dictionary<int, List<EquipmentMatesTriggerInt>>();
         /// <summary>
         /// MatesStringTrigger对应关系，很少会有写的情况，基本就是处理读
         /// </summary>

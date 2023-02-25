@@ -678,7 +678,7 @@ namespace PZIOT.Common.Omron
         //     写入数据失败
         public void SetDatas<T>(PlcMemory mr, object ch, params T[] inDatas) where T : new()
         {
-            short num = -1;
+            //short num = -1;
             short[] array = inDatas as short[];
             if (array == null)
             {

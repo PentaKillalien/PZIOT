@@ -17,16 +17,20 @@ namespace PZIOT.Services
     {
         public async Task<List<EquipmentMates>> QueryGlobeDic(Expression<Func<EquipmentMates, bool>> whereExpression,int eqpid)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            if (!PZIOTEquipmentManager.EquipmentMatesDic.ContainsKey(eqpid)) {
+            if (!PZIOTEquipmentManager.EquipmentMatesDic.ContainsKey(eqpid))
+            {
                 var list = await BaseDal.Query(whereExpression);
-                PZIOTEquipmentManager.EquipmentMatesDic.Add(eqpid, new List<EquipmentMates>());
-                list.ForEach(t=> PZIOTEquipmentManager.EquipmentMatesDic[eqpid].Add(t));
+                if (list.Any())
+                {
+                    PZIOTEquipmentManager.EquipmentMatesDic.Add(eqpid, new List<EquipmentMates>());
+                    list.ForEach(t => PZIOTEquipmentManager.EquipmentMatesDic[eqpid].Add(t));
+                }
+                else {
+                    return null;
+                }
+                
             }
-            var result = PZIOTEquipmentManager.EquipmentMatesDic[eqpid];
-            stopwatch.Stop();
-            ConsoleHelper.WriteSuccessLine($"查询耗时{stopwatch.ElapsedMilliseconds}");
-            return result;
+            return PZIOTEquipmentManager.EquipmentMatesDic[eqpid];
         }
     }
 }

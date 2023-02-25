@@ -12,7 +12,6 @@ using PZIOT.Common.Helper;
 using PZIOT.Tasks.Rule;
 using System.Linq;
 using PZIOT.Tasks.Function;
-using System.Diagnostics;
 
 namespace PZIOT.Tasks
 {
@@ -29,8 +28,8 @@ namespace PZIOT.Tasks
         private readonly IEquipmentMatesTriggerStringServices _equipmentMatesTriggerStringServices;
         private readonly IEquipmentMatesFunctionServices _equipmentMatesFunctionServices;
         private readonly Dictionary<int, TriggerData>  triggerDatas;
-        private readonly Dictionary<int, IFunction> functions;
-        private const string DefaultTriggerClass = "DefaultConsoleOk";
+        private const string TypeString = "string";
+        private const string TypeDouble = "double";
         private int GatherFrequency = 10;//秒
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
@@ -42,7 +41,6 @@ namespace PZIOT.Tasks
             _equipmentMatesTriggerStringServices = equipmentMatesTriggerStringServices;
             _equipmentMatesFunctionServices = equipmentMatesFunctionServices;
             triggerDatas = new Dictionary<int, TriggerData>();
-            functions = new Dictionary<int, IFunction>();   
 
         }
 
@@ -79,35 +77,29 @@ namespace PZIOT.Tasks
                             {
                                 try
                                 {
+                                    //数据项是否激活
                                     if (item2.IsActivation) {
+                                        //是否存在当前触发器时间对象,每个Mates只建立一次
                                         if (!triggerDatas.ContainsKey(item2.Id)) {
-                                            if (item2.VarType.Equals("DOUBLE")) {
+                                            if (item2.VarType == TypeDouble) {
                                                 var triggerData = new TriggerData();
                                                 triggerData.ValueChanged += async (sender, e) =>
                                                 {
                                                     //double类型的mate会有Function,String的只有触发器
                                                     Console.WriteLine($"数据项编号{e.MateId}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
                                                     int mateid = Convert.ToInt16(e.MateId);
-                                                    if (!functions.ContainsKey(mateid))
-                                                    {
-                                                        //查找function
-                                                        var getresult2 = await _equipmentMatesFunctionServices.QueryGlobeDic(t => t.MateId.Equals(item2.Id),item2.Id);
-                                                        if (getresult2 != null)
+                                                    var getresult2 = await _equipmentMatesFunctionServices.QueryGlobeDic(t => t.MateId.Equals(item2.Id), item2.Id);
+                                                    if (getresult2 != null) {
+                                                        Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IFunction));
+                                                        var myClass = implementingTypes.FirstOrDefault(type => type.Name == getresult2.AssemblyMethod);
+                                                        if (myClass != null)
                                                         {
-                                                            Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IFunction));
-                                                            var myClass = implementingTypes.FirstOrDefault(type => type.Name == getresult2.AssemblyMethod);
-                                                            if (myClass != null)
-                                                            {
-                                                                var myObject = (IFunction)Activator.CreateInstance(myClass);
-                                                                functions.Add(mateid, myObject);
-                                                                await myObject.ExecuteRule(e.OldValue, e.NewValue);
-                                                                Console.WriteLine($"Trigger fired: {getresult2.Description}");
-                                                            }
+                                                            var myObject = (IFunction)Activator.CreateInstance(myClass);
+                                                            //functions.Add(mateid, myObject);
+                                                            await myObject.ExecuteRule(e.OldValue, e.NewValue);
+                                                            Console.WriteLine($"Trigger fired: {getresult2.Description}");
                                                         }
-                                                    }
-                                                    else {
-                                                        await functions[mateid].ExecuteRule(e.OldValue, e.NewValue);
-                                                    }
+                                                    }//无Function则不执行
                                                     
                                                 };
                                                 triggerDatas.Add(item2.Id, triggerData);
@@ -131,42 +123,33 @@ namespace PZIOT.Tasks
                                         //查询规则进行触发,其实不需要维护Triggerid
                                         switch (item2.VarType)
                                         {
-                                            case "DOUBLE":
+                                            case TypeDouble:
                                                 double num = 0;
                                                 if (double.TryParse(data.EquipmentDataItemValue, out num))
                                                 {
                                                     //获取到当前Mate维护的触发器
-                                                    var getresult = await _equipmentMatesTriggerServices.Query(t => t.TriggerType.Equals(item2.TriggerId) && t.MateId == item2.Id);
-                                                    if (getresult.Count == 0)
+                                                    var getresult = await _equipmentMatesTriggerServices.QueryGlobeDic(t => t.TriggerType.Equals(item2.TriggerId) && t.MateId == item2.Id, item2.Id);
+                                                    if (getresult!=null)
                                                     {
-                                                        triggerDatas[item2.Id].rulemethod = DefaultTriggerClass;//默认触发器
-                                                    }
-                                                    else
-                                                    {
+                                                        triggerDatas[item2.Id].rules = getresult;
+                                                        triggerDatas[item2.Id].mateId = item2.Id;
+                                                        triggerDatas[item2.Id].usedata = data;//触发更多数据
+                                                        triggerDatas[item2.Id].Value = num;//值变化触发判断
 
-                                                        triggerDatas[item2.Id].rulemethod = getresult[0].AssemblyMethod;
                                                     }
-                                                    triggerDatas[item2.Id].rules = getresult;
-                                                    triggerDatas[item2.Id].mateId = item2.Id;
-                                                    triggerDatas[item2.Id].usedata = data;//触发更多数据
-                                                    triggerDatas[item2.Id].Value = num;//值变化触发判断
-                                                                                       //InterfaceImplementationHelper(typeof(IRule));
-
+                                                    
                                                 }
                                                 break;
-                                            case "STRING":
-                                                var getresult2 = await _equipmentMatesTriggerStringServices.Query(t => t.TriggerType.Equals(item2.TriggerId) && t.MateId == item2.Id);
+                                            case TypeString:
+                                                var getresult2 = await _equipmentMatesTriggerStringServices.QueryGlobeDic(t => t.TriggerType.Equals(item2.TriggerId) && t.MateId == item2.Id, item2.Id);
                                                 //Console.WriteLine($"{getresult2[0].Description}");
-                                                foreach (var rule in getresult2)
+                                                Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IRules));
+                                                var myClass = implementingTypes.FirstOrDefault(type => type.Name == getresult2.AssemblyMethod);
+                                                if (myClass != null)
                                                 {
-                                                    Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IRules));
-                                                    var myClass = implementingTypes.FirstOrDefault(type => type.Name == rule.AssemblyMethod);
-                                                    if (myClass != null)
-                                                    {
-                                                        var myObject = (IRules)Activator.CreateInstance(myClass);
-                                                        await myObject.ExecuteRule(data, rule);
-                                                        Console.WriteLine($"Trigger fired: {rule.Description}");
-                                                    }
+                                                    var myObject = (IRules)Activator.CreateInstance(myClass);
+                                                    await myObject.ExecuteRule(data, getresult2);
+                                                    Console.WriteLine($"Trigger fired: {getresult2.Description}");
                                                 }
                                                 break;
                                             default:

@@ -21,6 +21,11 @@ namespace PZIOT.Services
                 var list = await BaseDal.Query(whereExpression);
                 if (list.Any())
                 {
+                    if (list.Count > 1)
+                    {
+                        ConsoleHelper.WriteWarningLine($"Alarm:触发器为与数据项为一对一规则,Mate->{mateid}发现多个触发器，请即时处理!");
+                        return null;
+                    }
                     PZIOTEquipmentManager.MateTriggerStringDic.Add(mateid, list[0]);
                 }
 
