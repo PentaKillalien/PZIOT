@@ -405,6 +405,11 @@
             启动json信息
             </summary>
         </member>
+        <member name="P:PZIOT.Model.Models.EquipmentDriverDesc.IsClient">
+            <summary>
+            是否是客户端，不是客户端则是服务端,不会创建新的线程
+            </summary>
+        </member>
         <member name="P:PZIOT.Model.Models.EquipmentMates.EquipmentId">
             <summary>
             设备Id

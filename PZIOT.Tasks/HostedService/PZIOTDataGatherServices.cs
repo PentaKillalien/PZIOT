@@ -12,6 +12,7 @@ using PZIOT.Common.Helper;
 using PZIOT.Tasks.Rule;
 using System.Linq;
 using PZIOT.Tasks.Function;
+using System.Diagnostics;
 
 namespace PZIOT.Tasks
 {
@@ -21,7 +22,6 @@ namespace PZIOT.Tasks
     public class PZIOTDataGatherServices : IHostedService, IDisposable
     {
         private Timer _timer;
-        //private readonly IEquipmentServices _equipmentServices;//查询设备信息
         private readonly IEquipmentMatesServices _equipmentMatesServices;//查询设备数据项信息
         private readonly IEquipmentDataScadaServices _equipmentDataScadaServices;//设备采集数据
         private readonly IEquipmentMatesTriggerIntServices _equipmentMatesTriggerServices;
@@ -34,7 +34,6 @@ namespace PZIOT.Tasks
         // 这里可以注入
         public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
-            //_equipmentServices = equipmentServices;
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
             _equipmentMatesTriggerServices = equipmentMatesTriggerServices;
@@ -72,6 +71,8 @@ namespace PZIOT.Tasks
                         //采集所有的驱动并进行数据存储，目前的模式只能设置整体的采集频率 不支持单个
                         Task.Run(async () =>
                         {
+                            Stopwatch stopwatch = new Stopwatch();
+                            stopwatch.Start();
                             var matesinfo = await _equipmentMatesServices.QueryGlobeDic(it => it.EquipmentId == item.Key,item.Key);
                             foreach (var item2 in matesinfo)
                             {
@@ -169,7 +170,8 @@ namespace PZIOT.Tasks
                                 
                             }
                             
-                            
+                            stopwatch.Stop();
+                            ConsoleHelper.WriteSuccessLine($"设备编号{item.Key}采集耗时:{stopwatch.ElapsedMilliseconds}毫秒");
                         });
                     }
                     else {
