@@ -27,8 +27,6 @@ PZIOT 开箱即用的物联网设备协议采集系统。
 - [x] 设计并支持按钮级别的RBAC权限控制，同时支持一键同步接口和菜单 🎶；
 - [x] 支持 T4 代码模板，自动生成每层代码；
 - [x] 或使用 DbFirst 一键创建自己项目的四层文件（支持多库）；
-- [x] 封装`PZIOT.Webapi.Template`项目模板，一键重建自己的项目 ✨；
-- [x] 搭配多个前端案例供参考和借鉴：Blog.Vue、Blog.Admin、Nuxt.tbug、Blog.Mvp.Blazor ✨；
 - [x] 统一集成 IdentityServer4 认证 ✨;
 
 组件模块：
