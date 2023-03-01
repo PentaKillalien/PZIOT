@@ -1523,6 +1523,483 @@
             找不到指定资源
             </summary>
         </member>
+        <member name="T:PZIOT.Model.RhMes.DataFieldInfo">
+            <summary>
+            字段信息模型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.DataFieldInfo.FieldName">
+            <summary>
+            字段名称
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.DataFieldInfo.FieldDescription">
+            <summary>
+            字段描述
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataFieldInfo.Create(System.String,System.String)">
+            <summary>
+            创建类的实例
+            </summary>
+            <param name="fieldName"></param>
+            <param name="fieldDescription"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.DataFieldInfoExtension">
+            <summary>
+            扩展类
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataFieldInfoExtension.Append(PZIOT.Model.RhMes.DataFieldInfo,System.String,System.String)">
+            <summary>
+            添加字段信息
+            </summary>
+            <param name="info"></param>
+            <param name="fieldName"></param>
+            <param name="fieldDescription"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataFieldInfoExtension.Append(System.Collections.Generic.List{PZIOT.Model.RhMes.DataFieldInfo},System.String,System.String)">
+            <summary>
+            添加字段信息
+            </summary>
+            <param name="fieldInfos"></param>
+            <param name="fieldName"></param>
+            <param name="fieldDescription"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.DataResult">
+            <summary>
+            数据结果
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResult.Create(System.Boolean,System.String)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResult.Create(System.Boolean,System.String,System.Int32)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="message"></param>
+            <param name="record"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResult.Create(System.Boolean,System.String,System.String)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="okMessage"></param>
+            <param name="failMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.DataResult`1">
+            <summary>
+            操作结果
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.DataResult`1.Record">
+            <summary>
+            操作记录数
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.DataResult`1.SkipCount">
+            <summary>
+            跳过数量
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.DataResult`1.DataHeadFields">
+            <summary>
+            数据表头字段类别
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.DataResultExtension">
+            <summary>
+            扩展
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsDataListResult``1(System.Collections.Generic.List{``0},System.String)">
+            <summary>
+            将泛型数据对象转换为数据结果类型，包含异常信息
+            考虑泛型对象为集合对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsPageDataListResult``1(System.Collections.Generic.List{``0},System.Int32,System.String)">
+            <summary>
+            将泛型分页数据对象转换为分页数据结果类型，包含异常信息
+            考虑泛型对象为集合对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsDataSingleResult``1(``0,System.String)">
+            <summary>
+            将泛型数据对象转换为数据结果类型，包含异常信息
+            为单个对象
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsFailDResult``1(System.String,``0)">
+            <summary>
+            将泛型数据对象转换为失败类型的数据结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="msg"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsExceptionDResult``1(System.Exception,``0)">
+            <summary>
+            将泛型数据对象转换为异常类型的数据结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsDataSingleResult``1(``0,System.Boolean,System.String)">
+            <summary>
+            转换为数据结果类型
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.FetchData``1(PZIOT.Model.RhMes.DataResult{``0})">
+            <summary>
+            从数据结果中获取数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.FetchData``1(PZIOT.Model.RhMes.DataResult{System.Collections.Generic.List{``0}},System.Boolean)">
+            <summary>
+            从数据结果中获取数据集合
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <param name="isInit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.SetDataHeadFields``1(PZIOT.Model.RhMes.DataResult{System.Collections.Generic.List{``0}},System.Collections.Generic.List{PZIOT.Model.RhMes.DataFieldInfo})">
+            <summary>
+            设置表头字段数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <param name="fieldInfos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.SetDataHeadFields``1(PZIOT.Model.RhMes.DataResult{``0},System.Collections.Generic.List{PZIOT.Model.RhMes.DataFieldInfo})">
+            <summary>
+            设置表头字段数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <param name="fieldInfos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.ToOpResult``1(PZIOT.Model.RhMes.DataResult{``0})">
+            <summary>
+            将数据Dto转为操作Dto
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.DataResultExtension.ToException``1(PZIOT.Model.RhMes.DataResult{``0})">
+            <summary>
+            将数据Dto转为异常
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Default(System.Object)">
+            <summary>
+            创建操作结果默认的成功实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Failure(System.String)">
+            <summary>
+            创建操作结果默认的失败实例
+            </summary>
+            <param name="failMsg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Create(System.Boolean,System.String)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Create(System.Boolean,System.String,System.Int32)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="message"></param>
+            <param name="record"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Create(System.Boolean,System.String,System.String)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="okMessage"></param>
+            <param name="failMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResult.Create(System.Boolean,System.String,System.String,System.Object)">
+            <summary>
+            创建操作结果实例
+            </summary>
+            <param name="success"></param>
+            <param name="okMessage"></param>
+            <param name="failMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.OpResult`1">
+            <summary>
+            操作结果
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.OpResult`1.Record">
+            <summary>
+            操作记录数
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResultExtension.MapOpResult``2(PZIOT.Model.RhMes.OpResult{System.Collections.Generic.List{``0}},System.Func{``0,``1})">
+            <summary>
+            转为目标类型对象的数据结果类型
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TDestination"></typeparam>
+            <param name="dataResult"></param>
+            <param name="ooMaper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResultExtension.CheckedToOpResult``1(System.Collections.Generic.List{``0})">
+            <summary>
+            检测集合列表，返回检测操作结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResultExtension.AsExceptionOpResult(System.Exception)">
+            <summary>
+            返回操作异常的结果信息
+            </summary>
+            <param name="ex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResultExtension.HandleListData``1(System.Collections.Generic.List{``0},System.Func{``0,PZIOT.Model.RhMes.OpResult})">
+            <summary>
+            处理列表数据，返回操作结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="datas"></param>
+            <param name="handler"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.OpResultExtension.ToException``1(PZIOT.Model.RhMes.OpResult{``0})">
+            <summary>
+            将数据Dto转为异常
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="opResult"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.StoreMsgType">
+            <summary>
+            存储消息类别
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.ReqResult`1">
+            <summary>
+            接口请求返回结果
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqResult`1.Message">
+            <summary>
+            结果信息
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqResult`1.ErrorType">
+            <summary>
+            异常类型
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqResult`1.Success">
+            <summary>
+            结果成功与否标志
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqResult`1.Attach">
+            <summary>
+            附加对象，万能传值对象
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqResult`1.Context">
+            <summary>
+            请求上下文
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.ReqContext">
+            <summary>
+            请求上下文
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.ApiUrl">
+            <summary>
+            调用Url
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.MethodName">
+            <summary>
+            调用方法名称
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.InputPara">
+            <summary>
+            输入的参数
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.HttpMethod">
+            <summary>
+            Http方法
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.StatusCode">
+            <summary>
+            Http状态码
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ReqContext.Headers">
+            <summary>
+            请求头
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.ReqResultExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ReqResultExtensions.FetchData``1(PZIOT.Model.RhMes.ReqResult{``0})">
+            <summary>
+            从数据结果中获取数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dataResult"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ReqResultExtensions.AsSuccessOpResult``1(PZIOT.Model.RhMes.ReqResult{``0},System.String)">
+            <summary>
+            转回正常的操作结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reqResult"></param>
+            <param name="externalSystem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ReqResultExtensions.AsFailOpResult``1(PZIOT.Model.RhMes.ReqResult{``0},System.String)">
+            <summary>
+            转回异常的操作结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reqResult"></param>
+            <param name="externalSystem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ReqResultExtensions.AsFailDataResult``1(PZIOT.Model.RhMes.ReqResult{``0},System.String)">
+            <summary>
+            转回异常的数据结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reqResult"></param>
+            <param name="externalSystem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ReqResultExtensions.AsSuccessDataResult``1(PZIOT.Model.RhMes.ReqResult{``0},System.String)">
+            <summary>
+            转回正常的数据结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reqResult"></param>
+            <param name="externalSystem"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.ResultBase`1">
+            <summary>
+            结果基类
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ResultBase`1.Message">
+            <summary>
+            结果信息
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ResultBase`1.Success">
+            <summary>
+            结果成功与否标志
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.ResultBase`1.Attach">
+            <summary>
+            附加对象，万能传值对象
+            </summary>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.MessagePrefixSetter">
+            <summary>
+            返回值统一处理单例
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.RhMes.MessagePrefixSetter.MessagePrefix">
+            <summary>
+            前缀
+            </summary>
+        </member>
+        <member name="F:PZIOT.Model.RhMes.MessagePrefixSetter.Instance">
+            <summary>
+            实例
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.MessagePrefixSetter.SetMessagePrefix(System.String)">
+            <summary>
+            设置消息前缀
+            </summary>
+            <param name="messagePrefix">消息前缀</param>
+        </member>
+        <member name="T:PZIOT.Model.RhMes.ExtendMethod">
+            <summary>
+            扩展方法
+            </summary>
+        </member>
+        <member name="M:PZIOT.Model.RhMes.ExtendMethod.AsProjectMessage(System.String)">
+            <summary>
+            转换为带有项目信息的返回值
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
         <member name="T:PZIOT.Model.TableModel`1">
             <summary>
             表格数据，支持分页
