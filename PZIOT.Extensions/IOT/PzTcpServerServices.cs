@@ -1,6 +1,9 @@
 ﻿using log4net;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PZIOT.Common;
+using PZIOT.Tasks.Trigger;
 using SuperSocket;
 using SuperSocket.Channel;
 using SuperSocket.ProtoBase;
@@ -17,44 +20,64 @@ namespace PZIOT.Extensions.IOT
     /// <summary>
     /// 客制化项目，服务端
     /// </summary>
-    public class RhBg102TcpServerServices : IHostedService, IDisposable
+    public class PzTcpServerServices : IHostedService, IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(IotService));
         private IHost host;
         public void Dispose()
         {
-            this.Dispose();
+            host.Dispose();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            ConsoleHelper.WriteSuccessLine("Rhbg102服务启动");
-            host = SuperSocketHostBuilder.Create<TextPackageInfo, Cpt300LinePipelineFilter>().UsePackageHandler((s, p) =>
+            //List
+            var triggerData = new PzTcpTriggerData();
+            triggerData.ValueChanged +=  (sender, e) =>
+            {
+                Console.WriteLine($"数据项编号{e.EquipmentIp}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
+                //post
+            };
+            
+            ConsoleHelper.WriteSuccessLine("PzTcpServer服务已启动...");
+            host = SuperSocketHostBuilder.Create<TextPackageInfo, DoublePoundSignPipelineFilter>().UsePackageHandler((s, p) =>
             {
                 try
                 {
-
+                    ConsoleHelper.WriteInfoLine($"pzTcp Recive:{p.Text}");
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(p.Text); //转换为Json对象
+                    int input1 = 0;
+                    var input1Result = int.TryParse(jo["UlKeyPushCount"][0].ToString(), out input1);
+                    int input2 = 0;
+                    var input2Result = int.TryParse(jo["UlKeyPushCount"][1].ToString(), out input2);
+                    int input3 = 0;
+                    var input3Result = int.TryParse(jo["UlKeyPushCount"][2].ToString(), out input3);
+                    int input4 = 0;
+                    var input4Result = int.TryParse(jo["UlKeyPushCount"][3].ToString(), out input4);
+                    string statu = jo["ProductionState"].ToString();
+                    //+1判断就要上传
+                    
                 }
                 catch (Exception ex)
                 {
-                    //p.test去掉尾 然后读出需要的信息，记录到数据库
+                    ConsoleHelper.WriteErrorLine($"pzTcp Recive failed {ex.Message}");
                 }
                 return new ValueTask();
             }).UseSession<CptAppSession>().ConfigureSuperSocket(options =>//配置服务器如服务器名和监听端口等基本信息
                     {
-                        options.Name = "Tcp";
+                        options.Name = "PziotTcpServer";
                         options.ReceiveBufferSize = 2048;
                         options.Listeners = new List<ListenOptions>(){
                         new ListenOptions{
-                         Ip="1988",
-                         Port = 1988
+                         Ip="Any",
+                         Port = 17748
                         }
                         };
                     }).Build();
 
             try
             {
-                host.RunAsync();
+                host.RunAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -65,21 +88,23 @@ namespace PZIOT.Extensions.IOT
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            this.StopAsync(cancellationToken);
+            host.StopAsync(cancellationToken);
             return Task.CompletedTask;
         }
-
-        public class Cpt300LinePipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
+        /// <summary>
+        /// 双##号结尾协议
+        /// </summary>
+        private class DoublePoundSignPipelineFilter : TerminatorPipelineFilter<TextPackageInfo>
         {
             protected Encoding Encoding { get; private set; }
 
-            public Cpt300LinePipelineFilter()
+            public DoublePoundSignPipelineFilter()
                 : this(Encoding.ASCII)
             {
 
             }
 
-            public Cpt300LinePipelineFilter(Encoding encoding)
+            public DoublePoundSignPipelineFilter(Encoding encoding)
                 : base(new[] { (byte)'#', (byte)'#' })
             {
                 Encoding = encoding;
@@ -91,7 +116,7 @@ namespace PZIOT.Extensions.IOT
             }
         }
 
-        public class CptAppSession : AppSession
+        private class CptAppSession : AppSession
         {
 
             protected override ValueTask OnSessionConnectedAsync()

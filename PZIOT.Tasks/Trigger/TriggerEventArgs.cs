@@ -19,7 +19,6 @@ namespace PZIOT.Tasks.Trigger
         private double value;
         public List<EquipmentMatesTriggerInt> rules;
         public event EventHandler<TriggerEventArgs> ValueChanged;
-        public string rulemethod;
         public int mateId;
         public EquipmentDataScada usedata;
         public double Value
@@ -46,15 +45,16 @@ namespace PZIOT.Tasks.Trigger
                 if (value >= rule.MinValue && value <= rule.MaxValue)
                 {
                     Type[] implementingTypes = InterfaceImplementationHelper.GetImplementingTypes(typeof(IRules));
-                    var myClass = implementingTypes.FirstOrDefault(type => type.Name == rulemethod);
+                    var myClass = implementingTypes.FirstOrDefault(type => type.Name == rule.AssemblyMethod);
                     if (myClass != null)
                     {
                         var myObject = (IRules)Activator.CreateInstance(myClass);
                         myObject.ExecuteRule(usedata);
-                        Console.WriteLine($"Trigger fired: {rule.Description}");
+                        Console.WriteLine($"Trigger fired:规则描述 {rule.Description}");
                     }
                 }
             }
+            
 
         }
 

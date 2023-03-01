@@ -17,8 +17,8 @@ namespace PZIOT.Services
         //}
         public EquipmentServices()
         {
-
         }
+        
         /// <summary>
         /// 获取设备详情信息
         /// </summary>
@@ -26,10 +26,8 @@ namespace PZIOT.Services
         /// <returns></returns>
         public async Task<Equipment> GetEquipmentDetails(int id)
         {
-            // 此处想获取上一条下一条数据，因此将全部数据list出来，有好的想法请提出
-            //var bloglist = await base.Query(a => a.IsDeleted==false, a => a.bID);
-            var blogArticle = await base.Query(a => a.Id == id);
-            return blogArticle[0];
+            var eqps = await base.Query(a => a.Id == id);
+            return eqps[0];
 
         }
 

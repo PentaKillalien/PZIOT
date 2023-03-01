@@ -1,4 +1,5 @@
 ﻿using PZIOT.Common.EquipmentDriver;
+using PZIOT.Model.Models;
 using System.Collections.Generic;
 
 namespace PZIOT
@@ -67,5 +68,21 @@ namespace PZIOT
         /// 设备驱动对应关系
         /// </summary>
         public static Dictionary<int, IEquipmentDriver> EquipmentDriverDic{ get; set; }=new Dictionary<int, IEquipmentDriver>();
+        /// <summary>
+        /// 设备数据项对应关系,很少会有写的情况，基本就是处理读
+        /// </summary>
+        public static Dictionary<int, List<EquipmentMates>> EquipmentMatesDic { get; set; } = new Dictionary<int, List<EquipmentMates>>();
+        /// <summary>
+        /// MatesIntTrigger对应关系，很少会有写的情况，基本就是处理读
+        /// </summary>
+        public static Dictionary<int, List<EquipmentMatesTriggerInt>> MateTriggerIntDic { get; set; } = new Dictionary<int, List<EquipmentMatesTriggerInt>>();
+        /// <summary>
+        /// MatesStringTrigger对应关系，很少会有写的情况，基本就是处理读
+        /// </summary>
+        public static Dictionary<int, EquipmentMatesTriggerString> MateTriggerStringDic { get; set; } = new Dictionary<int, EquipmentMatesTriggerString>();
+        /// <summary>
+        /// MatesFunction对应关系，很少会有写的情况，基本就是处理读
+        /// </summary>
+        public static Dictionary<int, EquipmentMatesFunction> MateFunctionDic { get; set; } = new Dictionary<int, EquipmentMatesFunction>();
     }
 }

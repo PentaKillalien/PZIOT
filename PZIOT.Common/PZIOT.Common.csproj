@@ -25,6 +25,7 @@
     <PackageReference Include="MQTTnet" Version="4.1.4.563" />
     <PackageReference Include="NModbus" Version="3.0.72" />
     <PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+    <PackageReference Include="POmronFinsTCP.Net" Version="3.3.0" />
     <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="RSAExtensions" Version="1.1.0" />
     <PackageReference Include="S7netplus" Version="0.16.0" />

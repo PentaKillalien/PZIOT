@@ -1,4 +1,5 @@
-﻿using PZIOT.Model.PZIOTModels;
+﻿using PZIOT.Common.Helper;
+using PZIOT.Model.PZIOTModels;
 using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace PZIOT.Common.EquipmentDriver
         void client_DataReceived(object sender, DataEventArgs e)
         {
             //接收服务端的回复，不然就是等待
-            currentData = Encoding.ASCII.GetString(e.Data);
+            currentData = Encoding.ASCII.GetString(ByteHelper.BytesTrimEnd(e.Data));
             currentCount++ ;
         }
         /// <summary>

@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PZIOT.Common\PZIOT.Common.csproj" />
     <ProjectReference Include="..\PZIOT.IServices\PZIOT.IServices.csproj" />
   </ItemGroup>
 
