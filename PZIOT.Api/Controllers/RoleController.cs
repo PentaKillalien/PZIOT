@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using PZIOT.Common.HttpContextUser;
+﻿using PZIOT.Common.HttpContextUser;
 using PZIOT.IServices;
 using PZIOT.Model;
 using PZIOT.Model.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -34,7 +34,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // GET: api/User
         [HttpGet]
-        public async Task<MessageModel<PageModel<Role>>> Get(int page = 1, string key = "")
+        public async Task<DataResult<PageModel<Role>>> Get(int page = 1, string key = "")
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
@@ -45,7 +45,7 @@ namespace PZIOT.Controllers
 
             var data = await _roleServices.QueryPage(a => a.IsDeleted != true && (a.Name != null && a.Name.Contains(key)), page, intPageSize, " Id desc ");
 
-            //return new MessageModel<PageModel<Role>>()
+            //return new DataResult<PageModel<Role>>()
             //{
             //    msg = "获取成功",
             //    success = data.dataCount >= 0,
@@ -70,7 +70,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // POST: api/User
         [HttpPost]
-        public async Task<MessageModel<string>> Post([FromBody] Role role)
+        public async Task<DataResult<string>> Post([FromBody] Role role)
         {
             role.CreateId = _user.ID;
             role.CreateBy = _user.Name;
@@ -86,14 +86,14 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // PUT: api/User/5
         [HttpPut]
-        public async Task<MessageModel<string>> Put([FromBody] Role role)
+        public async Task<DataResult<string>> Put([FromBody] Role role)
         {
             if (role == null || role.Id <= 0)
                 return Failed("缺少参数");
 
             return await _roleServices.Update(role) ? Success(role?.Id.ObjToString(),"更新成功") : Failed("更新失败");
 
-            //var data = new MessageModel<string>();
+            //var data = new DataResult<string>();
             //if (role != null && role.Id > 0)
             //{
             //    data.success = await _roleServices.Update(role);
@@ -113,10 +113,10 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete]
-        public async Task<MessageModel<string>> Delete(int id)
+        public async Task<DataResult<string>> Delete(int id)
         {
             
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             //if (id > 0)
             //{
             //    var userDetail = await _roleServices.QueryById(id);

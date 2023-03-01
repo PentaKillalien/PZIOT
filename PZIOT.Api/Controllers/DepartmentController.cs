@@ -15,6 +15,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Api.Controllers
 {
@@ -33,7 +34,7 @@ namespace PZIOT.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<MessageModel<PageModel<Department>>> Get(int page = 1, string key = "", int intPageSize = 50)
+        public async Task<DataResult<PageModel<Department>>> Get(int page = 1, string key = "", int intPageSize = 50)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
@@ -42,23 +43,23 @@ namespace PZIOT.Api.Controllers
 
             Expression<Func<Department, bool>> whereExpression = a => true;
 
-            return new MessageModel<PageModel<Department>>()
+            return new DataResult<PageModel<Department>>()
             {
-                msg = "获取成功",
-                success = true,
-                response = await _departmentServices.QueryPage(whereExpression, page, intPageSize)
+                Message = "获取成功",
+                Success = true,
+                Attach = await _departmentServices.QueryPage(whereExpression, page, intPageSize)
             };
 
         }
 
         [HttpGet("{id}")]
-        public async Task<MessageModel<Department>> Get(string id)
+        public async Task<DataResult<Department>> Get(string id)
         {
-            return new MessageModel<Department>()
+            return new DataResult<Department>()
             {
-                msg = "获取成功",
-                success = true,
-                response = await _departmentServices.QueryById(id)
+                Message = "获取成功",
+                Success = true,
+                Attach = await _departmentServices.QueryById(id)
             };
         }
 
@@ -70,7 +71,7 @@ namespace PZIOT.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<List<Department>>> GetTreeTable(long f = 0, string key = "")
+        public async Task<DataResult<List<Department>>> GetTreeTable(long f = 0, string key = "")
         {
             List<Department> departments = new List<Department>();
             var departmentList = await _departmentServices.Query(d => d.IsDeleted == false);
@@ -116,7 +117,7 @@ namespace PZIOT.Api.Controllers
         /// <param name="pid"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<DepartmentTree>> GetDepartmentTree(int pid = 0)
+        public async Task<DataResult<DepartmentTree>> GetDepartmentTree(int pid = 0)
         {
             var departments = await _departmentServices.Query(d => d.IsDeleted == false);
             var departmentTrees = (from child in departments
@@ -161,30 +162,30 @@ namespace PZIOT.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<MessageModel<string>> Put([FromBody] Department request)
+        public async Task<DataResult<string>> Put([FromBody] Department request)
         {
-            var data = new MessageModel<string>();
-            data.success = await _departmentServices.Update(request);
-            if (data.success)
+            var data = new DataResult<string>();
+            data.Success = await _departmentServices.Update(request);
+            if (data.Success)
             {
-                data.msg = "更新成功";
-                data.response = request?.Id.ObjToString();
+                data.Message = "更新成功";
+                data.Attach = request?.Id.ObjToString();
             }
 
             return data;
         }
 
         [HttpDelete]
-        public async Task<MessageModel<string>> Delete(int id)
+        public async Task<DataResult<string>> Delete(int id)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             var model = await _departmentServices.QueryById(id);
             model.IsDeleted = true;
-            data.success = await _departmentServices.Update(model);
-            if (data.success)
+            data.Success = await _departmentServices.Update(model);
+            if (data.Success)
             {
-                data.msg = "删除成功";
-                data.response = model?.Id.ObjToString();
+                data.Message = "删除成功";
+                data.Attach = model?.Id.ObjToString();
             }
              
 
@@ -193,9 +194,9 @@ namespace PZIOT.Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<string>> SaveData2Tsv()
+        public async Task<DataResult<string>> SaveData2Tsv()
         {
-            var data = new MessageModel<string>() { success = true, msg = "" };
+            var data = new DataResult<string>() { Success = true, Message = "" };
             if (_env.IsDevelopment())
             {
 
@@ -207,13 +208,13 @@ namespace PZIOT.Api.Controllers
                 var rolesJson = JsonConvert.SerializeObject(await _departmentServices.Query(d => d.IsDeleted == false), microsoftDateFormatSettings);
                 FileHelper.WriteFile(Path.Combine(_env.WebRootPath, "BlogCore.Data.json", "Department_New.tsv"), rolesJson, Encoding.UTF8);
 
-                data.success = true;
-                data.msg = "生成成功！";
+                data.Success = true;
+                data.Message = "生成成功！";
             }
             else
             {
-                data.success = false;
-                data.msg = "当前不处于开发模式，代码生成不可用！";
+                data.Success = false;
+                data.Message = "当前不处于开发模式，代码生成不可用！";
             }
 
             return data;

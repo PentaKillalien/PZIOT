@@ -1,6 +1,8 @@
 ﻿using PZIOT.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using PZIOT.Model.RhMes;
+using PZIOT.Common.WebApiClients.HttpApis;
 
 namespace PZIOT.Controllers
 {
@@ -11,13 +13,13 @@ namespace PZIOT.Controllers
     {
         
         [NonAction]
-        public MessageModel<T> Success<T>(T data, string msg = "成功")
+        public DataResult<T> Success<T>(T data, string msg = "成功")
         {
-            return new MessageModel<T>()
+            return new DataResult<T>()
             {
-                success = true,
-                msg = msg,
-                response = data,
+                Success = true,
+                Message = msg,
+                Attach = data
             };
         }
         // [NonAction]
@@ -31,58 +33,57 @@ namespace PZIOT.Controllers
         //    };
         //}
         [NonAction]
-        public MessageModel Success(string msg = "成功")
+        public DataResult Success(string msg = "成功")
         {
-            return new MessageModel()
+            return new DataResult()
             {
-                success = true,
-                msg = msg,
-                response = null,
+                Success = true,
+                Message = msg,
+                Attach = null
             };
         }
         [NonAction]
-        public MessageModel<string> Failed(string msg = "失败", int status = 500)
+        public DataResult<string> Failed(string msg = "失败", int status = 500)
         {
-            return new MessageModel<string>()
+            return new DataResult<string>()
             {
-                success = false,
-                status = status,
-                msg = msg,
-                response = null,
+                Success = true,
+                Message = msg,
+                Attach = null,
+                Status= status
             };
         }
         [NonAction]
-        public MessageModel<T> Failed<T>(string msg = "失败", int status = 500)
+        public DataResult<T> Failed<T>(string msg = "失败", int status = 500)
         {
-            return new MessageModel<T>()
+            return new DataResult<T>()
             {
-                success = false,
-                status = status,
-                msg = msg,
-                response = default,
+                Success = true,
+                Message = msg,
+                Status = status
             };
         }
         [NonAction]
-        public MessageModel<PageModel<T>> SuccessPage<T>(int page, int dataCount, int pageSize, List<T> data, int pageCount, string msg = "获取成功")
+        public DataResult<PageModel<T>> SuccessPage<T>(int page, int dataCount, int pageSize, List<T> data, int pageCount, string msg = "获取成功")
         {
 
-            return new MessageModel<PageModel<T>>()
+            return new DataResult<PageModel<T>>()
             {
-                success = true,
-                msg = msg,
-                response = new PageModel<T>(page, dataCount, pageSize, data)
+                Success = true,
+                Message = msg,
+                Attach = new PageModel<T>(page, dataCount, pageSize, data)
 
             };
         }
         [NonAction]
-        public MessageModel<PageModel<T>> SuccessPage<T>(PageModel<T> pageModel, string msg = "获取成功")
+        public DataResult<PageModel<T>> SuccessPage<T>(PageModel<T> pageModel, string msg = "获取成功")
         {
 
-            return new MessageModel<PageModel<T>>()
+            return new DataResult<PageModel<T>>()
             {
-                success = true,
-                msg = msg,
-                response = pageModel
+                Success = true,
+                Message = msg,
+                Attach = pageModel
             };
         }
     }

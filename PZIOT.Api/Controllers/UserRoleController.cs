@@ -6,6 +6,7 @@ using PZIOT.Model.Models;
 using PZIOT.Model.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -47,14 +48,14 @@ namespace PZIOT.Controllers
         /// <param name="loginPwd"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<SysUserInfoDto>> AddUser(string loginName, string loginPwd)
+        public async Task<DataResult<SysUserInfoDto>> AddUser(string loginName, string loginPwd)
         {
             var userInfo = await _sysUserInfoServices.SaveUserInfo(loginName, loginPwd);
-            return new MessageModel<SysUserInfoDto>()
+            return new DataResult<SysUserInfoDto>()
             {
-                success = true,
-                msg = "添加成功",
-                response = _mapper.Map<SysUserInfoDto>(userInfo)
+                Success = true,
+                Message = "添加成功",
+                Attach = _mapper.Map<SysUserInfoDto>(userInfo)
             };
         }
 
@@ -64,13 +65,13 @@ namespace PZIOT.Controllers
         /// <param name="roleName"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<Role>> AddRole(string roleName)
+        public async Task<DataResult<Role>> AddRole(string roleName)
         {
-            return new MessageModel<Role>()
+            return new DataResult<Role>()
             {
-                success = true,
-                msg = "添加成功",
-                response = await _roleServices.SaveRole(roleName)
+                Success = true,
+                Message = "添加成功",
+                Attach = await _roleServices.SaveRole(roleName)
             };
         }
 
@@ -81,13 +82,13 @@ namespace PZIOT.Controllers
         /// <param name="rid"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<UserRole>> AddUserRole(int uid, int rid)
+        public async Task<DataResult<UserRole>> AddUserRole(int uid, int rid)
         {
-            return new MessageModel<UserRole>()
+            return new DataResult<UserRole>()
             {
-                success = true,
-                msg = "添加成功",
-                response = await _userRoleServices.SaveUserRole(uid, rid)
+                Success = true,
+                Message = "添加成功",
+                Attach = await _userRoleServices.SaveUserRole(uid, rid)
             };
         }
 

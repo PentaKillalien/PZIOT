@@ -1632,6 +1632,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="datas"></param>
+            <param name="exception"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsPageDataListResult``1(System.Collections.Generic.List{``0},System.Int32,System.String)">
@@ -1641,6 +1642,8 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="datas"></param>
+            <param name="totalCount"></param>
+            <param name="exception"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsDataSingleResult``1(``0,System.String)">
@@ -1650,6 +1653,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="data"></param>
+            <param name="exception"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsFailDResult``1(System.String,``0)">
@@ -1666,15 +1670,19 @@
             将泛型数据对象转换为异常类型的数据结果
             </summary>
             <typeparam name="T"></typeparam>
+            <param name="ex"></param>
             <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Model.RhMes.DataResultExtension.AsDataSingleResult``1(``0,System.Boolean,System.String)">
             <summary>
             转换为数据结果类型
+            
             </summary>
             <typeparam name="T"></typeparam>
             <param name="data"></param>
+            <param name="success"></param>
+            <param name="message"></param>
             <returns></returns>
         </member>
         <member name="M:PZIOT.Model.RhMes.DataResultExtension.FetchData``1(PZIOT.Model.RhMes.DataResult{``0})">
@@ -1774,6 +1782,7 @@
             <param name="success"></param>
             <param name="okMessage"></param>
             <param name="failMessage"></param>
+            <param name="attach"></param>
             <returns></returns>
         </member>
         <member name="T:PZIOT.Model.RhMes.OpResult`1">

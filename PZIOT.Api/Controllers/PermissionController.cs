@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -64,7 +65,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // GET: api/User
         [HttpGet]
-        public async Task<MessageModel<PageModel<Permission>>> Get(int page = 1, string key = "")
+        public async Task<DataResult<PageModel<Permission>>> Get(int page = 1, string key = "")
         {
             PageModel<Permission> permissions = new PageModel<Permission>();
             int intPageSize = 50;
@@ -137,11 +138,11 @@ namespace PZIOT.Controllers
             #endregion
 
 
-            //return new MessageModel<PageModel<Permission>>()
+            //return new DataResult<PageModel<Permission>>()
             //{
-            //    msg = "获取成功",
-            //    success = permissions.dataCount >= 0,
-            //    response = permissions
+            //    Message = "获取成功",
+            //    Success = permissions.dataCount >= 0,
+            //    Attach = permissions
             //};
 
             return permissions.dataCount >= 0 ? Success(permissions, "获取成功") : Failed<PageModel<Permission>>("获取失败");
@@ -156,7 +157,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<List<Permission>>> GetTreeTable(int f = 0, string key = "")
+        public async Task<DataResult<List<Permission>>> GetTreeTable(int f = 0, string key = "")
         {
             List<Permission> permissions = new List<Permission>();
             var apiList = await _moduleServices.Query(d => d.IsDeleted == false);
@@ -197,11 +198,11 @@ namespace PZIOT.Controllers
             }
 
 
-            //return new MessageModel<List<Permission>>()
+            //return new DataResult<List<Permission>>()
             //{
-            //    msg = "获取成功",
-            //    success = true,
-            //    response = permissions
+            //    Message = "获取成功",
+            //    Success = true,
+            //    Attach = permissions
             //};
             return Success(permissions, "获取成功");
         }
@@ -213,19 +214,19 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // POST: api/User
         [HttpPost]
-        public async Task<MessageModel<string>> Post([FromBody] Permission permission)
+        public async Task<DataResult<string>> Post([FromBody] Permission permission)
         {
-            //var data = new MessageModel<string>();
+            //var data = new DataResult<string>();
 
             permission.CreateId = _user.ID;
             permission.CreateBy = _user.Name;
 
             var id = (await _permissionServices.Add(permission));
-            //data.success = id > 0;
-            //if (data.success)
+            //data.Success = id > 0;
+            //if (data.Success)
             //{
-            //    data.response = id.ObjToString();
-            //    data.msg = "添加成功";
+            //    data.Attach = id.ObjToString();
+            //    data.Message = "添加成功";
             //}
 
 
@@ -238,19 +239,19 @@ namespace PZIOT.Controllers
         /// <param name="assignView"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<MessageModel<string>> Assign([FromBody] AssignView assignView)
+        public async Task<DataResult<string>> Assign([FromBody] AssignView assignView)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
 
 
             if (assignView.rid > 0)
             {
-                data.success = true;
+                data.Success = true;
 
                 var roleModulePermissions = await _roleModulePermissionServices.Query(d => d.RoleId == assignView.rid);
 
                 var remove = roleModulePermissions.Where(d => !assignView.pids.Contains(d.PermissionId.ObjToInt())).Select(c => (object)c.Id);
-                data.success &= remove.Any() ? await _roleModulePermissionServices.DeleteByIds(remove.ToArray()) : true;
+                data.Success &= remove.Any() ? await _roleModulePermissionServices.DeleteByIds(remove.ToArray()) : true;
 
                 foreach (var item in assignView.pids)
                 {
@@ -271,7 +272,7 @@ namespace PZIOT.Controllers
                         roleModulePermission.CreateId = _user.ID;
                         roleModulePermission.CreateBy = _user.Name;
 
-                        data.success &= (await _roleModulePermissionServices.Add(roleModulePermission)) > 0;
+                        data.Success &= (await _roleModulePermissionServices.Add(roleModulePermission)) > 0;
 
                     }
                     else
@@ -287,11 +288,11 @@ namespace PZIOT.Controllers
                     }
                 }
 
-                if (data.success)
+                if (data.Success)
                 {
                     _requirement.Permissions.Clear();
-                    data.response = "";
-                    data.msg = "保存成功";
+                    data.Attach = "";
+                    data.Message = "保存成功";
                 }
 
             }
@@ -308,9 +309,9 @@ namespace PZIOT.Controllers
         /// <param name="needbtn"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<PermissionTree>> GetPermissionTree(int pid = 0, bool needbtn = false)
+        public async Task<DataResult<PermissionTree>> GetPermissionTree(int pid = 0, bool needbtn = false)
         {
-            //var data = new MessageModel<PermissionTree>();
+            //var data = new DataResult<PermissionTree>();
 
             var permissions = await _permissionServices.Query(d => d.IsDeleted == false);
             var permissionTrees = (from child in permissions
@@ -336,11 +337,11 @@ namespace PZIOT.Controllers
 
             RecursionHelper.LoopToAppendChildren(permissionTrees, rootRoot, pid, needbtn);
 
-            //data.success = true;
-            //if (data.success)
+            //data.Success = true;
+            //if (data.Success)
             //{
-            //    data.response = rootRoot;
-            //    data.msg = "获取成功";
+            //    data.Attach = rootRoot;
+            //    data.Message = "获取成功";
             //}
 
             return Success(rootRoot, "获取成功");
@@ -353,10 +354,10 @@ namespace PZIOT.Controllers
         /// <param name="uid"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<NavigationBar>> GetNavigationBar(int uid)
+        public async Task<DataResult<NavigationBar>> GetNavigationBar(int uid)
         {
 
-            var data = new MessageModel<NavigationBar>();
+            var data = new DataResult<NavigationBar>();
 
             var uidInHttpcontext1 = 0;
             var roleIds = new List<int>();
@@ -427,11 +428,11 @@ namespace PZIOT.Controllers
                         permissionTrees = permissionTrees.OrderBy(d => d.order).ToList();
                         RecursionHelper.LoopNaviBarAppendChildren(permissionTrees, rootRoot);
 
-                        data.success = true;
-                        if (data.success)
+                        data.Success = true;
+                        if (data.Success)
                         {
-                            data.response = rootRoot;
-                            data.msg = "获取成功";
+                            data.Attach = rootRoot;
+                            data.Message = "获取成功";
                         }
                     }
                 }
@@ -445,9 +446,9 @@ namespace PZIOT.Controllers
         /// <param name="uid"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<List<NavigationBarPro>>> GetNavigationBarPro(int uid)
+        public async Task<DataResult<List<NavigationBarPro>>> GetNavigationBarPro(int uid)
         {
-            var data = new MessageModel<List<NavigationBarPro>>();
+            var data = new DataResult<List<NavigationBarPro>>();
 
             var uidInHttpcontext1 = 0;
             var roleIds = new List<int>();
@@ -503,11 +504,11 @@ namespace PZIOT.Controllers
 
                         permissionTrees = permissionTrees.OrderBy(d => d.order).ToList();
 
-                        data.success = true;
-                        if (data.success)
+                        data.Success = true;
+                        if (data.Success)
                         {
-                            data.response = permissionTrees;
-                            data.msg = "获取成功";
+                            data.Attach = permissionTrees;
+                            data.Message = "获取成功";
                         }
                     }
                 }
@@ -522,9 +523,9 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<AssignShow>> GetPermissionIdByRoleId(int rid = 0)
+        public async Task<DataResult<AssignShow>> GetPermissionIdByRoleId(int rid = 0)
         {
-            //var data = new MessageModel<AssignShow>();
+            //var data = new DataResult<AssignShow>();
 
             var rmps = await _roleModulePermissionServices.Query(d => d.IsDeleted == false && d.RoleId == rid);
             var permissionTrees = (from child in rmps
@@ -544,15 +545,15 @@ namespace PZIOT.Controllers
                 }
             }
 
-            //data.success = true;
-            //if (data.success)
+            //data.Success = true;
+            //if (data.Success)
             //{
-            //    data.response = new AssignShow()
+            //    data.Attach = new AssignShow()
             //    {
             //        permissionids = permissionTrees,
             //        assignbtns = assignbtns,
             //    };
-            //    data.msg = "获取成功";
+            //    data.Message = "获取成功";
             //}
 
             return Success(new AssignShow()
@@ -571,17 +572,17 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // PUT: api/User/5
         [HttpPut]
-        public async Task<MessageModel<string>> Put([FromBody] Permission permission)
+        public async Task<DataResult<string>> Put([FromBody] Permission permission)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             if (permission != null && permission.Id > 0)
             {
-                data.success = await _permissionServices.Update(permission);
+                data.Success = await _permissionServices.Update(permission);
                 await _roleModulePermissionServices.UpdateModuleId(permission.Id, permission.Mid);
-                if (data.success)
+                if (data.Success)
                 {
-                    data.msg = "更新成功";
-                    data.response = permission?.Id.ObjToString();
+                    data.Message = "更新成功";
+                    data.Attach = permission?.Id.ObjToString();
                 }
             }
 
@@ -595,18 +596,18 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete]
-        public async Task<MessageModel<string>> Delete(int id)
+        public async Task<DataResult<string>> Delete(int id)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             if (id > 0)
             {
                 var userDetail = await _permissionServices.QueryById(id);
                 userDetail.IsDeleted = true;
-                data.success = await _permissionServices.Update(userDetail);
-                if (data.success)
+                data.Success = await _permissionServices.Update(userDetail);
+                if (data.Success)
                 {
-                    data.msg = "删除成功";
-                    data.response = userDetail?.Id.ObjToString();
+                    data.Message = "删除成功";
+                    data.Attach = userDetail?.Id.ObjToString();
                 }
             }
 
@@ -620,9 +621,9 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // POST: api/User
         [HttpPost]
-        public async Task<MessageModel<string>> BatchPost([FromBody] List<Permission> permissions)
+        public async Task<DataResult<string>> BatchPost([FromBody] List<Permission> permissions)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             string ids = string.Empty;
             int sucCount = 0;
 
@@ -638,11 +639,11 @@ namespace PZIOT.Controllers
                 }
             }
 
-            data.success = ids.IsNotEmptyOrNull();
-            if (data.success)
+            data.Success = ids.IsNotEmptyOrNull();
+            if (data.Success)
             {
-                data.response = ids;
-                data.msg = $"{sucCount}条数据添加成功";
+                data.Attach = ids;
+                data.Message = $"{sucCount}条数据添加成功";
             }
 
             return data;
@@ -656,12 +657,12 @@ namespace PZIOT.Controllers
         /// <param name="isAction">是否执行迁移到数据</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<List<Permission>>> MigratePermission(string controllerName = "", int pid = 0, bool isAction = false)
+        public async Task<DataResult<List<Permission>>> MigratePermission(string controllerName = "", int pid = 0, bool isAction = false)
         {
-            var data = new MessageModel<List<Permission>>();
+            var data = new DataResult<List<Permission>>();
             if (controllerName.IsNullOrEmpty())
             {
-                data.msg = "必须填写要迁移的所属接口的控制器名称";
+                data.Message = "必须填写要迁移的所属接口的控制器名称";
                 return data;
             }
 
@@ -672,13 +673,13 @@ namespace PZIOT.Controllers
 
             if (jsonFileDomain.IsNullOrEmpty())
             {
-                data.msg = "Swagger.json在线文件域名不能为空";
+                data.Message = "Swagger.json在线文件域名不能为空";
                 return data;
             }
 
             var url = $"{jsonFileDomain}/swagger/V2/swagger.json";
-            var response = await client.GetAsync(url);
-            var body = await response.Content.ReadAsStringAsync();
+            var Attach = await client.GetAsync(url);
+            var body = await Attach.Content.ReadAsStringAsync();
 
             var resultJObj = (JObject)JsonConvert.DeserializeObject(body);
             var paths = resultJObj["paths"].ObjToString();
@@ -753,9 +754,9 @@ namespace PZIOT.Controllers
                 }
             }
 
-            data.response = permissions;
-            data.status = 200;
-            data.success = isAction;
+            data.Attach = permissions;
+            data.Status = 200;
+            data.Success = isAction;
 
             return data;
         }

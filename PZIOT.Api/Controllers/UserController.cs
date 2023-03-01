@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using PZIOT.AuthHelper.OverWrite;
 using PZIOT.Common.Helper;
@@ -13,7 +12,7 @@ using PZIOT.Model.ViewModels;
 using PZIOT.Repository.UnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -69,7 +68,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // GET: api/User
         [HttpGet]
-        public async Task<MessageModel<PageModel<SysUserInfoDto>>> Get(int page = 1, string key = "")
+        public async Task<DataResult<PageModel<SysUserInfoDto>>> Get(int page = 1, string key = "")
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
@@ -142,9 +141,9 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<SysUserInfoDto>> GetInfoByToken(string token)
+        public async Task<DataResult<SysUserInfoDto>> GetInfoByToken(string token)
         {
-            var data = new MessageModel<SysUserInfoDto>();
+            var data = new DataResult<SysUserInfoDto>();
             if (!string.IsNullOrEmpty(token))
             {
                 var tokenModel = JwtHelper.SerializeJwt(token);
@@ -153,9 +152,9 @@ namespace PZIOT.Controllers
                     var userinfo = await _sysUserInfoServices.QueryById(tokenModel.Uid);
                     if (userinfo != null)
                     {
-                        data.response = _mapper.Map<SysUserInfoDto>(userinfo);
-                        data.success = true;
-                        data.msg = "获取成功";
+                        data.Attach = _mapper.Map<SysUserInfoDto>(userinfo);
+                        data.Success = true;
+                        data.Message = "获取成功";
                     }
                 }
             }
@@ -170,19 +169,19 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // POST: api/User
         [HttpPost]
-        public async Task<MessageModel<string>> Post([FromBody] SysUserInfoDto sysUserInfo)
+        public async Task<DataResult<string>> Post([FromBody] SysUserInfoDto sysUserInfo)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
 
             sysUserInfo.uLoginPWD = MD5Helper.MD5Encrypt32(sysUserInfo.uLoginPWD);
             sysUserInfo.uRemark = _user.Name;
 
             var id = await _sysUserInfoServices.Add(_mapper.Map<SysUserInfo>(sysUserInfo));
-            data.success = id > 0;
-            if (data.success)
+            data.Success = id > 0;
+            if (data.Success)
             {
-                data.response = id.ObjToString();
-                data.msg = "添加成功";
+                data.Attach = id.ObjToString();
+                data.Message = "添加成功";
             }
 
             return data;
@@ -195,10 +194,10 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // PUT: api/User/5
         [HttpPut]
-        public async Task<MessageModel<string>> Put([FromBody] SysUserInfoDto sysUserInfo)
+        public async Task<DataResult<string>> Put([FromBody] SysUserInfoDto sysUserInfo)
         {
             // 这里使用事务处理
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
 
             var oldUser = await _sysUserInfoServices.QueryById(sysUserInfo.uID);
             if (oldUser is not { Id: > 0 })
@@ -244,14 +243,14 @@ namespace PZIOT.Controllers
                     await _userRoleServices.Add(userRolsAdd);
                 }
 
-                data.success = await _sysUserInfoServices.Update(oldUser);
+                data.Success = await _sysUserInfoServices.Update(oldUser);
 
                 _unitOfWorkManage.CommitTran();
 
-                if (data.success)
+                if (data.Success)
                 {
-                    data.msg = "更新成功";
-                    data.response = oldUser.Id.ObjToString();
+                    data.Message = "更新成功";
+                    data.Attach = oldUser.Id.ObjToString();
                 }
             }
             catch (Exception e)
@@ -270,18 +269,18 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // DELETE: api/ApiWithActions/5
         [HttpDelete]
-        public async Task<MessageModel<string>> Delete(int id)
+        public async Task<DataResult<string>> Delete(int id)
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             if (id > 0)
             {
                 var userDetail = await _sysUserInfoServices.QueryById(id);
                 userDetail.IsDeleted = true;
-                data.success = await _sysUserInfoServices.Update(userDetail);
-                if (data.success)
+                data.Success = await _sysUserInfoServices.Update(userDetail);
+                if (data.Success)
                 {
-                    data.msg = "删除成功";
-                    data.response = userDetail?.Id.ObjToString();
+                    data.Message = "删除成功";
+                    data.Attach = userDetail?.Id.ObjToString();
                 }
             }
 

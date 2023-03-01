@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nacos.V2;
 using System.Threading.Tasks;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Api.Controllers
 {
@@ -45,14 +46,14 @@ namespace PZIOT.Api.Controllers
         /// <returns></returns>
         [HttpGet]
 
-        public MessageModel<string> CheckSystemStartFinish()
+        public DataResult<string> CheckSystemStartFinish()
         {
             //********************* 用当前接口做基本健康检查 确定 基础服务 数据库 缓存都已正常启动*****
             // 然后再进行服务上线
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             // ***************  此处请求一下db 跟redis连接等 项目中简介 保证项目已全部启动
-            data.success = true;
-            data.msg = "SUCCESS";
+            data.Success = true;
+            data.Message = "SUCCESS";
             return data;
 
         }
@@ -63,15 +64,15 @@ namespace PZIOT.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<string>> GetStatus()
+        public async Task<DataResult<string>> GetStatus()
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             var instances = await NacosNamingService.GetAllInstances(JsonConfigSettings.NacosServiceName);
             if (instances == null || instances.Count == 0)
             {
-                data.status = 406;
-                data.msg = "DOWN";
-                data.success = false;
+                data.Status = 406;
+                data.Message = "DOWN";
+                data.Success = false;
                 return data;
             }
             // 获取当前程序IP
@@ -85,16 +86,16 @@ namespace PZIOT.Api.Controllers
             // var baseUrl = await NacosNamingService.GetServerStatus();
             if (isUp)
             {
-                data.status = 200;
-                data.msg = "UP";
-                data.success = true;
+                data.Status = 200;
+                data.Message = "UP";
+                data.Success = true;
                 return data;
             }
             else
             {
-                data.status = 406;
-                data.msg = "DOWN";
-                data.success = false;
+                data.Status = 406;
+                data.Message = "DOWN";
+                data.Success = false;
                 return data;
             }
         }
@@ -105,9 +106,9 @@ namespace PZIOT.Api.Controllers
         /// <returns></returns>
  
         [HttpGet]
-        public async Task<MessageModel<string>> Register()
+        public async Task<DataResult<string>> Register()
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             var instance = new Nacos.V2.Naming.Dtos.Instance()
             {
                 ServiceName = JsonConfigSettings.NacosServiceName,
@@ -119,8 +120,8 @@ namespace PZIOT.Api.Controllers
                 Metadata = JsonConfigSettings.NacosMetadata
             };
             await NacosNamingService.RegisterInstance(JsonConfigSettings.NacosServiceName, Nacos.V2.Common.Constants.DEFAULT_GROUP, instance);
-            data.success = true;
-            data.msg = "SUCCESS";
+            data.Success = true;
+            data.Message = "SUCCESS";
             return data;
         }
 
@@ -129,12 +130,12 @@ namespace PZIOT.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<string>> Deregister()
+        public async Task<DataResult<string>> Deregister()
         {
-            var data = new MessageModel<string>();
+            var data = new DataResult<string>();
             await NacosNamingService.DeregisterInstance(JsonConfigSettings.NacosServiceName, Nacos.V2.Common.Constants.DEFAULT_GROUP, IpHelper.GetCurrentIp(null), JsonConfigSettings.NacosPort);
-            data.success = true;
-            data.msg = "SUCCESS";
+            data.Success = true;
+            data.Message = "SUCCESS";
             return data;
         }
     }

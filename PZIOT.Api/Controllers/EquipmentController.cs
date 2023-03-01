@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using static PZIOT.Extensions.CustomApiVersion;
 using PZIOT.Extensions;
 using PZIOT.Services;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -44,7 +45,7 @@ namespace PZIOT.Controllers
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<PageModel<Equipment>>> Get(int id, int page = 1, string eqp = "1", string key = "")
+        public async Task<DataResult<PageModel<Equipment>>> Get(int id, int page = 1, string eqp = "1", string key = "")
         {
             await _redisBasketRepository.ListLeftPushAsync("JJBO","ccc",0);
             //Console.WriteLine($"redis放入数据成功{await _redisBasketRepository.ListLeftPopAsync(RedisMqKey.Loging,0)}")
@@ -73,7 +74,7 @@ namespace PZIOT.Controllers
         [HttpGet("{id}")]
         //[Authorize(Policy = "Scope_BlogModule_Policy")]
         [Authorize]
-        public async Task<MessageModel<Equipment>> Get(int id)
+        public async Task<DataResult<Equipment>> Get(int id)
         {
             return Success(await _equipmentServices.GetEquipmentDetails(id));
         }
@@ -93,7 +94,7 @@ namespace PZIOT.Controllers
         //和上边的版本控制以及路由地址都是一样的
 
         [CustomRoute(ApiVersions.V2, "Blogtest")]
-        public MessageModel<string> V2_Blogtest()
+        public DataResult<string> V2_Blogtest()
         {
             return Success<string>("我是第二版的设备信息");
         }
@@ -106,7 +107,7 @@ namespace PZIOT.Controllers
         [HttpPost]
         //[Authorize(Policy = "Scope_BlogModule_Policy")]
         [Authorize]
-        public async Task<MessageModel<string>> Post([FromBody] Equipment equipment)
+        public async Task<DataResult<string>> Post([FromBody] Equipment equipment)
         {
             var id = (await _equipmentServices.Add(equipment));
             return id > 0 ? Success<string>(id.ObjToString()) : Failed("添加失败");
@@ -122,7 +123,7 @@ namespace PZIOT.Controllers
         [HttpPut]
         [Route("Update")]
         [Authorize(Permissions.Name)]
-        public async Task<MessageModel<string>> Put([FromBody] Equipment equipment)
+        public async Task<DataResult<string>> Put([FromBody] Equipment equipment)
         {
             if (equipment != null && equipment.Id > 0)
             {
@@ -152,7 +153,7 @@ namespace PZIOT.Controllers
         [HttpDelete]
         [Authorize(Permissions.Name)]
         [Route("Delete")]
-        public async Task<MessageModel<string>> Delete(int id)
+        public async Task<DataResult<string>> Delete(int id)
         {
             if (id > 0)
             {
@@ -172,7 +173,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("ApacheTestUpdate")]
-        public async Task<MessageModel<bool>> ApacheTestUpdate()
+        public async Task<DataResult<bool>> ApacheTestUpdate()
         {
             return Success(await _equipmentServices.Update(new { bsubmitter = $"laozhang{DateTime.Now.Millisecond}", bID = 1 }), "更新成功");
         }

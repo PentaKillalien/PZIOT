@@ -6,20 +6,14 @@ using PZIOT.IServices;
 using PZIOT.Model;
 using PZIOT.Model.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using PZIOT.Extensions.Middlewares;
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -46,7 +40,7 @@ namespace PZIOT.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public MessageModel<ServerViewModel> Server()
+        public DataResult<ServerViewModel> Server()
         {
             return Success(new ServerViewModel()
             {
@@ -67,7 +61,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         // GET: api/Logs
         [HttpGet]
-        public MessageModel<List<LogInfo>> Get()
+        public DataResult<List<LogInfo>> Get()
         {
             if (AppSettings.app(new string[] { "Middleware", "SignalRSendLog", "Enabled" }).ObjToBool())
             {
@@ -79,13 +73,13 @@ namespace PZIOT.Controllers
 
 
         [HttpGet]
-        public MessageModel<RequestApiWeekView> GetRequestApiinfoByWeek()
+        public DataResult<RequestApiWeekView> GetRequestApiinfoByWeek()
         {
             return Success(LogLock.RequestApiinfoByWeek(), "成功");
         }
 
         [HttpGet]
-        public MessageModel<AccessApiDateView> GetAccessApiByDate()
+        public DataResult<AccessApiDateView> GetAccessApiByDate()
         {
             //return new MessageModel<AccessApiDateView>()
             //{
@@ -98,7 +92,7 @@ namespace PZIOT.Controllers
         }
 
         [HttpGet]
-        public MessageModel<AccessApiDateView> GetAccessApiByHour()
+        public DataResult<AccessApiDateView> GetAccessApiByHour()
         {
             //return new MessageModel<AccessApiDateView>()
             //{
@@ -176,7 +170,7 @@ namespace PZIOT.Controllers
         }
 
         [HttpGet]
-        public MessageModel<WelcomeInitData> GetActiveUsers([FromServices] IWebHostEnvironment environment)
+        public DataResult<WelcomeInitData> GetActiveUsers([FromServices] IWebHostEnvironment environment)
         {
             var accessLogsToday = GetAccessLogsToday(environment).Where(d => d.BeginTime.ObjToDate() >= DateTime.Today);
 
@@ -222,7 +216,7 @@ namespace PZIOT.Controllers
         }
 
         [HttpGet]
-        public async Task<MessageModel<AccessApiDateView>> GetIds4Users()
+        public async Task<DataResult<AccessApiDateView>> GetIds4Users()
         {
             List<ApiDate> apiDates = new List<ApiDate>();
 
@@ -250,22 +244,17 @@ namespace PZIOT.Controllers
                     count = 0
                 });
             }
-            //return new MessageModel<AccessApiDateView>()
-            //{
-            //    msg = "获取成功",
-            //    success = true,
-            //    response = new AccessApiDateView
-            //    {
-            //        columns = new string[] { "date", "count" },
-            //        rows = apiDates.OrderBy(d => d.date).ToList(),
-            //    }
-            //};
-
-            return Success(new AccessApiDateView
+            return new DataResult<AccessApiDateView>()
             {
-                columns = new string[] { "date", "count" },
-                rows = apiDates.OrderBy(d => d.date).ToList(),
-            }, "获取成功");
+                Message = "获取成功",
+                Success = true,
+                Attach = new AccessApiDateView
+                {
+                    columns = new string[] { "date", "count" },
+                    rows = apiDates.OrderBy(d => d.date).ToList(),
+                }
+            };
+
         }
 
     }

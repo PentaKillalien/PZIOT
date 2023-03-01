@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using PZIOT.Model.RhMes;
 
 namespace PZIOT.Controllers
 {
@@ -61,7 +61,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("JWTToken3.0")]
-        public async Task<MessageModel<TokenInfoViewModel>> GetJwtToken3(string name = "", string pass = "")
+        public async Task<DataResult<TokenInfoViewModel>> GetJwtToken3(string name = "", string pass = "")
         {
             string jwtStr = string.Empty;
 
@@ -116,7 +116,7 @@ namespace PZIOT.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("RefreshToken")]
-        public async Task<MessageModel<TokenInfoViewModel>> RefreshToken(string token = "")
+        public async Task<DataResult<TokenInfoViewModel>> RefreshToken(string token = "")
         {
             string jwtStr = string.Empty;
 
