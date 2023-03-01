@@ -325,6 +325,11 @@
             Qccid
             </summary>
         </member>
+        <member name="P:PZIOT.Model.Models.Equipment.IsAutoAnalysisStatus">
+            <summary>
+            是否自动分析状态
+            </summary>
+        </member>
         <member name="T:PZIOT.Model.Models.EquipmentDataScada">
             <summary>
             数据采集历史表，定时任务会根据此表做数据分析

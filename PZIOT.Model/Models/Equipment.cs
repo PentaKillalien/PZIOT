@@ -56,5 +56,9 @@ namespace PZIOT.Model.Models
         /// </summary>
         [SugarColumn(Length = 100, IsNullable = true)]
         public string Qccid { get; set; }
+        /// <summary>
+        /// 是否自动分析状态
+        /// </summary>
+        public bool IsAutoAnalysisStatus { get; set; }
     }
 }

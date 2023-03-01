@@ -49,7 +49,7 @@ namespace PZIOT.Tasks
                 DateTime startTime = endTime.AddSeconds(-(AnalysisInterval));//结束时间
                 Task.Run(async () => {
                     //获取到所有的设备
-                    var eqps = await _equipmentServices.Query();
+                    var eqps = await _equipmentServices.Query(t => t.IsAutoAnalysisStatus);
                     foreach (var item in eqps)
                     {
                         //单个设备的分析逻辑
