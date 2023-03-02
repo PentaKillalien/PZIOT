@@ -13,10 +13,8 @@ using PZIOT.Tasks.Rule;
 using System.Linq;
 using PZIOT.Tasks.Function;
 using System.Diagnostics;
-using InitQ.Abstractions;
 using StackExchange.Redis;
-using PZIOT.EventBus;
-using RabbitMQ.Client;
+using Newtonsoft.Json;
 
 namespace PZIOT.Tasks
 {
@@ -32,11 +30,13 @@ namespace PZIOT.Tasks
         private readonly IEquipmentMatesTriggerStringServices _equipmentMatesTriggerStringServices;
         private readonly IEquipmentMatesFunctionServices _equipmentMatesFunctionServices;
         private readonly Dictionary<int, TriggerData>  triggerDatas;
+        RedisBasketRepository redisBasketRepository;
         private const string TypeString = "string";
         private const string TypeDouble = "double";
         private int GatherFrequency = 10;//秒
+        private bool OpenRedis = false;//启用后先插入Redis,过段时间由另一个定时任务持久化
         // 这里可以注入
-        public PZIOTDataGatherServices(IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
+        public PZIOTDataGatherServices(ConnectionMultiplexer redisConn,IEquipmentMatesTriggerStringServices equipmentMatesTriggerStringServices,IEquipmentMatesTriggerIntServices equipmentMatesTriggerServices, IEquipmentMatesServices equipmentMatesServices, IEquipmentMatesFunctionServices equipmentMatesFunctionServices,IEquipmentDataScadaServices equipmentDataScadaServices)
         {
             _equipmentMatesServices= equipmentMatesServices;
             _equipmentDataScadaServices = equipmentDataScadaServices;
@@ -44,12 +44,15 @@ namespace PZIOT.Tasks
             _equipmentMatesTriggerStringServices = equipmentMatesTriggerStringServices;
             _equipmentMatesFunctionServices = equipmentMatesFunctionServices;
             triggerDatas = new Dictionary<int, TriggerData>();
+            redisBasketRepository = new RedisBasketRepository(redisConn);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine("Job 1 is starting.");
             GatherFrequency = Convert.ToInt16(AppSettings.app(new string[] {"ServiceConfig", "PZIOTDataGatherServicesInterval" }));
+            OpenRedis = AppSettings.app(new string[] { "ServiceConfig", "PZIOTDataGatherServicesIntervalInsertRedis" }).ObjToBool();
+            
             //_timer = new Timer(DoWork, null, TimeSpan.Zero,
             //    TimeSpan.FromSeconds(60 * 60));//一个小时
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
@@ -159,7 +162,15 @@ namespace PZIOT.Tasks
                                             default:
                                                 break;
                                         }
-                                        await _equipmentDataScadaServices.Add(data);
+                                        if (OpenRedis)
+                                        {
+                                            await redisBasketRepository.ListRightPushAsync(data.EquipmentId.ToString(), JsonConvert.SerializeObject(data), 1);
+                                        }
+                                        else {
+                                            await _equipmentDataScadaServices.Add(data);
+                                        }
+                                        
+                                        
                                     }
                                     
                                 }

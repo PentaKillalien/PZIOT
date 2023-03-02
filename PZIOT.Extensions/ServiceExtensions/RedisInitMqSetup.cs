@@ -31,7 +31,7 @@ namespace PZIOT.Extensions
                         typeof(RedisSubscribe2) 
                     };
                     //显示日志
-                    m.ShowLog = true;
+                    m.ShowLog = false;
                 });
             }
         }
