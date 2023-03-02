@@ -13,6 +13,10 @@ using PZIOT.Tasks.Rule;
 using System.Linq;
 using PZIOT.Tasks.Function;
 using System.Diagnostics;
+using InitQ.Abstractions;
+using StackExchange.Redis;
+using PZIOT.EventBus;
+using RabbitMQ.Client;
 
 namespace PZIOT.Tasks
 {
@@ -40,7 +44,6 @@ namespace PZIOT.Tasks
             _equipmentMatesTriggerStringServices = equipmentMatesTriggerStringServices;
             _equipmentMatesFunctionServices = equipmentMatesFunctionServices;
             triggerDatas = new Dictionary<int, TriggerData>();
-
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -156,8 +159,6 @@ namespace PZIOT.Tasks
                                             default:
                                                 break;
                                         }
-                                        
-
                                         await _equipmentDataScadaServices.Add(data);
                                     }
                                     

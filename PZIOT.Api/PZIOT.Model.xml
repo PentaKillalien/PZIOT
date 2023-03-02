@@ -2039,168 +2039,88 @@
             返回数据集
             </summary>
         </member>
-        <member name="T:PZIOT.Model.ViewModels.AdvertisementViewModels">
-            <summary>
-            广告类
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.Id">
-            <summary>
-            分类ID
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.Createdate">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.ImgUrl">
-            <summary>
-            广告图片
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.Title">
-            <summary>
-            广告标题
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.Url">
-            <summary>
-            广告链接
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.AdvertisementViewModels.Remark">
-            <summary>
-            备注
-            </summary>
-        </member>
-        <member name="T:PZIOT.Model.ViewModels.BlogViewModels">
-            <summary>
-            博客信息展示类
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bID">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bsubmitter">
-            <summary>创建人
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.btitle">
-            <summary>博客标题
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.digest">
-            <summary>摘要
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.previous">
-            <summary>
-            上一篇
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.previousID">
-            <summary>
-            上一篇id
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.next">
-            <summary>
-            下一篇
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.nextID">
-            <summary>
-            下一篇id
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bcategory">
-            <summary>类别
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bcontent">
-            <summary>内容
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.btraffic">
-            <summary>
-            访问量
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bcommentNum">
-            <summary>
-            评论数量
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bUpdateTime">
-            <summary> 修改时间
-            
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bCreateTime">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:PZIOT.Model.ViewModels.BlogViewModels.bRemark">
-            <summary>备注
-            
-            </summary>
-        </member>
         <member name="P:PZIOT.Model.ViewModels.EnumDemoDto.Type">
             <summary>
             Type Description balabala
             </summary>
         </member>
-        <member name="T:PZIOT.Model.ViewModels.GuestbookViewModels">
+        <member name="T:PZIOT.Model.ViewModels.EquipmentViewModels">
             <summary>
-            留言信息展示类
+            博客信息展示类
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.id">
-            <summary>留言表
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bID">
+            <summary>
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.blogId">
-            <summary>博客ID
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bsubmitter">
+            <summary>创建人
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.createdate">
-            <summary>创建时间
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.btitle">
+            <summary>博客标题
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.phone">
-            <summary>手机
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.digest">
+            <summary>摘要
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.QQ">
-            <summary>qq
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.previous">
+            <summary>
+            上一篇
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.previousID">
+            <summary>
+            上一篇id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.next">
+            <summary>
+            下一篇
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.nextID">
+            <summary>
+            下一篇id
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bcategory">
+            <summary>类别
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.body">
-            <summary>留言内容
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bcontent">
+            <summary>内容
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.ip">
-            <summary>ip地址
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.btraffic">
+            <summary>
+            访问量
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bcommentNum">
+            <summary>
+            评论数量
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bUpdateTime">
+            <summary> 修改时间
             
             </summary>
         </member>
-        <member name="P:PZIOT.Model.ViewModels.GuestbookViewModels.isshow">
-            <summary>是否显示在前台,0否1是
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bCreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:PZIOT.Model.ViewModels.EquipmentViewModels.bRemark">
+            <summary>备注
             
             </summary>
         </member>

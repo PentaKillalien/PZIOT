@@ -1,10 +1,10 @@
 ﻿namespace PZIOT.EventBus.EventHandling
 {
-    public class BlogQueryIntegrationEvent : IntegrationEvent
+    public class EquipmentQueryIntegrationEvent : IntegrationEvent
     {
         public string BlogId { get; private set; }
 
-        public BlogQueryIntegrationEvent(string blogid)
+        public EquipmentQueryIntegrationEvent(string blogid)
             => BlogId = blogid;
     }
 }

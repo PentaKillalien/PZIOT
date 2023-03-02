@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PZIOT.EventBus\PZIOT.EventBus.csproj" />
     <ProjectReference Include="..\PZIOT.IServices\PZIOT.IServices.csproj" />
   </ItemGroup>
 

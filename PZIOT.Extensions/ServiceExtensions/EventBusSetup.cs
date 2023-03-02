@@ -23,7 +23,7 @@ namespace PZIOT.Extensions
                 var subscriptionClientName = AppSettings.app(new string[] { "EventBus", "SubscriptionClientName" });
 
                 services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-                services.AddTransient<BlogQueryIntegrationEventHandler>();
+                services.AddTransient<EquipmentQueryIntegrationEventHandler>();
 
                 if (AppSettings.app(new string[] { "RabbitMQ", "Enabled" }).ObjToBool())
                 {
@@ -58,7 +58,7 @@ namespace PZIOT.Extensions
             {
                 var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-                eventBus.Subscribe<BlogQueryIntegrationEvent, BlogQueryIntegrationEventHandler>();
+                eventBus.Subscribe<EquipmentQueryIntegrationEvent, EquipmentQueryIntegrationEventHandler>();
             }
         }
     }

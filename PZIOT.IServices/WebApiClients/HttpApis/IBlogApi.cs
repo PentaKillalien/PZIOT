@@ -39,7 +39,7 @@ namespace PZIOT.Common.WebApiClients.HttpApis
         /// <param name="id"></param>
         /// <returns>Success</returns>
         [HttpGet("api/Blog/{id}")]
-        Task<MessageModel<BlogViewModels>> Blog3Async([Required] int id);
+        Task<MessageModel<EquipmentViewModels>> Blog3Async([Required] int id);
 
         /// <summary>
         /// apache jemeter 压力测试
@@ -63,7 +63,7 @@ namespace PZIOT.Common.WebApiClients.HttpApis
         /// <param name="id"></param>
         /// <returns>Success</returns>
         [HttpGet("api/Blog/DetailNuxtNoPer")]
-        Task<MessageModel<BlogViewModels>> DetailNuxtNoPerAsync(int? id);
+        Task<MessageModel<EquipmentViewModels>> DetailNuxtNoPerAsync(int? id);
 
         /// <summary>
         /// 更新博客信息 (Auth)

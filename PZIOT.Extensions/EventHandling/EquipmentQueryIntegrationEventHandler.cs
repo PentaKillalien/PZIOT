@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace PZIOT.EventBus
 {
-    public class BlogQueryIntegrationEventHandler : IIntegrationEventHandler<BlogQueryIntegrationEvent>
+    public class EquipmentQueryIntegrationEventHandler : IIntegrationEventHandler<EquipmentQueryIntegrationEvent>
     {
         private readonly IEquipmentServices _equipmentServices;
-        private readonly ILogger<BlogQueryIntegrationEventHandler> _logger;
+        private readonly ILogger<EquipmentQueryIntegrationEventHandler> _logger;
 
-        public BlogQueryIntegrationEventHandler(
+        public EquipmentQueryIntegrationEventHandler(
             IEquipmentServices blogArticleServices,
-            ILogger<BlogQueryIntegrationEventHandler> logger)
+            ILogger<EquipmentQueryIntegrationEventHandler> logger)
         {
             _equipmentServices = blogArticleServices;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task Handle(BlogQueryIntegrationEvent @event)
+        public async Task Handle(EquipmentQueryIntegrationEvent @event)
         {
             _logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, "PZIOT", @event);
 
