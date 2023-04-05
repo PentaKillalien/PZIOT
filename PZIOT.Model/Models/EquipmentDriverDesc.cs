@@ -21,6 +21,7 @@ namespace PZIOT.Model.Models
         /// </summary>
         [SugarColumn(Length = 100, IsNullable = true)]
         public string DriverType { get; set; }
+        
         /// <summary>
         /// 启动json信息
         /// </summary>

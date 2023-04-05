@@ -33,7 +33,7 @@ namespace PZIOT.Extensions.IOT
         {
             //List
             var triggerData = new PzTcpTriggerData();
-            triggerData.ValueChanged += async (sender, e) =>
+            triggerData.ValueChanged +=  (sender, e) =>
             {
                 Console.WriteLine($"数据项编号{e.EquipmentIp}数据发生变化,oldValue>{e.OldValue}=>newvalue>{e.NewValue}");
                 //post
@@ -70,7 +70,7 @@ namespace PZIOT.Extensions.IOT
                         options.Listeners = new List<ListenOptions>(){
                         new ListenOptions{
                          Ip="Any",
-                         Port = 1988
+                         Port = 17748
                         }
                         };
                     }).Build();
