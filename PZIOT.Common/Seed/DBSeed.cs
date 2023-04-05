@@ -134,35 +134,6 @@ namespace PZIOT.Common.Seed
 
                     var importer = new ExcelImporter();
 
-                    #region BlogArticle
-                    if (!await myContext.Db.Queryable<Equipment>().AnyAsync())
-                    {
-                        myContext.GetEntityDB<Equipment>().InsertRange(JsonHelper.ParseFormByJson<List<Equipment>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "BlogArticle"), Encoding.UTF8)));
-                        Console.WriteLine("Table:BlogArticle created success!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Table:BlogArticle already exists...");
-                    }
-                    #endregion
-
-
-                    #region Modules
-                    if (!await myContext.Db.Queryable<Modules>().AnyAsync())
-                    {
-
-
-
-                        var data = JsonConvert.DeserializeObject<List<Modules>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "Modules"), Encoding.UTF8), setting);
-
-                        myContext.GetEntityDB<Modules>().InsertRange(data);
-                        Console.WriteLine("Table:Modules created success!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Table:Modules already exists...");
-                    }
-                    #endregion
 
 
                     #region Permission
